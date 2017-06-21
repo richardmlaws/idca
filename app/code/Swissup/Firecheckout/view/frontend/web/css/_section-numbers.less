@@ -1,0 +1,42 @@
+.firecheckout {
+    counter-reset: firecheckout-section-counter;
+
+    .step-title,
+    .opc-block-summary > .title {
+        &:before {
+            background: #000;
+            display: inline-block;
+            width: 23px;
+            line-height: 23px;
+            height: 23px;
+            text-align: center;
+            margin: -3px 7px 0 0;
+            vertical-align: middle;
+            color: #fff;
+            font-size: 15px;
+            font-family: Verdana, sans-serif;
+            counter-increment: firecheckout-section-counter;
+            content: counter(firecheckout-section-counter);
+        }
+    }
+
+    &.firecheckout-col1-set,
+    &.firecheckout-quote-virtual {
+        .step-title,
+        .opc-block-summary > .title {
+            &:before {
+                display: none;
+            }
+        }
+    }
+}
+@media (max-width: 767px) {
+    .firecheckout {
+        .step-title,
+        .opc-block-summary > .title {
+            &:before {
+                display: none;
+            }
+        }
+    }
+}

@@ -1,0 +1,76 @@
+<div id ="product_container" class="product_container">
+    <h4><?php echo __('Choose Category'); ?></h4>
+    <?php
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+
+    $productCollection = $objectManager->create('Magento\Catalog\Model\ResourceModel\Category\CollectionFactory');
+
+    $categories = $productCollection->create()
+            ->addAttributeToSelect('*')
+            ->addFieldToFilter('is_active', array('eq' => '1'))
+            ->addFieldToFilter('level', array('gteq' => '2'));
+
+    $disabledCategories = $productCollection->create()
+            ->addAttributeToSelect('*')
+            ->addFieldToFilter('is_active', array('eq' => '0'))
+            ->addFieldToFilter('level', array('eq' => 2));
+    $discats = array();
+    foreach ($disabledCategories as $product_discategory):
+        $discats[] = $product_discategory->getId();
+    endforeach;
+    ?>
+    <div>
+        <div id="product_categories_container">
+            <select id="product_categories" class="product-categories" name="product_category_id">
+                <?php foreach ($categories as $product_category): ?>
+                    <?php $categoryId = $product_category->getId(); ?>
+                    <?php
+                    $enabled = true;
+                    $path = $product_category->getPath();
+                    $ids = explode('/', $path);
+                    foreach ($ids as $value) {
+                        if (in_array($value, $discats)) {
+                            $enabled = false;
+                            break;
+                        }
+                    }
+                    if ($enabled) {
+
+                        if ($block->getProductGeneralEnable()):
+                            if ($block->getProductDefaultCategory() == $categoryId)
+                                $selected = 'selected';
+                            else
+                                $selected = '';
+                        else:
+                            $selected = '';
+                        endif;
+
+                        $label = $product_category->getName();
+                        // Trying to create a visiual heiracrchy so you can see what level you're on
+                        $padLength = ($product_category->getLevel() - 2) * 4;
+                        //$label = str_pad($label, $padLength, ' ', STR_PAD_LEFT);
+                        ?>
+                        <option <?php echo $selected; ?> value="<?php echo $categoryId; ?>">
+                            <?php
+                            for ($i = 0; $i < $padLength; $i++) {
+                                echo '&nbsp;';
+                            }
+                            echo $label;
+                            ?>
+                        </option>    
+                        <?php
+                    }
+                    ?>  
+                <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    require(['jquery', 'jquery/ui'], function ($) {
+        var $j = jQuery.noConflict();
+        $j(function () {
+            $j('#product_categories').selectric();
+        });
+    });
+</script>

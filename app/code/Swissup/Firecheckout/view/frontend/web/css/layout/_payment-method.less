@@ -1,0 +1,81 @@
+.firecheckout {
+    .payment-method {
+        p:empty {
+            // remove margin below empty <p data-bind="html: getInstructions()"></p>
+            display: none;
+        }
+    }
+    .checkout-payment-method {
+        .fieldset {
+            > legend:first-child {
+                + br {
+                    display: none;
+                }
+            }
+        }
+        .payment-option-content {
+            padding: 0 25px 20px;
+        }
+    }
+    &.equal-billing-shipping {
+        .payment-method {
+            .billing-address-details {
+                display: none;
+            }
+        }
+    }
+    .checkout-payment-method .payment-method-content {
+        padding: 0 22px 20px;
+    }
+    .payment-method-billing-address {
+        margin-bottom: 15px;
+        .billing-address-details {
+            box-sizing: border-box;
+            padding: 7px 10px;
+            font-style: italic;
+            background: #f4f4f4;
+            &:empty {
+                display: none;
+            }
+        }
+        .fieldset {
+            .actions-toolbar {
+                margin-top: 15px;
+            }
+        }
+    }
+}
+@media (min-width: 768px) {
+    .firecheckout {
+        .checkout-container {
+            .payment-method {
+                .payment-method-content {
+                    > .actions-toolbar {
+                        // hide "place order" in payment section, because we show
+                        // it in summary
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+    .payment-method-billing-address {
+        .fieldset {
+            margin-left: -15px;
+            margin-right: -15px;
+        }
+    }
+}
+@media (max-width: 767px) {
+    .firecheckout {
+        .checkout-payment-method {
+            .payment-methods {
+                margin: 0;
+            }
+            .payment-method-title {
+                padding-left: 0;
+                padding-right: 0;
+            }
+        }
+    }
+}

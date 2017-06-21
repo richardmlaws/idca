@@ -1,0 +1,28 @@
+<!--
+/**
+ * Modified version of Magento/Checkout/view/frontend/web/template/shipping-address/address-renderer/default.html
+ *
+ * Added ko if: statements to remove possible blank lines.
+ */
+-->
+<div class="shipping-address-item" data-bind="css: isSelected() ? 'selected-item' : 'not-selected-item'">
+    <!-- ko text: address().prefix --><!-- /ko --> <!-- ko text: address().firstname --><!-- /ko -->
+    <!-- ko text: address().lastname --><!-- /ko --> <!-- ko text: address().suffix --><!-- /ko --><br/>
+    <!-- ko text: address().street --><!-- /ko --><!-- ko if: address().street && address().street[0] --><br/><!-- /ko -->
+    <!-- ko text: address().city --><!-- /ko --><!-- ko if: address().city -->, <!-- /ko --><!-- ko text: address().region --><!-- /ko --> <!-- ko text: address().postcode --><!-- /ko -->
+
+    <!-- ko if: address().city || address().region || address().postcode --><br/><!-- /ko -->
+
+    <!-- ko text: getCountryName(address().countryId) --><!-- /ko --><br/>
+    <!-- ko text: address().telephone --><!-- /ko --><!-- ko if: address().telephone --><br/><!-- /ko -->
+    <!-- ko if: (address().isEditable()) -->
+    <button type="button"
+            class="action edit-address-link"
+            data-bind="click: editAddress, visible: address().isEditable()">
+        <span data-bind="i18n: 'Edit'"></span>
+    </button>
+    <!-- /ko -->
+    <button type="button" data-bind="click: selectAddress" class="action action-select-shipping-item">
+        <span data-bind="i18n: 'Ship Here'"></span>
+    </button>
+</div>

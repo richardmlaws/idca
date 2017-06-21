@@ -1,0 +1,80 @@
+.firecheckout {
+    // This header is used for empty layout only
+    .firecheckout-header {
+        text-align: center;
+        .header {
+            padding: 20px 20px 0;
+            .logo {
+                float: none;
+                margin: 0;
+                img {
+                    display: inline;
+                }
+            }
+        }
+    }
+
+    &-layout-empty,
+    &-layout-full {
+        .page-title-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            width: auto;
+            height: auto;
+            margin: 0;
+            overflow: visible;
+            position: static;
+            h1 {
+                margin: 20px 0;
+            }
+        }
+    }
+
+    &:not(.firecheckout-layout-full) {
+        .page-main,
+        .header.content {
+            max-width: @firecheckout-page-wide__width;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+    &.firecheckout-col1-set {
+        .page-main {
+            max-width: @firecheckout-page-narrow__width;
+        }
+        &:not(.firecheckout-layout-full) {
+            .header.content {
+                max-width: @firecheckout-page-narrow__width;
+            }
+        }
+    }
+
+    &-layout-full {
+        .continue-shopping {
+            display: none;
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    .firecheckout {
+        &.firecheckout-quote-virtual {
+            .page-main {
+                max-width: @firecheckout-page-narrow__width;
+            }
+            &:not(.firecheckout-layout-full) {
+                .header.content {
+                    max-width: @firecheckout-page-narrow__width;
+                }
+            }
+        }
+
+        &-layout-full {
+            .nav-sections {
+                display: block;
+            }
+        }
+    }
+}

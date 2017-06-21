@@ -1,0 +1,16 @@
+{
+    "name": "swissup/delivery-date",
+    "description": "Magento 2 module gives your customers possibility to choose the delivery date",
+    "type": "magento2-module",
+    "version": "1.0.2",
+    "license": "OSL-3.0",
+    "require": {
+        "swissup/checkout": "*"
+    },
+    "autoload": {
+        "files": [ "registration.php" ],
+        "psr-4": {
+            "Swissup\\DeliveryDate\\": ""
+        }
+    }
+}

@@ -1,0 +1,111 @@
+.sagepaycw-payment-information-block {
+	margin: 0 0 3rem;
+}
+
+.sagepaycw-transaction-payment-information-block {
+	margin: 3rem 0;
+	background-color: #f1f1f1;
+	padding: 1rem;
+}
+
+.sagepaycw-transaction-information .tooltip,
+.sagepaycw-payment-information-block .tooltip {
+	float: right;
+}
+
+@media (min-width: 768px) {
+	.sagepaycw-transaction-information,
+	.sagepaycw-transaction-captures {
+		float: left;
+		width: calc( (100%) * .5 - 30px );
+	}
+	
+	.sagepaycw-transaction-history,
+	.sagepaycw-transaction-refunds {
+		float: right;
+		width: calc( (100%) * .5 - 30px );
+	}
+}
+
+.sagepaycw_form .admin__field .note,
+.sagepaycw_form .admin__field div.mage-error {
+	clear: both;
+	padding: 5px 0;
+	margin-left: calc( (100%) * .33333333 + 30px );	
+}
+.sagepaycw_form .admin__field .note {
+	font-size: 12px;
+	color: #303030;
+}
+.sagepaycw_form .admin__field div.mage-error,
+.sagepaycw_form td.value div.mage-error {
+	font-size: 12px;
+	color: #e02b27;
+}
+
+.sagepaycw_form .html-field {
+	line-height: 3.2rem;
+}
+
+.sagepaycw_form .multi-control:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+.sagepaycw_form .multi-control > div > div {
+	width: auto;
+	float: left;
+	margin-right: 5px;
+	margin-top: 0;
+}
+
+
+/*** CHECKOUT ***/
+
+.sagepaycw_form .card-number .multi-control > div > div {
+	width: 100%;
+	float: none;
+	margin: 0;
+}
+
+.sagepaycw_form .card-brand-image-color.brand-is-deselected {
+	display:none;
+}
+
+.sagepaycw_form .card-brand-image-grey.brand-is-selected {
+	display:none;
+}
+
+.sagepaycw_form .card-brand-image-selection {
+	margin-top: 5px;
+}
+
+.sagepaycw_form .card-brand-image-selection img {
+	width:auto;
+	height: 20px;
+	margin-right: 3px;
+	vertical-align: middle;
+}
+
+.sagepaycw_form .invalid-card-number,
+.sagepaycw_form .invalid-cvc-number {
+	border-color: #ed8380;
+	background-image: url(../images/invalid.png) !important;
+	background-position: right 5px center;
+	background-repeat: no-repeat !important;
+}
+
+.sagepaycw_form .valid-card-number,
+.sagepaycw_form .valid-cvc-number {
+	background-image: url(../images/valid.png) !important;
+	background-position: right 5px center;
+	background-repeat: no-repeat !important;
+}
+
+.sagepaycw_form .alias select {
+	width: 100%;
+}
+
+.sagepaycw_form .alias select option:empty {
+	display: block;
+}

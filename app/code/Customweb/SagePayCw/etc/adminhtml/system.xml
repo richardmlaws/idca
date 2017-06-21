@@ -1,0 +1,1566 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<section id="sagepaycw" type="text" sortOrder="800" showInDefault="1" showInWebsite="1" showInStore="1">
+			<label>SagePayCw</label>
+			<tab>sales</tab>
+			<resource>Customweb_SagePayCw::config_sagepaycw</resource>
+			<group id="information" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="0" translate="label">
+				<label><![CDATA[Information]]></label>
+				<field id="version" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="0" translate="label" type="label">
+					<label><![CDATA[Version]]></label>
+				</field>
+				<field id="more" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" type="label">
+					<frontend_model>Customweb\SagePayCw\Block\Backend\System\Config\Information\More</frontend_model>
+				</field>
+			</group>
+			<group id="shop" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+				<label><![CDATA[Shop]]></label>
+				<field id="alias_management" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="0" translate="label" type="select">
+					<label><![CDATA[Customer Alias Management]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[You can allow the customers to manage/delete their aliases in the their account.]]></comment>
+				</field>
+				<field id="await_notification" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="10" translate="label" type="select">
+					<label><![CDATA[Await Notification]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[In some cases it may take a few seconds until the transaction is successfully authorized. When this option is enabled, the notification is awaited.]]></comment>
+				</field>
+				
+			</group>
+			<group id="general" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label">
+				<label><![CDATA[General]]></label>
+				<field id="vendor" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="0" translate="label comment" type="text">
+					<label><![CDATA[Sage Pay Vender Name]]></label>
+					<comment><![CDATA[Used to authenticate your site. This should contain the
+							Sage Pay Vendor Name
+							supplied by
+							Sage Pay when your account was created.
+						]]></comment>
+				</field>
+				<field id="operation_mode" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label comment" type="select">
+					<label><![CDATA[Operation Mode]]></label>
+					<comment><![CDATA[You can switch between the different environments, by
+							selecting the corresponding operation mode.
+						]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\OperationMode</source_model>
+				</field>
+				<field id="deferred_authorization_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label comment" type="select">
+					<label><![CDATA[Deferred Authorization Type]]></label>
+					<comment><![CDATA[Sage Pay supports two types of
+							deferred authorization. The deferred
+							authorization allows only one
+							capture per transaction, but it guarantees the payment, because a
+							reservation is added
+							on the customer's card. In case of authenticate
+							you can do multiple captures per transaction, but there is no
+							reservation of the amount on the card.
+						]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\DeferredAuthorizationType</source_model>
+				</field>
+				<field id="description" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label comment" type="textarea">
+					<label><![CDATA[Description of the order]]></label>
+					<comment><![CDATA[The description of goods purchased is displayed on the
+							Sage Pay Server payment
+							page as the
+							customer enters their card details.
+						]]></comment>
+				</field>
+				<field id="transaction_id_schema" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label comment" type="text">
+					<label><![CDATA[Transaction ID Prefix]]></label>
+					<comment><![CDATA[Here you can insert a transaction prefix. The prefix
+							allows you to change the transaction number that is
+							transmitted to
+							Sage Pay. The prefix must contain the tag
+							{id}. It will then be replaced
+							by
+							the order number (e.g. name_{id}).
+						]]></comment>
+				</field>
+				<field id="send_basket" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="50" translate="label comment" type="select">
+					<label><![CDATA[Basket]]></label>
+					<comment><![CDATA[During the checkout the basket can be sent to
+							Sage Pay. It can be sent as XML, Basic.
+						]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\SendBasket</source_model>
+				</field>
+				<field id="gift_aid" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="60" translate="label comment" type="select">
+					<label><![CDATA[Gift Aid]]></label>
+					<comment><![CDATA[By enabling the gife aid option the customer can ticke a
+							box during the checkout process to indicate she or he wish to donate
+							the tax.This option requires that the your
+							Sage Pay
+							account has enabled the gift aid
+							option.
+						]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\GiftAid</source_model>
+				</field>
+				<field id="moto_cvc_check" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label comment" type="select">
+					<label><![CDATA[MoTo CVC Check]]></label>
+					<comment><![CDATA[When a mail / telephone order (MoTo) is made, should the
+							authorization process check the CVC?
+						]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\MotoCvcCheck</source_model>
+				</field>
+				<field id="T3M" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="80" translate="label comment" type="select">
+					<label><![CDATA[The 3rd Man]]></label>
+					<comment><![CDATA[Should results from The 3rd Man fraud screening be
+							polled and saved on the transaction?
+						]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\T3m</source_model>
+				</field>
+				<field id="username" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label comment" type="text">
+					<label><![CDATA[Username]]></label>
+					<comment><![CDATA[The username used for administrative requests.
+						]]></comment>
+				</field>
+				<field id="password" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label comment" type="password">
+					<label><![CDATA[Password]]></label>
+					<comment><![CDATA[The password used for administrative requests.
+						]]></comment>
+				</field>
+			</group>
+		</section>
+		<section id="payment">
+			<group id="sagepaycw_sagepay" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+				<label>Sage Pay Sage Pay Payment</label>
+				<field id="model"/>
+				<field id="active" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="0" translate="label" type="select">
+					<label><![CDATA[Enabled]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label><![CDATA[Title]]></label>
+				</field>
+				<field id="description" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="textarea">
+					<label><![CDATA[Description]]></label>
+				</field>
+				<field id="show_image" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
+					<label><![CDATA[Show Image]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="show_payment_id" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
+					<label><![CDATA[Show Payment Id]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Show the payment id in the order information]]></comment> 
+				</field>
+				<field id="currency" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="50" translate="label" type="multiselect">
+					<label><![CDATA[Allowed Currencies]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Sagepay\Currency</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="base_currency" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="60" translate="label" type="select">
+					<label><![CDATA[Use Base Currency]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Send amounts to Sage Pay in store's base currency.]]></comment>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label><![CDATA[Payment from Applicable Countries]]></label>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="80" translate="label" type="multiselect">
+					<label><![CDATA[Payment from Specific Countries]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Sagepay\Country</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="min_order_total" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label><![CDATA[Minimum Order Total]]></label>
+				</field>
+				<field id="max_order_total" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="100" translate="label" type="text">
+					<label><![CDATA[Maximum Order Total]]></label>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="120" translate="label" type="text">
+					<label><![CDATA[Sort Order]]></label>
+					<frontend_class>validate-number</frontend_class>
+				</field>
+				<field id="settlement" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="130" translate="label" type="select">
+					<label><![CDATA[Invoice Settlement]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Settlement</source_model>
+					<comment><![CDATA[Choose settlement after order in case you want an invoice to be created with your oder. The state of the invoice will set according to your capture status.]]></comment>
+				</field>
+				<field id="invoice_email" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="140" translate="label" type="select">
+					<label><![CDATA[Send Invoice Email]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Send the invoice email automatically after invoice creation.]]></comment>
+					<depends>
+						<field id="settlement">direct</field>
+					</depends>
+				</field>
+			<field id="address_check_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="150" translate="label comment" type="multiselect">
+					<label><![CDATA[Address Check Result]]></label>
+					<comment><![CDATA[During the checkout the address and post code are
+									checked against the linked data with the credit
+									card.
+									The selected
+									outcomes are threaded as uncertain transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\AddressCheckBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="cv2_check_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="160" translate="label comment" type="multiselect">
+					<label><![CDATA[CV2 Check Result]]></label>
+					<comment><![CDATA[During the checkout the CV2 code is checked. The
+									selected outcomes are treated as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Cv2CheckBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="three_d_secure_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="170" translate="label comment" type="multiselect">
+					<label><![CDATA[3D Secure Check]]></label>
+					<comment><![CDATA[During the authorization of the payment a 3D secure
+									check may be done. The selected outcomes are
+									treated
+									as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\ThreeDSecureBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="fraud_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="180" translate="label comment" type="multiselect">
+					<label><![CDATA[Fraud Check Result]]></label>
+					<comment><![CDATA[During the authorization of the payment a fraud check
+									may be done by ReD. The selected outcomes are
+									treated as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\FraudBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="capturing" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="190" translate="label comment" type="select">
+					<label><![CDATA[Capturing]]></label>
+					<comment><![CDATA[Should the amount be captured automatically after the
+									order (direct) or should the amount only be reserved (deferred)?
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Capturing</source_model>
+				</field>
+				<field id="authorizationMethod" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="200" translate="label comment" type="select">
+					<label><![CDATA[Authorization Method]]></label>
+					<comment><![CDATA[Select the authorization method to use for processing this payment method.]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Sagepay\Authorizationmethod</source_model>
+				</field>
+				<field id="alias_manager" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="210" translate="label comment" type="select">
+					<label><![CDATA[Alias Manager]]></label>
+					<comment><![CDATA[The alias manager allows the customer to select from a credit card previously stored. The sensitive data is stored by Sage Pay.]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\AliasManager</source_model>
+				</field>
+			</group><group id="sagepaycw_creditcard" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label">
+				<label>Sage Pay Credit Card</label>
+				<field id="model"/>
+				<field id="active" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="0" translate="label" type="select">
+					<label><![CDATA[Enabled]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label><![CDATA[Title]]></label>
+				</field>
+				<field id="description" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="textarea">
+					<label><![CDATA[Description]]></label>
+				</field>
+				<field id="show_image" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
+					<label><![CDATA[Show Image]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="show_payment_id" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
+					<label><![CDATA[Show Payment Id]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Show the payment id in the order information]]></comment> 
+				</field>
+				<field id="currency" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="50" translate="label" type="multiselect">
+					<label><![CDATA[Allowed Currencies]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Creditcard\Currency</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="base_currency" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="60" translate="label" type="select">
+					<label><![CDATA[Use Base Currency]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Send amounts to Sage Pay in store's base currency.]]></comment>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label><![CDATA[Payment from Applicable Countries]]></label>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="80" translate="label" type="multiselect">
+					<label><![CDATA[Payment from Specific Countries]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Creditcard\Country</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="min_order_total" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label><![CDATA[Minimum Order Total]]></label>
+				</field>
+				<field id="max_order_total" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="100" translate="label" type="text">
+					<label><![CDATA[Maximum Order Total]]></label>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="120" translate="label" type="text">
+					<label><![CDATA[Sort Order]]></label>
+					<frontend_class>validate-number</frontend_class>
+				</field>
+				<field id="settlement" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="130" translate="label" type="select">
+					<label><![CDATA[Invoice Settlement]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Settlement</source_model>
+					<comment><![CDATA[Choose settlement after order in case you want an invoice to be created with your oder. The state of the invoice will set according to your capture status.]]></comment>
+				</field>
+				<field id="invoice_email" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="140" translate="label" type="select">
+					<label><![CDATA[Send Invoice Email]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Send the invoice email automatically after invoice creation.]]></comment>
+					<depends>
+						<field id="settlement">direct</field>
+					</depends>
+				</field>
+			<field id="credit_card_brands" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="150" translate="label comment" type="multiselect">
+					<label><![CDATA[Credit Card Brands]]></label>
+					<comment><![CDATA[In case hidden authorization is used, the brand of the
+									credit card is detected by the card number and the card number is
+									validated
+									accordingly. This setting enables the restriction of the
+									allowed brands.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\CreditCardBrands</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="address_check_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="160" translate="label comment" type="multiselect">
+					<label><![CDATA[Address Check Result]]></label>
+					<comment><![CDATA[During the checkout the address and post code are
+									checked against the linked data with the credit
+									card.
+									The selected
+									outcomes are threaded as uncertain transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\AddressCheckBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="cv2_check_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="170" translate="label comment" type="multiselect">
+					<label><![CDATA[CV2 Check Result]]></label>
+					<comment><![CDATA[During the checkout the CV2 code is checked. The
+									selected outcomes are treated as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Cv2CheckBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="three_d_secure_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="180" translate="label comment" type="multiselect">
+					<label><![CDATA[3D Secure Check]]></label>
+					<comment><![CDATA[During the authorization of the payment a 3D secure
+									check may be done. The selected outcomes are
+									treated
+									as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\ThreeDSecureBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="fraud_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="190" translate="label comment" type="multiselect">
+					<label><![CDATA[Fraud Check Result]]></label>
+					<comment><![CDATA[During the authorization of the payment a fraud check
+									may be done by ReD. The selected outcomes are
+									treated as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\FraudBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="capturing" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="200" translate="label comment" type="select">
+					<label><![CDATA[Capturing]]></label>
+					<comment><![CDATA[Should the amount be captured automatically after the
+									order (direct) or should the amount only be reserved (deferred)?
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Capturing</source_model>
+				</field>
+				<field id="authorizationMethod" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="210" translate="label comment" type="select">
+					<label><![CDATA[Authorization Method]]></label>
+					<comment><![CDATA[Select the authorization method to use for processing this payment method.]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Creditcard\Authorizationmethod</source_model>
+				</field>
+				<field id="alias_manager" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="220" translate="label comment" type="select">
+					<label><![CDATA[Alias Manager]]></label>
+					<comment><![CDATA[The alias manager allows the customer to select from a credit card previously stored. The sensitive data is stored by Sage Pay.]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\AliasManager</source_model>
+				</field>
+			</group><group id="sagepaycw_visa" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label">
+				<label>Sage Pay Visa</label>
+				<field id="model"/>
+				<field id="active" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="0" translate="label" type="select">
+					<label><![CDATA[Enabled]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label><![CDATA[Title]]></label>
+				</field>
+				<field id="description" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="textarea">
+					<label><![CDATA[Description]]></label>
+				</field>
+				<field id="show_image" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
+					<label><![CDATA[Show Image]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="show_payment_id" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
+					<label><![CDATA[Show Payment Id]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Show the payment id in the order information]]></comment> 
+				</field>
+				<field id="currency" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="50" translate="label" type="multiselect">
+					<label><![CDATA[Allowed Currencies]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Visa\Currency</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="base_currency" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="60" translate="label" type="select">
+					<label><![CDATA[Use Base Currency]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Send amounts to Sage Pay in store's base currency.]]></comment>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label><![CDATA[Payment from Applicable Countries]]></label>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="80" translate="label" type="multiselect">
+					<label><![CDATA[Payment from Specific Countries]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Visa\Country</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="min_order_total" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label><![CDATA[Minimum Order Total]]></label>
+				</field>
+				<field id="max_order_total" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="100" translate="label" type="text">
+					<label><![CDATA[Maximum Order Total]]></label>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="120" translate="label" type="text">
+					<label><![CDATA[Sort Order]]></label>
+					<frontend_class>validate-number</frontend_class>
+				</field>
+				<field id="settlement" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="130" translate="label" type="select">
+					<label><![CDATA[Invoice Settlement]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Settlement</source_model>
+					<comment><![CDATA[Choose settlement after order in case you want an invoice to be created with your oder. The state of the invoice will set according to your capture status.]]></comment>
+				</field>
+				<field id="invoice_email" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="140" translate="label" type="select">
+					<label><![CDATA[Send Invoice Email]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Send the invoice email automatically after invoice creation.]]></comment>
+					<depends>
+						<field id="settlement">direct</field>
+					</depends>
+				</field>
+			<field id="address_check_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="150" translate="label comment" type="multiselect">
+					<label><![CDATA[Address Check Result]]></label>
+					<comment><![CDATA[During the checkout the address and post code are
+									checked against the linked data with the credit
+									card.
+									The selected
+									outcomes are threaded as uncertain transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\AddressCheckBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="cv2_check_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="160" translate="label comment" type="multiselect">
+					<label><![CDATA[CV2 Check Result]]></label>
+					<comment><![CDATA[During the checkout the CV2 code is checked. The
+									selected outcomes are treated as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Cv2CheckBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="three_d_secure_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="170" translate="label comment" type="multiselect">
+					<label><![CDATA[3D Secure Check]]></label>
+					<comment><![CDATA[During the authorization of the payment a 3D secure
+									check may be done. The selected outcomes are
+									treated
+									as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\ThreeDSecureBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="fraud_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="180" translate="label comment" type="multiselect">
+					<label><![CDATA[Fraud Check Result]]></label>
+					<comment><![CDATA[During the authorization of the payment a fraud check
+									may be done by ReD. The selected outcomes are
+									treated as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\FraudBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="capturing" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="190" translate="label comment" type="select">
+					<label><![CDATA[Capturing]]></label>
+					<comment><![CDATA[Should the amount be captured automatically after the
+									order (direct) or should the amount only be reserved (deferred)?
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Capturing</source_model>
+				</field>
+				<field id="authorizationMethod" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="200" translate="label comment" type="select">
+					<label><![CDATA[Authorization Method]]></label>
+					<comment><![CDATA[Select the authorization method to use for processing this payment method.]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Visa\Authorizationmethod</source_model>
+				</field>
+				<field id="alias_manager" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="210" translate="label comment" type="select">
+					<label><![CDATA[Alias Manager]]></label>
+					<comment><![CDATA[The alias manager allows the customer to select from a credit card previously stored. The sensitive data is stored by Sage Pay.]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\AliasManager</source_model>
+				</field>
+			</group><group id="sagepaycw_mastercard" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label">
+				<label>Sage Pay MasterCard</label>
+				<field id="model"/>
+				<field id="active" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="0" translate="label" type="select">
+					<label><![CDATA[Enabled]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label><![CDATA[Title]]></label>
+				</field>
+				<field id="description" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="textarea">
+					<label><![CDATA[Description]]></label>
+				</field>
+				<field id="show_image" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
+					<label><![CDATA[Show Image]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="show_payment_id" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
+					<label><![CDATA[Show Payment Id]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Show the payment id in the order information]]></comment> 
+				</field>
+				<field id="currency" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="50" translate="label" type="multiselect">
+					<label><![CDATA[Allowed Currencies]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Mastercard\Currency</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="base_currency" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="60" translate="label" type="select">
+					<label><![CDATA[Use Base Currency]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Send amounts to Sage Pay in store's base currency.]]></comment>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label><![CDATA[Payment from Applicable Countries]]></label>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="80" translate="label" type="multiselect">
+					<label><![CDATA[Payment from Specific Countries]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Mastercard\Country</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="min_order_total" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label><![CDATA[Minimum Order Total]]></label>
+				</field>
+				<field id="max_order_total" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="100" translate="label" type="text">
+					<label><![CDATA[Maximum Order Total]]></label>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="120" translate="label" type="text">
+					<label><![CDATA[Sort Order]]></label>
+					<frontend_class>validate-number</frontend_class>
+				</field>
+				<field id="settlement" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="130" translate="label" type="select">
+					<label><![CDATA[Invoice Settlement]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Settlement</source_model>
+					<comment><![CDATA[Choose settlement after order in case you want an invoice to be created with your oder. The state of the invoice will set according to your capture status.]]></comment>
+				</field>
+				<field id="invoice_email" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="140" translate="label" type="select">
+					<label><![CDATA[Send Invoice Email]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Send the invoice email automatically after invoice creation.]]></comment>
+					<depends>
+						<field id="settlement">direct</field>
+					</depends>
+				</field>
+			<field id="address_check_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="150" translate="label comment" type="multiselect">
+					<label><![CDATA[Address Check Result]]></label>
+					<comment><![CDATA[During the checkout the address and post code are
+									checked against the linked data with the credit
+									card.
+									The selected
+									outcomes are threaded as uncertain transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\AddressCheckBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="cv2_check_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="160" translate="label comment" type="multiselect">
+					<label><![CDATA[CV2 Check Result]]></label>
+					<comment><![CDATA[During the checkout the CV2 code is checked. The
+									selected outcomes are treated as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Cv2CheckBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="three_d_secure_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="170" translate="label comment" type="multiselect">
+					<label><![CDATA[3D Secure Check]]></label>
+					<comment><![CDATA[During the authorization of the payment a 3D secure
+									check may be done. The selected outcomes are
+									treated
+									as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\ThreeDSecureBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="fraud_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="180" translate="label comment" type="multiselect">
+					<label><![CDATA[Fraud Check Result]]></label>
+					<comment><![CDATA[During the authorization of the payment a fraud check
+									may be done by ReD. The selected outcomes are
+									treated as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\FraudBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="capturing" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="190" translate="label comment" type="select">
+					<label><![CDATA[Capturing]]></label>
+					<comment><![CDATA[Should the amount be captured automatically after the
+									order (direct) or should the amount only be reserved (deferred)?
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Capturing</source_model>
+				</field>
+				<field id="authorizationMethod" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="200" translate="label comment" type="select">
+					<label><![CDATA[Authorization Method]]></label>
+					<comment><![CDATA[Select the authorization method to use for processing this payment method.]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Mastercard\Authorizationmethod</source_model>
+				</field>
+				<field id="alias_manager" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="210" translate="label comment" type="select">
+					<label><![CDATA[Alias Manager]]></label>
+					<comment><![CDATA[The alias manager allows the customer to select from a credit card previously stored. The sensitive data is stored by Sage Pay.]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\AliasManager</source_model>
+				</field>
+			</group><group id="sagepaycw_debitmastercard" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="50" translate="label">
+				<label>Sage Pay Debit MasterCard</label>
+				<field id="model"/>
+				<field id="active" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="0" translate="label" type="select">
+					<label><![CDATA[Enabled]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label><![CDATA[Title]]></label>
+				</field>
+				<field id="description" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="textarea">
+					<label><![CDATA[Description]]></label>
+				</field>
+				<field id="show_image" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
+					<label><![CDATA[Show Image]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="show_payment_id" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
+					<label><![CDATA[Show Payment Id]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Show the payment id in the order information]]></comment> 
+				</field>
+				<field id="currency" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="50" translate="label" type="multiselect">
+					<label><![CDATA[Allowed Currencies]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Debitmastercard\Currency</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="base_currency" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="60" translate="label" type="select">
+					<label><![CDATA[Use Base Currency]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Send amounts to Sage Pay in store's base currency.]]></comment>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label><![CDATA[Payment from Applicable Countries]]></label>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="80" translate="label" type="multiselect">
+					<label><![CDATA[Payment from Specific Countries]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Debitmastercard\Country</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="min_order_total" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label><![CDATA[Minimum Order Total]]></label>
+				</field>
+				<field id="max_order_total" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="100" translate="label" type="text">
+					<label><![CDATA[Maximum Order Total]]></label>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="120" translate="label" type="text">
+					<label><![CDATA[Sort Order]]></label>
+					<frontend_class>validate-number</frontend_class>
+				</field>
+				<field id="settlement" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="130" translate="label" type="select">
+					<label><![CDATA[Invoice Settlement]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Settlement</source_model>
+					<comment><![CDATA[Choose settlement after order in case you want an invoice to be created with your oder. The state of the invoice will set according to your capture status.]]></comment>
+				</field>
+				<field id="invoice_email" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="140" translate="label" type="select">
+					<label><![CDATA[Send Invoice Email]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Send the invoice email automatically after invoice creation.]]></comment>
+					<depends>
+						<field id="settlement">direct</field>
+					</depends>
+				</field>
+			<field id="address_check_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="150" translate="label comment" type="multiselect">
+					<label><![CDATA[Address Check Result]]></label>
+					<comment><![CDATA[During the checkout the address and post code are
+									checked against the linked data with the credit
+									card.
+									The selected
+									outcomes are threaded as uncertain transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\AddressCheckBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="cv2_check_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="160" translate="label comment" type="multiselect">
+					<label><![CDATA[CV2 Check Result]]></label>
+					<comment><![CDATA[During the checkout the CV2 code is checked. The
+									selected outcomes are treated as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Cv2CheckBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="three_d_secure_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="170" translate="label comment" type="multiselect">
+					<label><![CDATA[3D Secure Check]]></label>
+					<comment><![CDATA[During the authorization of the payment a 3D secure
+									check may be done. The selected outcomes are
+									treated
+									as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\ThreeDSecureBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="fraud_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="180" translate="label comment" type="multiselect">
+					<label><![CDATA[Fraud Check Result]]></label>
+					<comment><![CDATA[During the authorization of the payment a fraud check
+									may be done by ReD. The selected outcomes are
+									treated as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\FraudBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="capturing" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="190" translate="label comment" type="select">
+					<label><![CDATA[Capturing]]></label>
+					<comment><![CDATA[Should the amount be captured automatically after the
+									order (direct) or should the amount only be reserved (deferred)?
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Capturing</source_model>
+				</field>
+				<field id="authorizationMethod" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="200" translate="label comment" type="select">
+					<label><![CDATA[Authorization Method]]></label>
+					<comment><![CDATA[Select the authorization method to use for processing this payment method.]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Debitmastercard\Authorizationmethod</source_model>
+				</field>
+				<field id="alias_manager" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="210" translate="label comment" type="select">
+					<label><![CDATA[Alias Manager]]></label>
+					<comment><![CDATA[The alias manager allows the customer to select from a credit card previously stored. The sensitive data is stored by Sage Pay.]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\AliasManager</source_model>
+				</field>
+			</group><group id="sagepaycw_maestro" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="60" translate="label">
+				<label>Sage Pay Maestro</label>
+				<field id="model"/>
+				<field id="active" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="0" translate="label" type="select">
+					<label><![CDATA[Enabled]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label><![CDATA[Title]]></label>
+				</field>
+				<field id="description" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="textarea">
+					<label><![CDATA[Description]]></label>
+				</field>
+				<field id="show_image" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
+					<label><![CDATA[Show Image]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="show_payment_id" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
+					<label><![CDATA[Show Payment Id]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Show the payment id in the order information]]></comment> 
+				</field>
+				<field id="currency" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="50" translate="label" type="multiselect">
+					<label><![CDATA[Allowed Currencies]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Maestro\Currency</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="base_currency" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="60" translate="label" type="select">
+					<label><![CDATA[Use Base Currency]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Send amounts to Sage Pay in store's base currency.]]></comment>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label><![CDATA[Payment from Applicable Countries]]></label>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="80" translate="label" type="multiselect">
+					<label><![CDATA[Payment from Specific Countries]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Maestro\Country</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="min_order_total" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label><![CDATA[Minimum Order Total]]></label>
+				</field>
+				<field id="max_order_total" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="100" translate="label" type="text">
+					<label><![CDATA[Maximum Order Total]]></label>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="120" translate="label" type="text">
+					<label><![CDATA[Sort Order]]></label>
+					<frontend_class>validate-number</frontend_class>
+				</field>
+				<field id="settlement" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="130" translate="label" type="select">
+					<label><![CDATA[Invoice Settlement]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Settlement</source_model>
+					<comment><![CDATA[Choose settlement after order in case you want an invoice to be created with your oder. The state of the invoice will set according to your capture status.]]></comment>
+				</field>
+				<field id="invoice_email" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="140" translate="label" type="select">
+					<label><![CDATA[Send Invoice Email]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Send the invoice email automatically after invoice creation.]]></comment>
+					<depends>
+						<field id="settlement">direct</field>
+					</depends>
+				</field>
+			<field id="address_check_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="150" translate="label comment" type="multiselect">
+					<label><![CDATA[Address Check Result]]></label>
+					<comment><![CDATA[During the checkout the address and post code are
+									checked against the linked data with the credit
+									card.
+									The selected
+									outcomes are threaded as uncertain transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\AddressCheckBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="cv2_check_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="160" translate="label comment" type="multiselect">
+					<label><![CDATA[CV2 Check Result]]></label>
+					<comment><![CDATA[During the checkout the CV2 code is checked. The
+									selected outcomes are treated as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Cv2CheckBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="three_d_secure_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="170" translate="label comment" type="multiselect">
+					<label><![CDATA[3D Secure Check]]></label>
+					<comment><![CDATA[During the authorization of the payment a 3D secure
+									check may be done. The selected outcomes are
+									treated
+									as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\ThreeDSecureBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="fraud_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="180" translate="label comment" type="multiselect">
+					<label><![CDATA[Fraud Check Result]]></label>
+					<comment><![CDATA[During the authorization of the payment a fraud check
+									may be done by ReD. The selected outcomes are
+									treated as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\FraudBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="capturing" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="190" translate="label comment" type="select">
+					<label><![CDATA[Capturing]]></label>
+					<comment><![CDATA[Should the amount be captured automatically after the
+									order (direct) or should the amount only be reserved (deferred)?
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Capturing</source_model>
+				</field>
+				<field id="authorizationMethod" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="200" translate="label comment" type="select">
+					<label><![CDATA[Authorization Method]]></label>
+					<comment><![CDATA[Select the authorization method to use for processing this payment method.]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Maestro\Authorizationmethod</source_model>
+				</field>
+				<field id="alias_manager" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="210" translate="label comment" type="select">
+					<label><![CDATA[Alias Manager]]></label>
+					<comment><![CDATA[The alias manager allows the customer to select from a credit card previously stored. The sensitive data is stored by Sage Pay.]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\AliasManager</source_model>
+				</field>
+			</group><group id="sagepaycw_visaelectron" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70" translate="label">
+				<label>Sage Pay Visa Electron</label>
+				<field id="model"/>
+				<field id="active" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="0" translate="label" type="select">
+					<label><![CDATA[Enabled]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label><![CDATA[Title]]></label>
+				</field>
+				<field id="description" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="textarea">
+					<label><![CDATA[Description]]></label>
+				</field>
+				<field id="show_image" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
+					<label><![CDATA[Show Image]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="show_payment_id" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
+					<label><![CDATA[Show Payment Id]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Show the payment id in the order information]]></comment> 
+				</field>
+				<field id="currency" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="50" translate="label" type="multiselect">
+					<label><![CDATA[Allowed Currencies]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Visaelectron\Currency</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="base_currency" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="60" translate="label" type="select">
+					<label><![CDATA[Use Base Currency]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Send amounts to Sage Pay in store's base currency.]]></comment>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label><![CDATA[Payment from Applicable Countries]]></label>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="80" translate="label" type="multiselect">
+					<label><![CDATA[Payment from Specific Countries]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Visaelectron\Country</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="min_order_total" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label><![CDATA[Minimum Order Total]]></label>
+				</field>
+				<field id="max_order_total" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="100" translate="label" type="text">
+					<label><![CDATA[Maximum Order Total]]></label>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="120" translate="label" type="text">
+					<label><![CDATA[Sort Order]]></label>
+					<frontend_class>validate-number</frontend_class>
+				</field>
+				<field id="settlement" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="130" translate="label" type="select">
+					<label><![CDATA[Invoice Settlement]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Settlement</source_model>
+					<comment><![CDATA[Choose settlement after order in case you want an invoice to be created with your oder. The state of the invoice will set according to your capture status.]]></comment>
+				</field>
+				<field id="invoice_email" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="140" translate="label" type="select">
+					<label><![CDATA[Send Invoice Email]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Send the invoice email automatically after invoice creation.]]></comment>
+					<depends>
+						<field id="settlement">direct</field>
+					</depends>
+				</field>
+			<field id="address_check_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="150" translate="label comment" type="multiselect">
+					<label><![CDATA[Address Check Result]]></label>
+					<comment><![CDATA[During the checkout the address and post code are
+									checked against the linked data with the credit
+									card.
+									The selected
+									outcomes are threaded as uncertain transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\AddressCheckBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="cv2_check_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="160" translate="label comment" type="multiselect">
+					<label><![CDATA[CV2 Check Result]]></label>
+					<comment><![CDATA[During the checkout the CV2 code is checked. The
+									selected outcomes are treated as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Cv2CheckBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="three_d_secure_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="170" translate="label comment" type="multiselect">
+					<label><![CDATA[3D Secure Check]]></label>
+					<comment><![CDATA[During the authorization of the payment a 3D secure
+									check may be done. The selected outcomes are
+									treated
+									as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\ThreeDSecureBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="fraud_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="180" translate="label comment" type="multiselect">
+					<label><![CDATA[Fraud Check Result]]></label>
+					<comment><![CDATA[During the authorization of the payment a fraud check
+									may be done by ReD. The selected outcomes are
+									treated as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\FraudBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="capturing" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="190" translate="label comment" type="select">
+					<label><![CDATA[Capturing]]></label>
+					<comment><![CDATA[Should the amount be captured automatically after the
+									order (direct) or should the amount only be reserved (deferred)?
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Capturing</source_model>
+				</field>
+				<field id="authorizationMethod" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="200" translate="label comment" type="select">
+					<label><![CDATA[Authorization Method]]></label>
+					<comment><![CDATA[Select the authorization method to use for processing this payment method.]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Visaelectron\Authorizationmethod</source_model>
+				</field>
+				<field id="alias_manager" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="210" translate="label comment" type="select">
+					<label><![CDATA[Alias Manager]]></label>
+					<comment><![CDATA[The alias manager allows the customer to select from a credit card previously stored. The sensitive data is stored by Sage Pay.]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\AliasManager</source_model>
+				</field>
+			</group><group id="sagepaycw_americanexpress" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="80" translate="label">
+				<label>Sage Pay American Express</label>
+				<field id="model"/>
+				<field id="active" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="0" translate="label" type="select">
+					<label><![CDATA[Enabled]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label><![CDATA[Title]]></label>
+				</field>
+				<field id="description" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="textarea">
+					<label><![CDATA[Description]]></label>
+				</field>
+				<field id="show_image" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
+					<label><![CDATA[Show Image]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="show_payment_id" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
+					<label><![CDATA[Show Payment Id]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Show the payment id in the order information]]></comment> 
+				</field>
+				<field id="currency" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="50" translate="label" type="multiselect">
+					<label><![CDATA[Allowed Currencies]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Americanexpress\Currency</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="base_currency" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="60" translate="label" type="select">
+					<label><![CDATA[Use Base Currency]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Send amounts to Sage Pay in store's base currency.]]></comment>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label><![CDATA[Payment from Applicable Countries]]></label>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="80" translate="label" type="multiselect">
+					<label><![CDATA[Payment from Specific Countries]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Americanexpress\Country</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="min_order_total" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label><![CDATA[Minimum Order Total]]></label>
+				</field>
+				<field id="max_order_total" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="100" translate="label" type="text">
+					<label><![CDATA[Maximum Order Total]]></label>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="120" translate="label" type="text">
+					<label><![CDATA[Sort Order]]></label>
+					<frontend_class>validate-number</frontend_class>
+				</field>
+				<field id="settlement" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="130" translate="label" type="select">
+					<label><![CDATA[Invoice Settlement]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Settlement</source_model>
+					<comment><![CDATA[Choose settlement after order in case you want an invoice to be created with your oder. The state of the invoice will set according to your capture status.]]></comment>
+				</field>
+				<field id="invoice_email" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="140" translate="label" type="select">
+					<label><![CDATA[Send Invoice Email]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Send the invoice email automatically after invoice creation.]]></comment>
+					<depends>
+						<field id="settlement">direct</field>
+					</depends>
+				</field>
+			<field id="address_check_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="150" translate="label comment" type="multiselect">
+					<label><![CDATA[Address Check Result]]></label>
+					<comment><![CDATA[During the checkout the address and post code are
+									checked against the linked data with the credit
+									card.
+									The selected
+									outcomes are threaded as uncertain transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\AddressCheckBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="cv2_check_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="160" translate="label comment" type="multiselect">
+					<label><![CDATA[CV2 Check Result]]></label>
+					<comment><![CDATA[During the checkout the CV2 code is checked. The
+									selected outcomes are treated as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Cv2CheckBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="three_d_secure_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="170" translate="label comment" type="multiselect">
+					<label><![CDATA[3D Secure Check]]></label>
+					<comment><![CDATA[During the authorization of the payment a 3D secure
+									check may be done. The selected outcomes are
+									treated
+									as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\ThreeDSecureBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="fraud_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="180" translate="label comment" type="multiselect">
+					<label><![CDATA[Fraud Check Result]]></label>
+					<comment><![CDATA[During the authorization of the payment a fraud check
+									may be done by ReD. The selected outcomes are
+									treated as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\FraudBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="capturing" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="190" translate="label comment" type="select">
+					<label><![CDATA[Capturing]]></label>
+					<comment><![CDATA[Should the amount be captured automatically after the
+									order (direct) or should the amount only be reserved (deferred)?
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Capturing</source_model>
+				</field>
+				<field id="authorizationMethod" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="200" translate="label comment" type="select">
+					<label><![CDATA[Authorization Method]]></label>
+					<comment><![CDATA[Select the authorization method to use for processing this payment method.]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Americanexpress\Authorizationmethod</source_model>
+				</field>
+				<field id="alias_manager" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="210" translate="label comment" type="select">
+					<label><![CDATA[Alias Manager]]></label>
+					<comment><![CDATA[The alias manager allows the customer to select from a credit card previously stored. The sensitive data is stored by Sage Pay.]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\AliasManager</source_model>
+				</field>
+			</group><group id="sagepaycw_diners" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="90" translate="label">
+				<label>Sage Pay Diners Club</label>
+				<field id="model"/>
+				<field id="active" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="0" translate="label" type="select">
+					<label><![CDATA[Enabled]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label><![CDATA[Title]]></label>
+				</field>
+				<field id="description" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="textarea">
+					<label><![CDATA[Description]]></label>
+				</field>
+				<field id="show_image" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
+					<label><![CDATA[Show Image]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="show_payment_id" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
+					<label><![CDATA[Show Payment Id]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Show the payment id in the order information]]></comment> 
+				</field>
+				<field id="currency" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="50" translate="label" type="multiselect">
+					<label><![CDATA[Allowed Currencies]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Diners\Currency</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="base_currency" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="60" translate="label" type="select">
+					<label><![CDATA[Use Base Currency]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Send amounts to Sage Pay in store's base currency.]]></comment>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label><![CDATA[Payment from Applicable Countries]]></label>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="80" translate="label" type="multiselect">
+					<label><![CDATA[Payment from Specific Countries]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Diners\Country</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="min_order_total" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label><![CDATA[Minimum Order Total]]></label>
+				</field>
+				<field id="max_order_total" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="100" translate="label" type="text">
+					<label><![CDATA[Maximum Order Total]]></label>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="120" translate="label" type="text">
+					<label><![CDATA[Sort Order]]></label>
+					<frontend_class>validate-number</frontend_class>
+				</field>
+				<field id="settlement" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="130" translate="label" type="select">
+					<label><![CDATA[Invoice Settlement]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Settlement</source_model>
+					<comment><![CDATA[Choose settlement after order in case you want an invoice to be created with your oder. The state of the invoice will set according to your capture status.]]></comment>
+				</field>
+				<field id="invoice_email" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="140" translate="label" type="select">
+					<label><![CDATA[Send Invoice Email]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Send the invoice email automatically after invoice creation.]]></comment>
+					<depends>
+						<field id="settlement">direct</field>
+					</depends>
+				</field>
+			<field id="address_check_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="150" translate="label comment" type="multiselect">
+					<label><![CDATA[Address Check Result]]></label>
+					<comment><![CDATA[During the checkout the address and post code are
+									checked against the linked data with the credit
+									card.
+									The selected
+									outcomes are threaded as uncertain transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\AddressCheckBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="cv2_check_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="160" translate="label comment" type="multiselect">
+					<label><![CDATA[CV2 Check Result]]></label>
+					<comment><![CDATA[During the checkout the CV2 code is checked. The
+									selected outcomes are treated as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Cv2CheckBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="three_d_secure_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="170" translate="label comment" type="multiselect">
+					<label><![CDATA[3D Secure Check]]></label>
+					<comment><![CDATA[During the authorization of the payment a 3D secure
+									check may be done. The selected outcomes are
+									treated
+									as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\ThreeDSecureBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="fraud_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="180" translate="label comment" type="multiselect">
+					<label><![CDATA[Fraud Check Result]]></label>
+					<comment><![CDATA[During the authorization of the payment a fraud check
+									may be done by ReD. The selected outcomes are
+									treated as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\FraudBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="capturing" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="190" translate="label comment" type="select">
+					<label><![CDATA[Capturing]]></label>
+					<comment><![CDATA[Should the amount be captured automatically after the
+									order (direct) or should the amount only be reserved (deferred)?
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Capturing</source_model>
+				</field>
+				<field id="authorizationMethod" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="200" translate="label comment" type="select">
+					<label><![CDATA[Authorization Method]]></label>
+					<comment><![CDATA[Select the authorization method to use for processing this payment method.]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Diners\Authorizationmethod</source_model>
+				</field>
+				<field id="alias_manager" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="210" translate="label comment" type="select">
+					<label><![CDATA[Alias Manager]]></label>
+					<comment><![CDATA[The alias manager allows the customer to select from a credit card previously stored. The sensitive data is stored by Sage Pay.]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\AliasManager</source_model>
+				</field>
+			</group><group id="sagepaycw_jcb" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100" translate="label">
+				<label>Sage Pay JCB</label>
+				<field id="model"/>
+				<field id="active" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="0" translate="label" type="select">
+					<label><![CDATA[Enabled]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label><![CDATA[Title]]></label>
+				</field>
+				<field id="description" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="textarea">
+					<label><![CDATA[Description]]></label>
+				</field>
+				<field id="show_image" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
+					<label><![CDATA[Show Image]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="show_payment_id" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
+					<label><![CDATA[Show Payment Id]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Show the payment id in the order information]]></comment> 
+				</field>
+				<field id="currency" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="50" translate="label" type="multiselect">
+					<label><![CDATA[Allowed Currencies]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Jcb\Currency</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="base_currency" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="60" translate="label" type="select">
+					<label><![CDATA[Use Base Currency]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Send amounts to Sage Pay in store's base currency.]]></comment>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label><![CDATA[Payment from Applicable Countries]]></label>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="80" translate="label" type="multiselect">
+					<label><![CDATA[Payment from Specific Countries]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Jcb\Country</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="min_order_total" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label><![CDATA[Minimum Order Total]]></label>
+				</field>
+				<field id="max_order_total" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="100" translate="label" type="text">
+					<label><![CDATA[Maximum Order Total]]></label>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="120" translate="label" type="text">
+					<label><![CDATA[Sort Order]]></label>
+					<frontend_class>validate-number</frontend_class>
+				</field>
+				<field id="settlement" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="130" translate="label" type="select">
+					<label><![CDATA[Invoice Settlement]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Settlement</source_model>
+					<comment><![CDATA[Choose settlement after order in case you want an invoice to be created with your oder. The state of the invoice will set according to your capture status.]]></comment>
+				</field>
+				<field id="invoice_email" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="140" translate="label" type="select">
+					<label><![CDATA[Send Invoice Email]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Send the invoice email automatically after invoice creation.]]></comment>
+					<depends>
+						<field id="settlement">direct</field>
+					</depends>
+				</field>
+			<field id="address_check_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="150" translate="label comment" type="multiselect">
+					<label><![CDATA[Address Check Result]]></label>
+					<comment><![CDATA[During the checkout the address and post code are
+									checked against the linked data with the credit
+									card.
+									The selected
+									outcomes are threaded as uncertain transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\AddressCheckBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="cv2_check_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="160" translate="label comment" type="multiselect">
+					<label><![CDATA[CV2 Check Result]]></label>
+					<comment><![CDATA[During the checkout the CV2 code is checked. The
+									selected outcomes are treated as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Cv2CheckBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="three_d_secure_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="170" translate="label comment" type="multiselect">
+					<label><![CDATA[3D Secure Check]]></label>
+					<comment><![CDATA[During the authorization of the payment a 3D secure
+									check may be done. The selected outcomes are
+									treated
+									as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\ThreeDSecureBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="fraud_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="180" translate="label comment" type="multiselect">
+					<label><![CDATA[Fraud Check Result]]></label>
+					<comment><![CDATA[During the authorization of the payment a fraud check
+									may be done by ReD. The selected outcomes are
+									treated as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\FraudBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="capturing" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="190" translate="label comment" type="select">
+					<label><![CDATA[Capturing]]></label>
+					<comment><![CDATA[Should the amount be captured automatically after the
+									order (direct) or should the amount only be reserved (deferred)?
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Capturing</source_model>
+				</field>
+				<field id="authorizationMethod" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="200" translate="label comment" type="select">
+					<label><![CDATA[Authorization Method]]></label>
+					<comment><![CDATA[Select the authorization method to use for processing this payment method.]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Jcb\Authorizationmethod</source_model>
+				</field>
+				<field id="alias_manager" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="210" translate="label comment" type="select">
+					<label><![CDATA[Alias Manager]]></label>
+					<comment><![CDATA[The alias manager allows the customer to select from a credit card previously stored. The sensitive data is stored by Sage Pay.]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\AliasManager</source_model>
+				</field>
+			</group><group id="sagepaycw_lasercard" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="110" translate="label">
+				<label>Sage Pay Laser Card</label>
+				<field id="model"/>
+				<field id="active" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="0" translate="label" type="select">
+					<label><![CDATA[Enabled]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label><![CDATA[Title]]></label>
+				</field>
+				<field id="description" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="textarea">
+					<label><![CDATA[Description]]></label>
+				</field>
+				<field id="show_image" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
+					<label><![CDATA[Show Image]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="show_payment_id" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
+					<label><![CDATA[Show Payment Id]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Show the payment id in the order information]]></comment> 
+				</field>
+				<field id="currency" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="50" translate="label" type="multiselect">
+					<label><![CDATA[Allowed Currencies]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Lasercard\Currency</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="base_currency" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="60" translate="label" type="select">
+					<label><![CDATA[Use Base Currency]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Send amounts to Sage Pay in store's base currency.]]></comment>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label><![CDATA[Payment from Applicable Countries]]></label>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="80" translate="label" type="multiselect">
+					<label><![CDATA[Payment from Specific Countries]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Lasercard\Country</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="min_order_total" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label><![CDATA[Minimum Order Total]]></label>
+				</field>
+				<field id="max_order_total" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="100" translate="label" type="text">
+					<label><![CDATA[Maximum Order Total]]></label>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="120" translate="label" type="text">
+					<label><![CDATA[Sort Order]]></label>
+					<frontend_class>validate-number</frontend_class>
+				</field>
+				<field id="settlement" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="130" translate="label" type="select">
+					<label><![CDATA[Invoice Settlement]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Settlement</source_model>
+					<comment><![CDATA[Choose settlement after order in case you want an invoice to be created with your oder. The state of the invoice will set according to your capture status.]]></comment>
+				</field>
+				<field id="invoice_email" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="140" translate="label" type="select">
+					<label><![CDATA[Send Invoice Email]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Send the invoice email automatically after invoice creation.]]></comment>
+					<depends>
+						<field id="settlement">direct</field>
+					</depends>
+				</field>
+			<field id="address_check_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="150" translate="label comment" type="multiselect">
+					<label><![CDATA[Address Check Result]]></label>
+					<comment><![CDATA[During the checkout the address and post code are
+									checked against the linked data with the credit
+									card.
+									The selected
+									outcomes are threaded as uncertain transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\AddressCheckBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="cv2_check_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="160" translate="label comment" type="multiselect">
+					<label><![CDATA[CV2 Check Result]]></label>
+					<comment><![CDATA[During the checkout the CV2 code is checked. The
+									selected outcomes are treated as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Cv2CheckBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="three_d_secure_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="170" translate="label comment" type="multiselect">
+					<label><![CDATA[3D Secure Check]]></label>
+					<comment><![CDATA[During the authorization of the payment a 3D secure
+									check may be done. The selected outcomes are
+									treated
+									as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\ThreeDSecureBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="fraud_behavior" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="180" translate="label comment" type="multiselect">
+					<label><![CDATA[Fraud Check Result]]></label>
+					<comment><![CDATA[During the authorization of the payment a fraud check
+									may be done by ReD. The selected outcomes are
+									treated as uncertain
+									transactions.
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\FraudBehavior</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="capturing" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="190" translate="label comment" type="select">
+					<label><![CDATA[Capturing]]></label>
+					<comment><![CDATA[Should the amount be captured automatically after the
+									order (direct) or should the amount only be reserved (deferred)?
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Capturing</source_model>
+				</field>
+				<field id="authorizationMethod" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="200" translate="label comment" type="select">
+					<label><![CDATA[Authorization Method]]></label>
+					<comment><![CDATA[Select the authorization method to use for processing this payment method.]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Lasercard\Authorizationmethod</source_model>
+				</field>
+				<field id="alias_manager" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="210" translate="label comment" type="select">
+					<label><![CDATA[Alias Manager]]></label>
+					<comment><![CDATA[The alias manager allows the customer to select from a credit card previously stored. The sensitive data is stored by Sage Pay.]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\AliasManager</source_model>
+				</field>
+			</group><group id="sagepaycw_paypal" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="120" translate="label">
+				<label>Sage Pay PayPal</label>
+				<field id="model"/>
+				<field id="active" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="0" translate="label" type="select">
+					<label><![CDATA[Enabled]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="title" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="text">
+					<label><![CDATA[Title]]></label>
+				</field>
+				<field id="description" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label" type="textarea">
+					<label><![CDATA[Description]]></label>
+				</field>
+				<field id="show_image" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30" translate="label" type="select">
+					<label><![CDATA[Show Image]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="show_payment_id" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40" translate="label" type="select">
+					<label><![CDATA[Show Payment Id]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Show the payment id in the order information]]></comment> 
+				</field>
+				<field id="currency" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="50" translate="label" type="multiselect">
+					<label><![CDATA[Allowed Currencies]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Paypal\Currency</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="base_currency" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="60" translate="label" type="select">
+					<label><![CDATA[Use Base Currency]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Send amounts to Sage Pay in store's base currency.]]></comment>
+				</field>
+				<field id="allowspecific" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="70" translate="label" type="allowspecific">
+					<label><![CDATA[Payment from Applicable Countries]]></label>
+					<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+				</field>
+				<field id="specificcountry" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="80" translate="label" type="multiselect">
+					<label><![CDATA[Payment from Specific Countries]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Paypal\Country</source_model>
+					<can_be_empty>1</can_be_empty>
+				</field>
+				<field id="min_order_total" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="90" translate="label" type="text">
+					<label><![CDATA[Minimum Order Total]]></label>
+				</field>
+				<field id="max_order_total" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="100" translate="label" type="text">
+					<label><![CDATA[Maximum Order Total]]></label>
+				</field>
+				<field id="sort_order" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="120" translate="label" type="text">
+					<label><![CDATA[Sort Order]]></label>
+					<frontend_class>validate-number</frontend_class>
+				</field>
+				<field id="settlement" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="130" translate="label" type="select">
+					<label><![CDATA[Invoice Settlement]]></label>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Settlement</source_model>
+					<comment><![CDATA[Choose settlement after order in case you want an invoice to be created with your oder. The state of the invoice will set according to your capture status.]]></comment>
+				</field>
+				<field id="invoice_email" showInDefault="1" showInStore="0" showInWebsite="1" sortOrder="140" translate="label" type="select">
+					<label><![CDATA[Send Invoice Email]]></label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment><![CDATA[Send the invoice email automatically after invoice creation.]]></comment>
+					<depends>
+						<field id="settlement">direct</field>
+					</depends>
+				</field>
+			<field id="seller_protection" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="150" translate="label comment" type="select">
+					<label><![CDATA[PayPal Seller Protection]]></label>
+					<comment><![CDATA[PayPal may provide seller protection. In case PayPal
+									grants no seller protection (address is not
+									confirmed and the payer
+									could not be verified), what should happend with the transaction?
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\SellerProtection</source_model>
+				</field>
+				<field id="capturing" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="160" translate="label comment" type="select">
+					<label><![CDATA[Capturing]]></label>
+					<comment><![CDATA[Should the amount be captured automatically after the
+									order (direct) or should the amount only be reserved (deferred)?
+								]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Capturing</source_model>
+				</field>
+				<field id="authorizationMethod" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="170" translate="label comment" type="select">
+					<label><![CDATA[Authorization Method]]></label>
+					<comment><![CDATA[Select the authorization method to use for processing this payment method.]]></comment>
+					<source_model>Customweb\SagePayCw\Model\Config\Source\Paypal\Authorizationmethod</source_model>
+				</field>
+			</group>
+		</section>
+	</system>
+</config>

@@ -1,0 +1,43 @@
+@media (min-width: 769px) {
+    .firecheckout {
+        &._has-modal {
+            overflow: auto;
+        }
+        .modal-popup {
+            .modal-inner-wrap {
+                box-shadow: 0 0 40px rgba(0,0,0,0.3);
+                transform-origin: 50% 50% 0;
+                opacity: 0;
+                transition: all 0.2s;
+
+                & when (@firecheckout-modal__popup-effect = 'zoom') {
+                    transform: scale(0.8);
+                }
+                & when (@firecheckout-modal__popup-effect = 'slide-down') {
+                    transform: translateY(-100px);
+                }
+            }
+            + .modals-overlay {
+                background-color: rgba(0,0,0,0.2);
+                transition: all 0.2s;
+                opacity: 0;
+            }
+
+            &._show {
+                .modal-inner-wrap {
+                    opacity: 1;
+                    & when (@firecheckout-modal__popup-effect = 'zoom') {
+                        transform: scale(1);
+                    }
+                    & when (@firecheckout-modal__popup-effect = 'slide-down') {
+                        transform: translateY(0);
+                    }
+                }
+
+                + .modals-overlay {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+}

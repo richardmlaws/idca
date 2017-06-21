@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /
+Sitemap: http://idcardsolutions.net/public_html/idcardsolutions.net/sitemap.xml

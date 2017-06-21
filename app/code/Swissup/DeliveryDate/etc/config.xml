@@ -1,0 +1,17 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <delivery_date>
+            <main>
+                <!-- <display_area>0</display_area> -->
+                <field_label>Delivery Date</field_label>
+                <filter_per_shipping_method>1</filter_per_shipping_method>
+                <use_calendar>1</use_calendar>
+                <processing_end_time>23,59,59</processing_end_time>
+                <min_delay>0</min_delay>
+                <max_delay>365</max_delay>
+                <!-- <disable_after_same_day_time><![CDATA[13:00]]></disable_after_same_day_time> -->
+                <!-- <date_format><![CDATA[d-m-Y]]></date_format> -->
+            </main>
+        </delivery_date>
+    </default>
+</config>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<preference for="Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\AdvancedPricing"
+            type="M3\Tierprice\Ui\DataProvider\Product\Form\Modifier\AdvancedPricing" />
+	<preference for="Magento\Catalog\Model\Product\Attribute\Backend\Tierprice" type="M3\Tierprice\Model\Magento\Catalog\Product\Attribute\Backend\Tierprice" />
+		
+    <preference for="Magento\Catalog\Model\ResourceModel\Product\Attribute\Backend\Tierprice" type="M3\Tierprice\Model\Magento\Catalog\ResourceModel\Product\Attribute\Backend\Tierprice" />
+	<preference for="Magento\Catalog\Model\Product\Type\Price" type="M3\Tierprice\Model\Magento\Catalog\Product\Type\Price" />
+	
+</config>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+
+    <update handle="Zgento_lightbox"/>
+    <head>
+          <css src="Zgento_LightBox::css/lightbox.css"/>
+          <script src="Zgento_LightBox::js/lightbox.js"/>
+    </head>
+
+    <body>
+        <referenceBlock name="product.info.media.image" >
+          <action method="setTemplate" ifconfig="zgento_lightbox/general/enable">
+          <argument name="template" xsi:type="string">Zgento_LightBox::product/view/gallery.phtml</argument>
+          </action>
+        </referenceBlock>
+
+    </body>
+</page>

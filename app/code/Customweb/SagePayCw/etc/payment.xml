@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<payment xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Payment:etc/payment.xsd">
+    <groups>
+        <group id="sagepaycw">
+            <label>Sage Pay</label>
+        </group>
+    </groups>
+    <methods>
+        <method name="sagepaycw_sagepay">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="sagepaycw_creditcard">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="sagepaycw_visa">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="sagepaycw_mastercard">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="sagepaycw_debitmastercard">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="sagepaycw_maestro">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="sagepaycw_visaelectron">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="sagepaycw_americanexpress">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="sagepaycw_diners">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="sagepaycw_jcb">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="sagepaycw_lasercard">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method><method name="sagepaycw_paypal">
+			<allow_multiple_address>1</allow_multiple_address>
+		</method>
+    </methods>
+</payment>

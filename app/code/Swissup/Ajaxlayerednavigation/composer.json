@@ -1,0 +1,23 @@
+{
+    "name": "swissup/ajaxlayerednavigation",
+    "description": "Advanced catalog filters with ajax and seo support",
+    "keywords": [
+        "ajaxlayerednavigation",
+        "layered navigation",
+        "filters",
+        "seo layered navigation"
+    ],
+    "type": "magento2-module",
+    "version": "1.0.1",
+    "license": ["OSL-3.0"],
+    "require": {
+        "php": "~5.5.0|~5.6.0|~7.0.0",
+        "swissup/core": "*"
+    },
+    "autoload": {
+        "files": [ "registration.php" ],
+        "psr-4": {
+            "Swissup\\Ajaxlayerednavigation\\": ""
+        }
+    }
+}

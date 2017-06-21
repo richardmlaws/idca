@@ -1,0 +1,20 @@
+<!--
+/**
+ * Modified version of Magento/Checkout/view/frontend/web/template/shipping-information/address-renderer/default.html
+ *
+ * Added ko if: statements to remove possible blank lines.
+ */
+-->
+<!-- ko if: (visible()) -->
+    <!-- ko text: address().prefix --><!-- /ko --> <!-- ko text: address().firstname --><!-- /ko -->
+    <!-- ko text: address().lastname --><!-- /ko --> <!-- ko text: address().suffix --><!-- /ko --><br/>
+    <!-- ko text: address().street --><!-- /ko --><!-- ko if: address().street && address().street[0] --><br/><!-- /ko -->
+    <!-- ko text: address().city --><!-- /ko --><!-- ko if: address().city -->, <!-- /ko --><!-- ko text: address().region --><!-- /ko --> <!-- ko text: address().postcode --><!-- /ko -->
+
+    <!-- ko if: address().city || address().region || address().postcode -->
+    <br/>
+    <!-- /ko -->
+
+    <!-- ko text: getCountryName(address().countryId) --><!-- /ko --><br/>
+    <!-- ko text: address().telephone --><!-- /ko --><!-- ko if: address().telephone --><br/><!-- /ko -->
+<!-- /ko -->

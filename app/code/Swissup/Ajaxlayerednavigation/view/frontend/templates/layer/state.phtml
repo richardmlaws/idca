@@ -1,0 +1,38 @@
+<?php $_filters = $block->getAppliedFilters(); ?>
+<?php if (!empty($_filters)): ?>
+<?php
+    $_state = [];
+    foreach ($_filters as $_filter) {
+        $filterName = $_filter->getName();
+        if (is_object($filterName)) {
+            $filterName = $filterName->getText();
+        }
+        $_state[$filterName][] = [
+            "label" => $_filter->getLabel(),
+            "url" => $_filter->getRemoveUrl()
+        ];
+    }
+?>
+<div class="filter-active">
+    <?php foreach ($_state as $_filterName => $_items): ?>
+        <span class="filter-label"><?php echo $block->escapeHtml(__($_filterName)); ?></span>
+        <?php foreach ($_items as $_filter): ?>
+            <?php
+                $label = $block->stripTags($_filter['label']);
+                $removeUrl = $_filter['url'];
+             ?>
+            <div class="state-item">
+                <span class="state-item-name" title="<?php echo $label ?>"><?php echo $label ?></span>
+                <span class="state-item-remove"><span class="state-item-icon-cancel"></span></span>
+                <a class="state-item-remove-url" href="<?php echo $removeUrl ?>"></a>
+            </div>
+        <?php endforeach; ?>
+    <?php endforeach; ?>
+    <?php $configHelper = $this->helper('Swissup\Ajaxlayerednavigation\Helper\Config'); ?>
+    <a
+        class="filter-active-item-clear-all"
+        title="<?php /* @escapeNotVerified */ echo __('Clear All') ?>"
+        href="<?php /* @escapeNotVerified */ echo $configHelper->getClearAllUrl() ?>">
+    <span><?php /* @escapeNotVerified */ echo __('Clear All') ?></span></a>
+</div>
+<?php endif; ?>

@@ -1,0 +1,693 @@
+/**** Styling overrides - redesigned product page to accommodate vPress ****/
+
+#product .basket .vpress-init {
+  background:#2C99DA;
+  color:#fff;
+  -webkit-border-radius:3px;
+  -moz-border-radius:3px;
+  border-radius:3px;
+  -webkit-background-clip:padding-box;
+  -moz-background-clip:padding-box;
+  background-clip:padding-box;
+  position:relative;
+  -webkit-box-sizing:border-box;
+  -moz-box-sizing:border-box;
+  -ms-box-sizing:border-box;
+  box-sizing:border-box;
+  padding:7px 20px;
+  width:auto;
+  min-width:.75em;
+  overflow:hidden;
+  font-size:14px;
+  line-height:14px;
+  text-align:center;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-weight:normal;
+  text-decoration:none;
+  vertical-align:middle;
+  cursor:pointer;
+  background-repeat:no-repeat;
+  padding:7px 12px;
+  border-color:#919191;
+  min-height:0;
+  font-weight:bold;
+  text-shadow:none;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+#product .related {
+    padding-top: 15px;
+    clear: both;
+}
+
+#product .small fieldset {
+    float: none;
+}
+
+.vpress-product-proof-row .product-proof-product-title .vpress-row-remove,
+.vpress-product-proof-row .product-proof-product-title .vpress-row-toggle {
+    padding-left: 20px;
+    font-size: 15px;
+    cursor: pointer;
+    vertical-align: middle;
+    color: #999;
+	
+}
+#vpress-loader {
+    display: none;
+    padding: 10px;
+    vertical-align: middle;
+    background: #fff;
+    margin: 10px 0;
+}
+#vpress-loader img {
+    vertical-align: middle;
+}
+#vpress-loader .vpress-loading-text {
+    padding-left: 20px;
+}
+#vpress-product-proof-row-container {
+    width: 78%;
+  	position: relative;
+  	
+}
+#vpress-product-proof-row-container .vpress-product-proof-row {
+    background: #fff;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+	position: relative;
+}
+#vpress-product-proof-row-container .vpress-product-proof-row .product-proof-product-title {
+    font-size: 17px;
+    padding: 5px;
+    background: #4D4D4F;
+  	color:#fff;
+}
+#vpress-product-proof-row-container .vpress-product-proof-row h5 {
+    margin: 0;
+    font-style: italic;
+    text-align: center
+    font-size: 14px;
+  	/*position: absolute;
+  	top: 50px;
+  	left: 210px;*/
+  	color:#333;
+}
+#vpress-product-proof-row-container .vpress-product-proof-row h5 .vpress-pdf-page-preview {
+    *display: inline;
+    display: inline-block;
+    margin-left: 20px;
+    background: url('/templates/blank/lib/pdf-icon.gif') no-repeat right;    
+    cursor: pointer;
+  	padding-right: 25px;
+}
+#vpress-product-proof-row-container .vpress-product-proof-row .vpress-field-wrapper {
+    overflow: hidden;
+    margin-top: 8px;
+    padding: 0px 0 8px 0;
+    background: none;
+  	position: relative;
+}
+#vpress-product-proof-row-container .vpress-product-proof-row .vpress-field-wrapper.proof-name {
+    padding: 10px 5px 20px;
+    background:url("/static/idcards/css/proofstep-name.png") no-repeat 75% 5px;    
+
+}
+#vpress-product-proof-row-container .vpress-product-proof-row .vpress-field-wrapper textarea, 
+#vpress-product-proof-row-container .vpress-product-proof-row .vpress-field-wrapper input.text {
+    border: 1px solid #ccc;
+    height: 20px;
+    width: 180px;
+}
+.vpress-field {
+    padding-left: 4px;
+}
+#vpress-product-proof-row-container .vpress-product-proof-row .vpress-field-wrapper input.text.has-suffix {
+    width: 110px;
+}
+#vpress-product-proof-row-container .vpress-product-proof-row .vpress-field-wrapper .precontent {
+    float: left;
+    padding: 0 0px 0 0;
+    line-height: 20px;
+		font-size: 10px;
+}
+#vpress-product-proof-row-container .vpress-product-proof-row .vpress-row-content-page {
+    overflow: hidden;    
+    padding: 0 0px 10px 5px;
+    position: relative;
+}
+.page-number-2 {  }
+#vpress-product-proof-row-container .vpress-product-proof-row .vpress-page-header {
+    padding: 4px 0;
+display: none;	
+}
+#vpress-product-proof-row-container .vpress-product-proof-row .vpress-field-wrapper .precontent.postcontent {
+    padding: 0;
+}
+#vpress-product-proof-row-container .vpress-product-proof-row .vpress-field-wrapper label {
+    clear: none;
+    display: block;
+    float: left;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 20px;
+    padding: 0;
+    width: 150px;
+}
+#vpress-product-proof-row-container .vpress-product-proof-row .vpress-form-form input.submit {
+    display: none;
+}
+
+#vpress-product-proof-row-container .vpress-product-proof-row .vpress-response-preview {
+    cursor: move;
+    margin-bottom: 20px;
+    margin-left: 0px;
+    margin-right: 0;
+    margin-top: 20px !important;
+    overflow: hidden;
+    padding-left: 0;
+    padding-right: 0;
+    position: absolute;
+    width: 99%;
+
+}
+#vpress-product-proof-row-container .vpress-product-proof-row .vpress-response-preview img {
+    padding: 0px;
+    background: #eee;
+    display: block;
+    margin: 0 auto;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    border: 1px solid #ccc;
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.vpress-row-content { position: relative; }
+#vpress-product-proof-row-container .vpress-product-proof-row .vpress-response-preview-controls  {
+    position: absolute;
+    left:400px;
+    text-align: left;
+    top: 230px;
+    background: url("/static/idcards/css/proofstep-update-pdf.png") no-repeat top right;
+    padding-right: 310px;
+}
+#vpress-product-proof-row-container .vpress-product-proof-row .vpress-response-preview-controls a.control {
+    zoom: 1;
+    *display: inline;
+    display: block;
+    width: 32px;
+    height: 32px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+#vpress-product-proof-row-container .vpress-product-proof-row .vpress-response-preview-controls a.control.zoom-in {
+    background: url('/utils/images/zoom-in.png') top left no-repeat;
+}
+#vpress-product-proof-row-container .vpress-product-proof-row .vpress-response-preview-controls a.control.zoom-out {
+    background: url('/utils/images/zoom-out.png') top left no-repeat;
+}
+#vpress-product-proof-row-container .vpress-product-proof-row .vpress-response-preview-controls a.control.full-screen {
+    background: url('/static/schoolprint/css/zoom.jpg') top left no-repeat; width: 37px; height: 38px; margin-right: 70px;
+}
+form.vpress_selfprintable #vpress-product-proof-row-container .vpress-product-proof-row .vpress-response-preview-controls a.control.full-screen { margin-right: 10px; }
+#vpress-product-proof-row-container .vpress-product-proof-row .vpress-response-preview-controls a.control.update-proof {
+    background: url('/static/schoolprint/css/update.jpg') 0 0px no-repeat; width: 42px; height: 38px;
+}
+#vpress-product-proof-row-container .vpress-product-proof-row .vpress-response-preview-controls a.control.vpress-pdf-page-preview {
+    background: url('/static/schoolprint/css/pdf.jpg') 0 0px no-repeat; width: 28px; height: 38px;
+  	margin-left: 7px;
+}
+form.vpress_selfprintable #vpress-product-proof-row-container .vpress-product-proof-row .vpress-response-preview-controls a.control.vpress-pdf-page-preview { display: none; }
+#vpress-product-proof-row-container .vpress-product-proof-row .vpress-response-preview-controls a.control.download-artwork-button {
+    background: url('/static/schoolprint/css/icon-download.jpg') 0 0px no-repeat; width: 48px; height: 38px; margin-right: 60px;
+}
+#vpress-product-proof-row-container .vpress-product-proof-row .vpress-response-preview-controls
+    .vpress-image-loading-error 
+{
+    font-size: 11px;
+}
+form.vpress_selfprintable .results { display: none; }
+form.vpress_selfprintable #vpress-product-proof-row-container .vpress-product-proof-row .vpress-field-wrapper textarea, #vpress-product-proof-row-container .vpress-product-proof-row .vpress-field-wrapper input.text { /*margin-left: 150px;*/}
+#vpress-product-proof-row-container .vpress-product-proof-row .vpress-form-fields {
+    background:url("/static/idcards/css/proofstep-edit.png") no-repeat right top; 
+    float: left;
+    font-size: 14px;
+    margin-bottom: 20px;
+    margin-top: 150px;
+    min-height: 10px !important;
+    width: 80%;
+	  padding-bottom: 100px;
+}
+#vpress-product-proof-row-container .vpress-product-proof-row .vpress-btn {
+    zoom: 1;
+    *display: inline;
+    display: inline-block;
+  	background: linear-gradient(to bottom, #2C99DA, #218CCC) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    -moz-box-sizing: border-box;
+    border: 1px solid #919191;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+    color: #fff;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 14px;
+    min-height: 0;
+    min-width: 0.75em;
+    overflow: hidden;
+    padding: 7px 12px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    text-shadow: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: auto;
+}
+a.save-for-later { margin-left: 10px; }
+#vpress-product-proof-row-container .vpress-product-proof-row .vpress-field-wrapper input.vpress-error,
+#vpress-product-proof-row-container .vpress-product-proof-row .vpress-field-wrapper textarea.vpress-error {
+    border: 1px solid #d00;
+}
+#vpress-product-proof-row-container .vpress-product-proof-row .vpress-error-msg {
+    border: 3px solid #4D4D4F;
+    color: #DD0000;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0;
+    padding: 10px;
+}
+#vpress-product-proof-row-container .vpress-logo-picker {
+    padding: 8px 4px 10px 0;
+}
+#vpress-product-proof-row-container .vpress-logo-picker .vpress-logo-picker-btn {
+  	background: linear-gradient(to bottom, #ccc, #696a69) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    -moz-box-sizing: border-box;
+    border: 1px solid #919191;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+    color: #fff;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 14px;
+    min-height: 0;
+    min-width: 0.75em;
+    overflow: hidden;
+    padding: 7px 12px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    text-shadow: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: auto;
+}
+#vpress-img-fullscreen-container,
+#vpress-gallery-container {
+    zoom: 1;
+    width: 100%;
+    height: 100%;
+    z-index: 100;    
+    background: #000;
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+    position: fixed;
+    top: 0;
+}
+#vpress-img-fullscreen-container-box,
+#vpress-gallery-container-box {
+    position: relative;
+    zoom: 1;
+    width: 550px;
+    min-height: 350px;
+    background: #eee;
+    padding: 15px;
+    z-index: 101;    
+}
+#vpress-img-fullscreen-container-box {
+    width: 950px;
+    min-height: 100px;
+}
+span.vpress-gallery-upload-blocked { font-size: 16px; font-weight: bold; }
+#vpress-img-fullscreen-container-box .vpress-fullscreen-display-image {
+    width: auto !important;
+    max-width: 100% !important;
+    height: auto !important;
+	margin-top: 20px;
+}
+#vpress-img-fullscreen-container-box .vpress-img-fullscreen-close,
+#vpress-gallery-container-box .vpress-gallery-close {
+  	background: linear-gradient(to bottom, #e1232c, #aa131a) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    -moz-box-sizing: border-box;
+    border: 1px solid #919191;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+    color: #fff;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 14px;
+    min-height: 0;
+    min-width: 0.75em;
+    overflow: hidden;
+    padding: 7px 12px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    text-shadow: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: auto;
+  	float: right
+}
+#vpress-gallery-container-box .vpress-gallery-new-upload {
+  	background: linear-gradient(to bottom, #ccc, #696a69) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    -moz-box-sizing: border-box;
+    border: 1px solid #919191;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+    color: #fff;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 14px;
+    min-height: 0;
+    min-width: 0.75em;
+    overflow: hidden;
+    padding: 7px 12px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    text-shadow: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: auto;
+  	float: left;
+}
+#vpress-file-upload {
+    background: #333;
+    color: #eee;
+    margin-top: 5px;
+	float: left;
+	width: 93%;
+}
+#vpress-file-upload .image-browse {
+    display: block;
+    margin-top: 5px;
+}
+#vpress-file-upload .image-browse .desc {
+    display: none;
+}
+#vpress-gallery-images {
+    margin-top: 15px;
+    text-align: left;
+  	float: left;
+  	width: 100%;
+}
+#vpress-gallery-images .vpress-gallery-image {
+    cursor: pointer;
+    padding: 2px;
+    background: #3f3f3f;
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+}
+#vpress-gallery-images .vpress-gallery-image:hover {
+    background: #999;
+}
+
+#vpress-gallery-crop-container img {
+    border: 1px dashed #5a5858;
+}
+
+.vpress-gallery-chosen-image {
+    display: block;
+    margin-top: 5px;
+}
+
+.vpress-gallery-full-btn,
+.vpress-gallery-done-btn {
+    margin-top: 10px;
+    text-align: center;
+    margin-bottom: 0;
+}
+.vpress-gallery-full-btn a,
+.vpress-gallery-done-btn a {
+  	background: linear-gradient(to bottom, #1aba25, #0d8b16) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    -moz-box-sizing: border-box;
+    border: 1px solid #919191;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 14px;
+    min-height: 0;
+    min-width: 0.75em;
+    overflow: hidden;
+    padding: 7px 12px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    text-shadow: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: auto;
+  	zoom: 1;
+}
+.proofing p { display: block; height: 20px; margin-top: 10px !important; }
+
+#vpress-saved-proofs {
+    width: 97.8%;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #fff;
+  	border: 1px solid #ccc;
+	margin-top: 15px;
+}
+
+#vpress-saved-proofs input { float: left; }
+input#vpress-saved-proofs-search { height: 20px; padding: 2px 4px; margin-right: 5px; }
+input#vpress-saved-proofs-search-btn, input#vpress-saved-proofs-reset-btn { 
+    -moz-box-sizing: border-box;
+    background: linear-gradient(to bottom, #ccc, #696a69) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 1px solid #919191;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 14px;
+    min-height: 0;
+    min-width: 0.75em;
+    overflow: hidden;
+    padding: 3px 10px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    text-shadow: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: auto;
+    margin-right: 5px;
+}
+#vpress-saved-proofs-content { float: left; width: 100%; }
+
+#vpress-saved-proofs h4 {
+    padding-bottom: 8px;
+    font-size: 14px;
+}
+
+#vpress-saved-proofs #vpress-saved-proofs-paginator {
+    text-align: center;
+  	float: right;
+  	clear: right;
+    font-size: 14px;
+}
+#vpress-saved-proofs #vpress-saved-proofs-paginator ul {
+    margin: 0;
+    padding: 0;
+}
+
+#vpress-saved-proofs #vpress-saved-proofs-paginator li {
+    *zoom:1
+    *display: inline;
+    display: inline-block;
+    margin-right: 10px;
+  	padding-top: 0;
+  	padding-bottom: 0;
+}
+#vpress-saved-proofs #vpress-saved-proofs-paginator li a,
+#vpress-saved-proofs #vpress-saved-proofs-paginator li span {
+    padding: 5px;
+    
+}
+#vpress-saved-proofs #vpress-saved-proofs-paginator li a {
+    background: #fff;
+    cursor: pointer;
+}
+
+#vpress-saved-proofs #vpress-saved-proofs-content {
+    margin-top: 15px;
+}
+
+#vpress-saved-proofs #vpress-saved-proofs-content table {
+    width: 60%;
+    border-collapse: collapse;
+}
+#vpress-saved-proofs #vpress-saved-proofs-content table a {
+    cursor: pointer;
+    color: #0075bc;
+	margin-right: 20px;
+}
+  #vpress-saved-proofs-content td { font-weight: normal; font-size: 12px; padding: 5px 0; }
+  #vpress-saved-proofs-content th { font-size: 14px; }
+  a.vpress-edit { 
+    	background: linear-gradient(to bottom, #1aba25, #0d8b16) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    -moz-box-sizing: border-box;
+    border: 1px solid #919191;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+    color: #fff !important;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 12px;
+    min-height: 0;
+    min-width: 0.75em;
+    overflow: hidden;
+    padding: 3px 8px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    text-shadow: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: auto;
+  }
+    a.vpress-delete { 
+    	background: linear-gradient(to bottom, #E1232C, #AA131A) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    -moz-box-sizing: border-box;
+    border: 1px solid #919191;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+    color: #fff !important;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 12px;
+    min-height: 0;
+    min-width: 0.75em;
+    overflow: hidden;
+    padding: 3px 8px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    text-shadow: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: auto;
+  }
+
+#vpress-saved-proofs form {
+    padding: 4px;
+    background: none;
+}
+
+#vpress-saved-proofs form li input {
+    margin-left: 0;
+}
+#primary .basket #vpress-saved-proofs form fieldset.submit {
+    padding: 0;
+}
+
+#vpress-saved-proofs { display: none; }
+body.vpress-proof-preview-active #vpress-saved-proofs { display: none; float: left; font-size: 17px; color:#4D4D4F; font-weight: bold; width: 70%; margin-left: 20px;}
+body.vpress-proof-preview-active #vpress-saved-proofs #login { margin:0; }
+body.vpress-proof-preview-active #vpress-saved-proofs #login .mini-nav a { font-weight: normal; }
+body.vpress-proof-preview-active #vpress-saved-proofs #login .mini-nav { margin:0; }
+body.vpress-proof-preview-active #product .image { }
+body.vpress-proof-preview-active .basket { width: 100% !important; margin: 0 !important; padding: 0 !important; }
+body.vpress-proof-preview-active #product .item-info { }
+body.vpress-proof-preview-active #product .info-wrap { }
+body.vpress-proof-preview-active #product .basket input#add-to-basket { display: block; margin-left: 50px; }
+body.vpress-proof-preview-active #product .basket fieldset { padding: 20px; }
+body.vpress-proof-preview-active #product .discounts { }
+body.vpress-proof-preview-active .basket { margin-bottom: 40px !important; }
+body.vpress-proof-preview-active #product .pdv-body { width: 100%; }
+#vpress-saved-proofs #login label { width: 8em; font-size: 12px; font-weight: normal; }
+#vpress-saved-proofs #login ol { margin: 0; }
+#vpress-saved-proofs #login ul li a { font-size: 11px; }
+#vpress-saved-proofs #login input.submit {
+      -moz-box-sizing: border-box;
+    background: linear-gradient(to bottom, #ccc, #696a69) repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: 1px solid #919191;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 14px;
+    min-height: 0;
+    min-width: 0.75em;
+    overflow: hidden;
+    padding: 3px 10px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    text-shadow: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    width: auto;
+    margin-right: 5px;
+}
+    
+a.zoom-in, a.zoom-out, a.full-screen { display: none !important; }
+#vpress-gallery-images p { color:#000; text-align: center; }
+.vpress_tipr_container_bottom { display: none !important; }
+p.vpress-image-loading-error { float: left; width: 220px; }
+.vpress-proof-preview-active .leftbasket { float: right; clear: right; width: 20%; }
+.vpress-proof-preview-active label.qty-label { float: right; width: 20% !important; clear: none !important; }
+.vpress-proof-preview-active .multi-select { float: right; width: 20% !important; clear: right !important; }
+.vpress-proof-preview-active #product .results { margin-top: 20px; padding: 0; margin-left: -40px; }
+
+.wristbands label.qty-label { background:url("/static/idcards/css/proofstep1.png") no-repeat 0 10px; padding-left: 50px !important; }
+.wristbands .multi-select label { background:url("/static/idcards/css/proofstep2.png") no-repeat 0 10px; padding-left: 50px !important; }
+.wristbands label.product-select { background:url("/static/idcards/css/proofstep3.png") no-repeat 0 10px; }
+.pdv-idcards-plain-wristbands label.product-select { background:url("/static/idcards/css/proofstep2.png") no-repeat 0 10px; }
+.wristbands .leftbasket { background:url("/static/idcards/css/proofstep4.png") no-repeat 0 10px; padding-left: 50px; }
+.plastic-security-wristbands .leftbasket {background: none;padding: 0;}
+.pdv-idcards-plain-wristbands .leftbasket { background:url("/static/idcards/css/proofstep3.png") no-repeat 0 10px; padding-left: 50px; }
+.vpress-proof-preview-active p.delvat { margin: 20px 0; display: block; float: left; }
+.vpress-proof-preview-active #submits { background:url("/static/idcards/css/proofstep-basket2.png") no-repeat bottom left; padding-bottom: 170px; }
+
+
+
+
+
+

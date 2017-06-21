@@ -1,0 +1,37 @@
+{
+    "name": "swissup/firecheckout",
+    "description": "Onestep checkout extension for Magento2",
+    "keywords": [
+        "firecheckout",
+        "onestep checkout",
+        "checkout"
+    ],
+    "type": "magento2-module",
+    "version": "1.5.1",
+    "license": "OSL-3.0",
+    "require": {
+        "swissup/checkout": "*",
+        "swissup/address-autocomplete": "*",
+        "swissup/address-field-manager": "*",
+        "swissup/checkout-cart": "*",
+        "swissup/checkout-success": "*",
+        "swissup/delivery-date": "*",
+        "swissup/geoip": "*",
+        "swissup/orderattachment": "*",
+        "swissup/taxvat": "*"
+    },
+    "autoload": {
+        "files": [ "registration.php" ],
+        "psr-4": {
+            "Swissup\\Firecheckout\\": ""
+        }
+    },
+    "extra": {
+        "swissup": {
+            "links": {
+                "docs"     : "http://docs.swissuplabs.com/m2/extensions/firecheckout/",
+                "changelog": "http://docs.swissuplabs.com/m2/extensions/firecheckout/changelog/"
+            }
+        }
+    }
+}

@@ -1,0 +1,300 @@
+<?php
+
+namespace Biztech\Productdesigner\Setup;
+ 
+use Magento\Framework\Setup\UpgradeSchemaInterface;
+use Magento\Framework\Setup\SchemaSetupInterface;
+use Magento\Framework\Setup\ModuleContextInterface;
+ 
+class UpgradeSchema implements UpgradeSchemaInterface
+{
+    public function upgrade(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    {   
+        $setup->startSetup();
+        
+        if (version_compare($context->getVersion(), '1.0.1') < 0) {            
+            if (!$setup->getConnection()->isTableExists($setup->getTable('productdesigner_simpleprinting'))) {
+                $table = $setup->getConnection()->newTable(
+                    $setup->getTable('productdesigner_simpleprinting')
+                    )->addColumn(
+                    'simpleprinting_id',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                    10,
+                    ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
+                    'primary Key of auspost -eparcel table'
+                    
+                    )->addColumn(
+                    'simpleprinting_name',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    255,
+                    ['nullable' => false, 'default' =>0],
+                    'store website id '
+                    
+                    )->addColumn(
+                    'simpleprinting_code',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    255,
+                    ['nullable' => false, 'default' =>0],
+                    'Stores Destination Country id'
+                    
+                    )->addColumn(
+                    'simpleprinting_description',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    255,
+                    ['nullable' => false,'default'=> 0],
+                    'Stores Destination region id'
+                    
+                    )->addColumn(
+                    'minimum_quantity',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                    10,
+                    ['nullable' => false, 'default'=>'0'],
+                    'Stores Destination zip code'
+                    
+                    )->addColumn(
+                    'front_surcharge',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_DECIMAL,
+                    '10,2',
+                    ['nullable' => false , 'default'=>'0'],
+                    'Stores condition name'
+                    
+                    )->addColumn(
+                    'store_id',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    255,
+                    ['nullable' => false, 'default' =>'0'],
+                    'condition from value (price)'
+                    
+                    )->addColumn(
+                    'status',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                    10,
+                    ['nullable' => false, 'default' => '0'],
+                    'To condition value (price)'
+                    
+                    )->setComment(
+                    'Shipping Auspost E Parcel Rates'
+                    );
+                    $setup->getConnection()->createTable($table);
+                
+                //View File Fix For Frontend JS Layout
+                //Auspost php Update to Separate Extra Cover Shipping
+            }            
+        }
+
+        if (version_compare($context->getVersion(), '1.0.2') < 0) {            
+            if (!$setup->getConnection()->isTableExists($setup->getTable('productdesigner_printing_method'))) {
+                $table = $setup->getConnection()->newTable(
+                    $setup->getTable('productdesigner_printing_method')
+                    )->addColumn(
+                    'printing_id',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                    10,
+                    ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
+                    'primary Key of productdesigner_printing_method table'
+                    
+                    )->addColumn(
+                    'printing_name',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    255,
+                    ['nullable' => false, 'default' =>0],
+                    'name'
+                    
+                    )->addColumn(
+                    'printing_code',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    255,
+                    ['nullable' => false, 'default' =>0],
+                    'Stores Destination Country id'
+                    
+                    )->addColumn(
+                    'printing_code',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    255,
+                    ['nullable' => false,'default'=> 0],
+                    'Code'
+                    
+                    )->addColumn(
+                    'printing_description',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    255,
+                    ['nullable' => false, 'default'=>'0'],
+                    'printing_description'
+                    
+                    )->addColumn(
+                    'store_id',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                    '10,2',
+                    ['nullable' => false , 'default'=>'0'],
+                    'store_id'
+                    
+                    )->addColumn(
+                    'status',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                    255,
+                    ['nullable' => false, 'default' =>'0'],
+                    'status'
+                    
+                    )->addColumn(
+                    'minimum_quantity',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                    10,
+                    ['nullable' => false, 'default' => '0'],
+                    'minimum_quantity'
+
+                    )->addColumn(
+                    'colortype',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    10,
+                    ['nullable' => false, 'default' => '0'],
+                    'colortype'
+
+                    )->addColumn(
+                    'info',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    10,
+                    ['nullable' => false, 'default' => '0'],
+                    'info'
+
+                    )->addColumn(
+                    'customer_groups',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    10,
+                    ['nullable' => false, 'default' => '0'],
+                    'customer_groups'
+                    
+                    )->setComment(
+                    'Printing Method for Configurable Products'
+                    );
+                    $setup->getConnection()->createTable($table);
+                
+                //View File Fix For Frontend JS Layout
+                //Auspost php Update to Separate Extra Cover Shipping
+            }            
+        }
+
+        if (version_compare($context->getVersion(), '1.0.3') < 0) {            
+            if (!$setup->getConnection()->isTableExists($setup->getTable('productdesigner_colors'))) {
+                $table = $setup->getConnection()->newTable(
+                    $setup->getTable('productdesigner_colors')
+                    )->addColumn(
+                    'colors_id',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                    10,
+                    ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
+                    'primary Key of productdesigner_colors table'
+                    
+                    )->addColumn(
+                    'colors_counter',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                    10,
+                    ['nullable' => false, 'default' =>0],
+                    'name'
+                    
+                    )->addColumn(
+                    'colors_price',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                    10,
+                    ['nullable' => false , 'default'=>'0'],
+                    'price'
+                    
+                    )->setComment(
+                    'Color Counter for Configurable Products'
+                    );
+                    $setup->getConnection()->createTable($table);
+                
+                //View File Fix For Frontend JS Layout
+                //Auspost php Update to Separate Extra Cover Shipping
+            }            
+        }
+
+        if (version_compare($context->getVersion(), '1.0.4') < 0) {            
+            if (!$setup->getConnection()->isTableExists($setup->getTable('productdesigner_areasize'))) {
+                $table = $setup->getConnection()->newTable(
+                    $setup->getTable('productdesigner_areasize')
+                    )->addColumn(
+                    'areasize_id',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                    10,
+                    ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
+                    'primary Key of productdesigner_areasize table'
+                    
+                    )->addColumn(
+                    'area_price',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                    10,
+                    ['nullable' => false , 'default'=>'0'],
+                    'price'                    
+                    )->addColumn(
+                    'area_size',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    255,
+                    ['nullable' => false, 'default' =>0],
+                    'name'
+                    
+                    )->setComment(
+                    'Ara size'
+                    );
+                    $setup->getConnection()->createTable($table);
+                
+                //View File Fix For Frontend JS Layout
+                //Auspost php Update to Separate Extra Cover Shipping
+            }            
+        }
+
+        if (version_compare($context->getVersion(), '1.0.5') < 0) {            
+            if (!$setup->getConnection()->isTableExists($setup->getTable('productdesigner_pcolor'))) {
+                $table = $setup->getConnection()->newTable(
+                    $setup->getTable('productdesigner_pcolor')
+                    )->addColumn(
+                    'pcolor_id',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                    10,
+                    ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
+                    'primary Key of productdesigner_pcolor table'
+                    
+                    )->addColumn(
+                    'color_name',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    255,
+                    ['nullable' => false, 'default' =>0],
+                    'name')
+                    ->addColumn(
+                    'color_code',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    255,
+                    ['nullable' => false, 'default' =>0],
+                    'name')
+                    ->addColumn(
+                    'status',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                    10,
+                    ['nullable' => false, 'default' =>0],
+                    'name')
+                    ->addColumn(
+                    'store_id',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_TEXT,
+                    255,
+                    ['nullable' => true, 'default' =>0],
+                    'name')
+                    ->setComment(
+                    'Ara size'
+                    );
+                    $setup->getConnection()->createTable($table);
+                
+                //View File Fix For Frontend JS Layout
+                //Auspost php Update to Separate Extra Cover Shipping
+            }            
+        }
+        if (version_compare($context->getVersion(), '1.0.6') <= 0) {
+            if ($setup->getConnection()->isTableExists($setup->getTable('productdesigner_image_selection_area'))) {
+                $table = $setup->getConnection()->addColumn($setup->getTable('productdesigner_image_selection_area'), 'masking_image_id', ['type' => \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, 'length' => 10, 'nullable' => false, 'default' => '0', 'comment' => 'Selection Area']);
+            }
+        }
+        
+
+        $setup->endSetup();
+
+        
+    }
+}

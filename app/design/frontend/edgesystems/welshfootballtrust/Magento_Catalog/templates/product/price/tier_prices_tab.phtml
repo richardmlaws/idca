@@ -1,0 +1,40 @@
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$_product = $objectManager->get('Magento\Framework\Registry')->registry('current_product');//get current product
+$product = $objectManager->create('Magento\Catalog\Model\Product')->load($_product->getId());        
+$tier_price = $product->getPriceInfo()->getPrice('tier_price')->getTierPriceList();
+$cathelper = $objectManager->create('Magento\Catalog\Helper\Data');
+$priceHelper = $objectManager->create('Magento\Framework\Pricing\Helper\Data'); // Instance of Pricing Helper
+
+if(count($tier_price) > 0){
+?>
+<div id="tier-price-group">
+
+	<ul class="prices-tier items">
+		<div class="PriceBreakHeader">
+			<div class="PriceBreakLine Column1">Qty</div>
+			<div class="PriceBreakLine Column3">inc. VAT</div>
+			<div class="PriceBreakLine Column2">exc. VAT</div>
+		</div>
+		<?php foreach($tier_price as $price){
+		?>
+		<li class="item">
+			<span class="tier-qty"><?php echo $price['price_qty']; ?></span>
+			
+			<span class="tier-price">
+
+				<span class="price-container price-tier_price tax weee">
+					<span class="price-wrapper price-including-tax">
+						<span class="price"><?php echo $priceHelper->currency($cathelper->getTaxPrice($product, $price['price']->getValue(), true, null,null,null,null,true,true), true, false); ?></span>   
+					</span>
+						
+					<span class="price-wrapper price-excluding-tax">
+						<span class="price"><?php echo $priceHelper->currency($cathelper->getTaxPrice($product, $price['price']->getValue(), false, null,null,null,null,true,true), true, false); ?></span>
+					</span>
+				</span>
+			</span>                    
+		</li>
+		<?php } ?>
+	</ul>
+</div>
+<?php } ?>

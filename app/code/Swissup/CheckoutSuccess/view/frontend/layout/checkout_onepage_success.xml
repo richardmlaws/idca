@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Swissup_CheckoutSuccess::css/checkout-success.css"/>
+        <title>Success Page</title>
+    </head>
+    <update handle="customer_account"/>
+    <update handle="sales_order_item_renderers"/>
+    <update handle="sales_order_item_price"/>
+    <body>
+        <referenceContainer name="order.success.additional.info">
+            <block class="Magento\Framework\View\Element\Template" name="swissup.checkout.success" template="Magento_Theme::template.phtml" ifconfig="success_page/general/enabled" cacheable="false">
+                <block class="Swissup\CheckoutSuccess\Block\CmsBlock" name="checkout.additional.cms.top" before="-">
+                    <arguments>
+                        <argument name="block_type" xsi:type="string">block_top</argument>
+                    </arguments>
+                </block>
+                <block class="Magento\Sales\Block\Order\Info" name="order.date" template="order/order_date.phtml" ifconfig="success_page/general/detailed_info" after="checkout.additional.cms.top"/>
+                <block class="Magento\Sales\Block\Order\View" name="sales.order.view" cacheable="false" ifconfig="success_page/general/detailed_info">
+                    <block class="Magento\Sales\Block\Order\Items" name="order_items" template="order/items.phtml">
+                        <block class="Magento\Framework\View\Element\RendererList" name="sales.order.items.renderers" as="renderer.list"/>
+                        <block class="Magento\Sales\Block\Order\Totals" name="order_totals" template="order/totals.phtml">
+                            <arguments>
+                                <argument name="label_properties" xsi:type="string">colspan="4" class="mark"</argument>
+                                <argument name="value_properties" xsi:type="string">class="amount"</argument>
+                            </arguments>
+                            <block class="Magento\Tax\Block\Sales\Order\Tax" name="tax" template="order/tax.phtml"/>
+                        </block>
+                    </block>
+                </block>
+                <block class="Magento\Sales\Block\Order\Info" as="info" name="sales.order.info" after="sales.order.view" ifconfig="success_page/general/detailed_info"/>
+                <block class="Swissup\CheckoutSuccess\Block\CmsBlock" name="checkout.additional.cms.bottom" after="-">
+                    <arguments>
+                        <argument name="block_type" xsi:type="string">block_bottom</argument>
+                    </arguments>
+                </block>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

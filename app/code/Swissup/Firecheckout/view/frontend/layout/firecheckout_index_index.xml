@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="checkout_index_index"/>
+    <head>
+        <css src="Swissup_Firecheckout::css/firecheckout.css"/>
+    </head>
+    <body>
+        <referenceBlock name="page.main.title">
+            <block class="Magento\Framework\View\Element\Html\Link" name="firecheckout.continue_shopping" after="-">
+                <arguments>
+                    <argument name="label" xsi:type="string" translate="true">Back to Store</argument>
+                    <argument name="title" xsi:type="string" translate="true">Continue Shopping</argument>
+                    <argument name="path" xsi:type="string">/</argument>
+                    <argument name="class" xsi:type="string">continue-shopping</argument>
+                    <argument name="template" xsi:type="string">Swissup_Firecheckout::link.phtml</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+        <referenceBlock name="content">
+            <block class="Magento\Cms\Block\Widget\Block" name="firecheckout.additional_content.top" before="-">
+                <arguments>
+                    <argument name="block_id" xsi:type="helper" helper="Swissup\Firecheckout\Helper\AdditionalContent::getTopCmsBlockId"/>
+                    <argument name="template" xsi:type="helper" helper="Swissup\Firecheckout\Helper\AdditionalContent::getTemplate"/>
+                    <argument name="block_css" xsi:type="string">firecheckout-content-top</argument>
+                </arguments>
+            </block>
+            <block class="Magento\Cms\Block\Widget\Block" name="firecheckout.additional_content.bottom" after="-">
+                <arguments>
+                    <argument name="block_id" xsi:type="helper" helper="Swissup\Firecheckout\Helper\AdditionalContent::getBottomCmsBlockId"/>
+                    <argument name="template" xsi:type="helper" helper="Swissup\Firecheckout\Helper\AdditionalContent::getTemplate"/>
+                    <argument name="block_css" xsi:type="string">firecheckout-content-bottom</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+        <referenceBlock name="checkout.root">
+            <arguments>
+                <argument name="jsLayout" xsi:type="array">
+                    <item name="components" xsi:type="array">
+                        <item name="firecheckout" xsi:type="array">
+                            <item name="component" xsi:type="string">Swissup_Firecheckout/js/firecheckout</item>
+                        </item>
+                        <item name="stickySummary" xsi:type="array">
+                            <item name="component" xsi:type="string">Swissup_Firecheckout/js/view/sticky-summary</item>
+                        </item>
+                        <item name="checkout" xsi:type="array">
+                            <item name="children" xsi:type="array">
+                                <item name="progressBar" xsi:type="array">
+                                    <item name="componentDisabled" xsi:type="boolean">true</item>
+                                </item>
+                                <item name="sidebar" xsi:type="array">
+                                    <item name="children" xsi:type="array">
+                                        <item name="summary" xsi:type="array">
+                                            <item name="children" xsi:type="array">
+                                                <item name="itemsAfter" xsi:type="array">
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="place-order" xsi:type="array">
+                                                            <item name="component" xsi:type="string">Swissup_Firecheckout/js/view/place-order</item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                        <item name="shipping-information" xsi:type="array">
+                                            <item name="componentDisabled" xsi:type="boolean">true</item>
+                                        </item>
+                                        <item name="summary-content" xsi:type="array">
+                                            <item name="component" xsi:type="string">Swissup_Firecheckout/js/view/additional-content</item>
+                                            <item name="displayArea" xsi:type="string">shipping-information</item>
+                                            <item name="config" xsi:type="array">
+                                                <item name="content" xsi:type="helper" helper="Swissup\Firecheckout\Helper\AdditionalContent::render">
+                                                    <param name="block_id" xsi:type="string">Swissup\Firecheckout\Helper\AdditionalContent::getBelowOrderSummaryCmsBlockId</param>
+                                                    <param name="block_css" xsi:type="string">firecheckout-content-below-order-summary</param>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                                <item name="steps" xsi:type="array">
+                                    <item name="children" xsi:type="array">
+                                        <item name="shipping-step" xsi:type="array">
+                                            <item name="children" xsi:type="array">
+                                                <item name="shippingAddress" xsi:type="array">
+                                                    <item name="component" xsi:type="string">Swissup_Firecheckout/js/view/shipping</item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                        <item name="billing-step" xsi:type="array">
+                                            <item name="children" xsi:type="array">
+                                                <item name="payment" xsi:type="array">
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="additional-payment-validators" xsi:type="array">
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="firecheckout-validator" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">Swissup_Firecheckout/js/view/validation</item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

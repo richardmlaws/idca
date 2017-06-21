@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="delivery_date" translate="label" type="text" sortOrder="420" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Delivery date</label>
+            <tab>swissup_checkout</tab>
+            <resource>Swissup_DeliveryDate::config</resource>
+            <group id="main" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Main</label>
+                <!-- <field id="enable" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field> -->
+                <field id="field_label" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Delivery date field label</label>
+                </field>
+                <field id="filter_per_shipping_method" translate="label" type="select" sortOrder="23" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show for all shipping methods</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+
+                </field>
+                <field id="shipping_methods" translate="label" type="multiselect" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Shipping Methods</label>
+                    <source_model>Magento\Shipping\Model\Config\Source\Allmethods</source_model>
+                    <can_be_empty>1</can_be_empty>
+                    <depends>
+                        <field id="filter_per_shipping_method">0</field>
+                    </depends>
+                </field>
+                <field id="required" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Make Delivery Date a required field</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="use_calendar" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use Calendar</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="use_default_date_value" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use first avilable date as default value</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="processing_end_time" translate="label" type="time" sortOrder="70" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Delivery processing day ends at</label>
+                    <comment>When placing order after this time, first available date will be shifted to the next day</comment>
+                </field>
+                <field id="min_delay" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Delivery will be available since first available day (order date) plus this value</label>
+                </field>
+                <field id="max_delay" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Period in days, while delivery will be available, since first available day</label>
+                </field>
+                <field id="date_format" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Date format</label>
+                    <comment><![CDATA[<a href="http://php.net/manual/en/function.date.php" target="_blank">Date format description</a>. Locale date format used when empty]]></comment>
+                </field>
+                <field id="exclude_weekdays" translate="label" type="multiselect" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Exclude days of week from delivery</label>
+                    <source_model>Magento\Config\Model\Config\Source\Locale\Weekdays</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+                <field id="holidays" translate="label" sortOrder="120" showInDefault="1" showInWebsite="0" showInStore="0" canRestore="1">
+                    <label>Holidays</label>
+                    <frontend_model>Swissup\DeliveryDate\Block\Adminhtml\Form\Field\Holidays</frontend_model>
+                    <backend_model>Swissup\DeliveryDate\Model\System\Config\Backend\Holidays</backend_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

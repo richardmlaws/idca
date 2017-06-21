@@ -1,0 +1,106 @@
+<script type="text/javascript">
+	<?php if ($block->isEnabled()) { ?>
+	var scripts = document.getElementsByTagName('script'), initScript = false;
+	for(var i=0; i<scripts.length; i++) if (scripts[i].type == 'text/x-magento-init') {initScript = scripts[i]; break;}
+	if (initScript) {
+		try{
+			//creating mass action items here, not from xml of the ui_component
+			var obj = JSON.parse(initScript.innerHTML);
+			var actions = obj['*']['Magento_Ui/js/core/app']['components']['product_listing']['children']['product_listing']['children']['listing_top']['children']['listing_massaction']['config']['actions'];
+			actions[actions.length] = {
+				component: "uiComponent",
+				label: "<?php echo $block->escapeHtml(__("Copy Custom Options 1 to Many")) ?>",
+				type: "copy_dynamic_options",
+				url: "<?php echo $block->getUrl('dynamicproductoptions/product_options/massCopy') ?>",
+				confirm: {
+					message: "<?php echo $block->escapeHtml(__("Please enter the product Id you wish to copy options from")) ?>: <span id='dpoMassActionContainer'></span><scri"+"pt>dpoGrid.attachCopyMassActionEvent()</scr"+"ipt>",
+					title: "<?php echo $block->escapeHtml(__("Copy Custom Options 1 to Many")) ?>"
+				}
+			};
+			actions[actions.length] = {
+				component: "uiComponent",
+				label: "<?php echo $block->escapeHtml(__("Load Options Template 1 to Many")) ?>",
+				type: "load_dynamic_options",
+				url: "<?php echo $block->getUrl('dynamicproductoptions/product_options/massLoad') ?>",
+				confirm: {
+					message: "<?php echo $block->escapeHtml(__("Please select an option template you wish to apply to selected products")) ?>: <span id='dpoMassActionContainer'></span><scri"+"pt>dpoGrid.attachLoadMassActionEvent()</scr"+"ipt>",
+					title: "<?php echo $block->escapeHtml(__("Load Options Template 1 to Many")) ?>"
+				}
+			};
+			initScript.innerHTML = JSON.stringify(obj);
+		} catch(e){}
+	}
+	var dpoGrid = {
+		templates: <?php echo json_encode((array) $block->getTemplatesList()); ?>,
+		attachCopyMassActionEvent: function(){
+			require([
+				'uiRegistry'
+			], function (registry) {
+				var massaction = registry.get('product_listing.product_listing.listing_top.listing_massaction');
+				var postParams = massaction.getSelections();
+				window.dpoMassActionObject = massaction.getAction('copy_dynamic_options');
+				window.dpoMassActionURL = window.dpoMassActionObject.url;
+			});
+			var container = jQuery('#dpoMassActionContainer'), popup = jQuery('#dpoMassActionContainer').closest('.modal-popup');
+			var input = jQuery('<input>').attr('type', 'text');
+			container.append(input);
+			container.closest('.modal-popup').find('button.action-accept').attr('disabled', 'disabled');
+			input.on('keyup', function(){
+				if (this.value != "") {
+					popup.find('button.action-accept').removeAttr('disabled');
+				} else {
+					popup.find('button.action-accept').attr('disabled', 'disabled');
+				}
+				window.dpoMassActionObject.url = window.dpoMassActionURL + 'from_product_id/'+this.value+'/';
+			});
+			setTimeout(function(){input.focus()}, 100);
+		},
+		attachLoadMassActionEvent: function(){
+			require([
+				'uiRegistry'
+			], function (registry) {
+				var massaction = registry.get('product_listing.product_listing.listing_top.listing_massaction');
+				var postParams = massaction.getSelections();
+				window.dpoMassActionObject = massaction.getAction('load_dynamic_options');
+				window.dpoMassActionURL = window.dpoMassActionObject.url;
+			});
+			var container = jQuery('#dpoMassActionContainer'), popup = jQuery('#dpoMassActionContainer').closest('.modal-popup');
+			var dropdown = jQuery('<select>');
+			dropdown.append(jQuery('<option>').attr('value', '').html('-- Please select a template --'));
+			for(i in this.templates) {
+				dropdown.append(jQuery('<option>').attr('value', i).html(this.templates[i]));
+			}
+			container.append(dropdown);
+            var method = jQuery('<select style="margin-left:5px"><option value="0" selected="selected">Replace Options</option><option value="1">Append Options</option></select>');
+            container.append(method);
+			container.closest('.modal-popup').find('button.action-accept').attr('disabled', 'disabled');
+			dropdown.on('change', function(){
+				if (this.value != "") {
+					popup.find('button.action-accept').removeAttr('disabled');
+				} else {
+					popup.find('button.action-accept').attr('disabled', 'disabled');
+				}
+				window.dpoMassActionObject.url = window.dpoMassActionURL + 'template_id/'+dropdown[0].value+'/method/'+method[0].value+'/';
+			});
+            method.on('change', function(){
+                window.dpoMassActionObject.url = window.dpoMassActionURL + 'template_id/'+dropdown[0].value+'/method/'+method[0].value+'/';
+            });
+			setTimeout(function(){dropdown.focus()}, 100);
+		}
+	}
+	<?php } else { ?>
+		require([
+			'jquery'
+		], function (jQuery) {
+			window.hideMassActions = function(){
+				if (jQuery('.action-menu-items').length) {
+					jQuery('.action-menu-items li span').each(function(i, span){
+						if (span.innerHTML.toLowerCase().indexOf('copy custom options') > -1 ||
+							span.innerHTML.toLowerCase().indexOf('load options') > -1) span.parentNode.style.display = 'none';
+					});
+				} else setTimeout(window.hideMassActions, 200);
+			}
+			window.hideMassActions();
+		});
+	<?php } ?>
+</script>

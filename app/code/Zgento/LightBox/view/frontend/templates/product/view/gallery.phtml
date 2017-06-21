@@ -1,0 +1,40 @@
+
+<div class="gallery-placeholder " data-gallery-role="gallery-placeholder">
+<?php 
+$helper = $this->helper('Zgento\LightBox\Helper\Data');
+$images=json_decode($block->getGalleryImagesJson());
+$moreImgs='';
+foreach ($images as $image) {
+    if($image->isMain){
+        $mainImage=$image;
+    }else{
+        $moreImgs.= '<li><a href="'.$image->full.'" data-lightbox="thumbnail"><img alt="'.$image->caption.'" src="'.$image->thumb.'" class="resized""></a></li>';        
+    }
+}
+
+?>
+    <a class="main-image" onclick="return false;" title="<?php echo $mainImage->caption;?>" data-lightbox="thumbnail" href="<?php echo $mainImage->full;?>">
+        <img alt="<?php echo $mainImage->caption;?>" src="<?php echo $mainImage->img;?>" class="resized" >
+    </a>
+    <div class="more-views">
+        <ul>
+            <?php echo $moreImgs; ?>
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript">
+require(
+    [
+      'jquery', 
+      'domReady!',
+      'pub/static/frontend/Magento/luma/en_US/Zgento_LightBox/js/lightbox.js'
+    ], function ($) {
+        'use strict';
+        new Lightbox({
+            fadeDuration  : 200,
+            resizeDuration: 400,
+            wrapAround    :1
+        });
+    });
+</script>

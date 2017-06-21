@@ -1,0 +1,86 @@
+<?php $_product = $block->getProduct(); ?>
+<?php $buttonTitle = __('Add to Cart'); ?>
+<?php 
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$config = $objectManager->create('Magento\Framework\App\Config\ScopeConfigInterface');
+$layout = $config->getValue('productdesigner/selectview/Selectview');
+?>
+<?php if ($_product->isSaleable()): ?>
+	<div class="box-tocart">
+		<div class="fieldset">
+			<?php if ($block->shouldRenderQuantity()): ?>
+				<?php if(!$this->helper('Bss\ConfiguableGridView\Helper\Data')->isEnabled() || $_product->getTypeId() != 'configurable' || !$this->helper('Bss\ConfiguableGridView\Helper\Data')->getCurrentProduct()->getConfigurableGridView()) : ?>
+					<div class="field qty">
+						<label class="label" for="qty"><span><?php /* @escapeNotVerified */ echo __('Qty') ?></span></label>
+						<div class="control">
+							<input type="number"
+							name="qty"
+							id="qty"
+							maxlength="12"
+							value="<?php /* @escapeNotVerified */ echo $block->getProductDefaultQty() * 1 ?>"
+							title="<?php /* @escapeNotVerified */ echo __('Qty') ?>" class="input-text qty"
+							data-validate="<?php echo $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+							/>
+						</div>
+					</div>
+				<?php endif ?>
+			<?php endif; ?>
+			<div class="actions">
+				<button type="submit"
+				title="<?php /* @escapeNotVerified */ echo $buttonTitle ?>"
+				class="action primary tocart"
+				id="product-addtocart-button">
+				<span><?php /* @escapeNotVerified */ echo $buttonTitle ?></span>
+			</button>
+			<?php $isPdEnable = $this->helper('Biztech\Productdesigner\Helper\Info')->isPdEnable($_product->getId()); ?>
+<?php if (isset($isPdEnable) && $isPdEnable) : ?>
+<a href="<?php if ($layout == 'box_view'): ?><?php
+                    echo $this->getUrl('productdesigner',
+                        array('_secure' => $this->getRequest()->isSecure())) . '?id=' . $_product->getId();
+                    ?><?php else: ?><?php
+                    echo $this->getUrl('productdesigner/index/full',
+                        array('_secure' => $this->getRequest()->isSecure())) . '?id=' . $_product->getId();
+                    ?><?php endif; ?>" class="product-design-button"><input type="button" title="Design It" class="action primary tocart"
+                        id="product-addtocart-button" value="Design It"/>                
+    </a>
+<?php endif; ?>
+			<?php echo $block->getChildHtml('', true) ?>
+		</div>
+	</div>
+</div>
+<?php endif; ?>
+<?php if ($block->isRedirectToCartEnabled()) : ?>
+	<script type="text/x-magento-init">
+		{
+		"#product_addtocart_form": {
+		"Magento_Catalog/product/view/validation": {
+		"radioCheckboxClosest": ".nested"
+	}
+}
+}
+</script>
+<?php else : ?>
+	<script>
+		require([
+			'jquery',
+			'mage/mage',
+			'Magento_Catalog/product/view/validation',
+			'Magento_Catalog/js/catalog-add-to-cart'
+			], function ($) {
+				'use strict';
+
+				$('#product_addtocart_form').mage('validation', {
+					radioCheckboxClosest: '.nested',
+					submitHandler: function (form) {
+						var widget = $(form).catalogAddToCart({
+							bindSubmit: false
+						});
+
+						widget.catalogAddToCart('submitForm', $(form));
+
+						return false;
+					}
+				});
+			});
+		</script>
+	<?php endif; ?>
