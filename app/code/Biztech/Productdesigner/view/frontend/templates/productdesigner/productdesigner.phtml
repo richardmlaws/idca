@@ -6,7 +6,7 @@ $mediaurl = $store->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_
 
 $colors = $objectManager->create('Biztech\Productdesigner\Model\Mysql4\Pcolor\Collection');
 $config = $objectManager->create('Magento\Framework\App\Config\ScopeConfigInterface');
-$enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicker');
+$enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicker'); 
 ?>
 
 <div id="fb-root"></div>

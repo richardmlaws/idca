@@ -69,18 +69,18 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
                         echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true)
                         ?>" class="product photo product-item-photo">
                            <?php // Product Image ?>
-                        <!--<a href="<?php /* @escapeNotVerified */ //echo $_product->getProductUrl()    ?>" class="product photo product-item-photo" tabindex="-1">
+                        <!--<a href="<?php /* @escapeNotVerified */ //echo $_product->getProductUrl()              ?>" class="product photo product-item-photo" tabindex="-1">
                             <?php //echo $productImage->toHtml(); ?>
                         </a>-->
                             <?php if ($imagePath) : ?>
-                            <?php /*    <span class="product-image-container" style="width:200px;">
-                                    <span class="product-image-wrapper" style="padding-bottom: 125%;">
-                                        <img src="<?php //$productImage->toHtml();  
-                                       // echo $this->helper('Magento\Catalog\Helper\Image')->init($product, 'product_page_image')->setImageFile($designImages['image_path'])->resize(200, 250)->keepAspectRatio(true)->constrainOnly(false)->getUrl();
-                                        ?>" alt="" />
-                                    </span>
-                                </span> */ ?>
-                                         <?php echo $productImage->toHtml(); ?>
+                                <?php /*    <span class="product-image-container" style="width:200px;">
+                                  <span class="product-image-wrapper" style="padding-bottom: 125%;">
+                                  <img src="<?php //$productImage->toHtml();
+                                  // echo $this->helper('Magento\Catalog\Helper\Image')->init($product, 'product_page_image')->setImageFile($designImages['image_path'])->resize(200, 250)->keepAspectRatio(true)->constrainOnly(false)->getUrl();
+                                  ?>" alt="" />
+                                  </span>
+                                  </span> */ ?>
+                                <?php echo $productImage->toHtml(); ?>
 
                             <?php else : ?>
                                 <?php echo $productImage->toHtml(); ?>
@@ -98,8 +98,8 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
                         <strong class="product name product-item-name">
                             <?php if ($productData) : ?>
                                 <a href="<?php echo $_product->getProductUrl() ?>" title="<?php
-                                   echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true)
-                                   ?>" class="product-item-link">
+                                echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true)
+                                ?>" class="product-item-link">
                                    <?php
                                    /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_product->getName(), 'name');
 
@@ -178,7 +178,7 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
                                     <div class="actions-primary"<?php echo strpos($pos, $viewMode . '-primary') ? $position : ''; ?>>
 
 
-                                        <?php if ($_product->isSaleable()): ?>
+                                        <?php if ($_product->isSaleable()) { ?>
                                             <?php $postParams = $block->getAddToCartPostParams($_product); ?>
                                             <form data-role="tocart-form" action="<?php /* @escapeNotVerified */ echo $postParams['action']; ?>" method="post">
                                                 <input type="hidden" name="product" value="<?php /* @escapeNotVerified */ echo $postParams['data']['product']; ?>">
@@ -205,37 +205,45 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
                                             $layout = $config->getValue('productdesigner/selectview/Selectview');
                                             $product->getResource()->getAttribute('media_gallery')
                                                     ->getBackend()->afterLoad($product);
-
+                                            $band_enable = $product->getEnableWristband();
                                             $product_images = $product->getMediaGalleryImages();
                                             $productData = $product->getPreLoadedTemplate();
                                             ?>
                                             <?php $isPdEnable = $this->helper('Biztech\Productdesigner\Helper\Info')->isPdEnable($_product->getId()); ?>
-                                            <?php if ($this->helper('Biztech\Productdesigner\Helper\Data')->isEnable()): ?>
-                                                <?php if (isset($isPdEnable) && $isPdEnable && count($product_images) > 0) : ?>
+                                            <?php if ($this->helper('Biztech\Productdesigner\Helper\Data')->isEnable()) { ?>
+                                                <?php if (isset($isPdEnable) && $isPdEnable && count($product_images) > 0) { ?>
                                                     <?php if ($this->helper('Biztech\Productdesigner\Helper\Info')->checkDesignArea($_product->getId())) { ?>
                                                         <?php if ($productData) { ?>
-                                                            <button type="button" title="<?php echo __('Design It') ?>" class="button btn-cart list-design-button" onclick="<?php if ($layout == 'box_view'): ?>window.location.href = '<?php
-                                                                echo $this->getUrl('productdesigner/index/index', array('_secure' => $this->getRequest()->isSecure())) . '?id=' . $_product->getId() . '&templateid=' . $productData;
-                                                                ?>' <?php else: ?>window.location.href = '<?php
-                                                                echo $this->getUrl('productdesigner/index/full', array('_secure' => $this->getRequest()->isSecure())) . '?id=' . $_product->getId() . '&templateid=' . $productData;
-                                                                ?>'<?php endif; ?>"><span><span><?php echo __('Design It') ?></span></span></button>
+                                                            <?php if ($band_enable) { ?>
+                                                                <button type="button" title="<?php echo __('Design It') ?>" class="button btn-cart list-design-button" onclick="window.location.href = '<?php echo $this->getUrl('productdesigner/index/band', array('_secure' => $this->getRequest()->isSecure())) . '?id=' . $_product->getId() . '&templateid=' . $productData; ?>'"><span><span><?php echo __('Design It') ?></span></span></button>
+                                                            <?php } else { ?>
+                                                                <button type="button" title="<?php echo __('Design It') ?>" class="button btn-cart list-design-button" onclick="<?php if ($layout == 'box_view') { ?>window.location.href = '<?php
+                                                                    echo $this->getUrl('productdesigner/index/index', array('_secure' => $this->getRequest()->isSecure())) . '?id=' . $_product->getId() . '&templateid=' . $productData;
+                                                                    ?>' <?php } else { ?>window.location.href = '<?php
+                                                                    echo $this->getUrl('productdesigner/index/full', array('_secure' => $this->getRequest()->isSecure())) . '?id=' . $_product->getId() . '&templateid=' . $productData;
+                                                                    ?>'<?php } ?>"><span><span><?php echo __('Design It') ?></span></span></button>
+                                                                    <?php } ?>
                                                                 <?php } else { ?>
-                                                            <button type="button" title="<?php echo __('Design It') ?>" class="button btn-cart list-design-button" onclick="<?php if ($layout == 'box_view'): ?>window.location.href = '<?php
-                                                                echo $this->getUrl('productdesigner/index/index', array('_secure' => $this->getRequest()->isSecure())) . '?id=' . $_product->getId();
-                                                                ?>' <?php else: ?>window.location.href = '<?php
-                                                                echo $this->getUrl('productdesigner/index/full', array('_secure' => $this->getRequest()->isSecure())) . '?id=' . $_product->getId();
-                                                                ?>'<?php endif; ?>"><span><span><?php echo __('Design It') ?></span></span></button>
+                                                                    <?php if ($band_enable) { ?>
+                                                                <button type="button" title="<?php echo __('Design It') ?>" class="button btn-cart list-design-button" onclick="window.location.href = '<?php echo $this->getUrl('productdesigner/index/band', array('_secure' => $this->getRequest()->isSecure())) . '?id=' . $_product->getId(); ?>'"><span><span><?php echo __('Design It') ?></span></span></button>
+                                                            <?php } else { ?>
+                                                                <button type="button" title="<?php echo __('Design It') ?>" class="button btn-cart list-design-button" onclick="<?php if ($layout == 'box_view') { ?>window.location.href = '<?php
+                                                                    echo $this->getUrl('productdesigner/index/index', array('_secure' => $this->getRequest()->isSecure())) . '?id=' . $_product->getId();
+                                                                    ?>' <?php } else { ?>window.location.href = '<?php
+                                                                    echo $this->getUrl('productdesigner/index/full', array('_secure' => $this->getRequest()->isSecure())) . '?id=' . $_product->getId();
+                                                                    ?>'<?php } ?>"><span><span><?php echo __('Design It') ?></span></span></button>
+                                                                    <?php } ?>
                                                                 <?php } ?>
                                                             <?php } ?>
-                                                        <?php endif; ?>
-                                                    <?php endif; ?>
-                                                <?php else: ?>
+                                                        <?php } ?>
+                                                    <?php } ?>
+                                                <?php } else { ?>
                                                     <?php if ($_product->getIsSalable()): ?>
                                                 <div class="stock available"><span><?php /* @escapeNotVerified */ echo __('In stock') ?></span></div>
                                             <?php else: ?>
                                                 <div class="stock unavailable"><span><?php /* @escapeNotVerified */ echo __('Out of stock') ?></span></div>
                                             <?php endif; ?>
-                                        <?php endif; ?>
+                                        <?php } ?>
                                     </div>
                                     <div data-role="add-to-links" class="actions-secondary"<?php echo strpos($pos, $viewMode . '-secondary') ? $position : ''; ?>>
                                         <?php if ($addToBlock = $block->getChildBlock('addto')): ?>

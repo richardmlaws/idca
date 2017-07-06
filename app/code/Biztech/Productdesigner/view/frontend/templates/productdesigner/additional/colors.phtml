@@ -6,6 +6,7 @@ $url = $demo->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_M
 $obj_product = $objectManager->create('Magento\Catalog\Model\Product');
 $product = $obj_product->load($product_id);
 $product_type = $product->getTypeId();
+ $band_enable = $product->getEnableWristband();
 $default_color = $this->helper('Biztech\Productdesigner\Helper\Info')->getDefaultImage($product_id);
 
 if ($product_type == 'configurable') {
@@ -42,7 +43,7 @@ if ($product_type == 'configurable') {
              <?php endforeach; ?>
     </div>
 <?php } ?>
-<div id="product-sides" class="pd-block product-sides">
+<div id="product-sides" class="pd-block product-sides" <?php echo $band_enable ? 'style="display:none;"' : ''; ?>>
     <h4><?php echo __('Choose Side'); ?></h4>
     <?php
     $objectManager = \Magento\Framework\App\ObjectManager::getInstance();

@@ -1072,3 +1072,7 @@ input,button,select,textarea{-webkit-box-shadow:none!important;box-shadow:none!i
 
 .catalog-product-view .actions .product-design-button {width: 100%;}
 
+
+
+/*--- Idcardsolutions ---*/
+.productdesigner-view .pd-left-panel {min-height: auto;}

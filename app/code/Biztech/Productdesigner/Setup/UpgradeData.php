@@ -107,5 +107,23 @@ class UpgradeData implements UpgradeDataInterface
                     ]
             );
         }
+        if (version_compare($context->getVersion(), '1.0.9', '<')) {
+            $eavSetup = $this->eavSetupFactory->create(['setup' => $setup]);
+            $eavSetup->addAttribute(
+                \Magento\Catalog\Model\Product::ENTITY, 'enable_wristband', [
+                'type' => 'int',
+                'backend' => '',
+                'frontend' => '',
+                'label' => 'Enable For Wristband',
+                'input' => 'boolean',
+                'class' => '',
+                'source' => 'Magento\Catalog\Model\Product\Attribute\Source\Boolean',
+                'global' => \Magento\Catalog\Model\ResourceModel\Eav\Attribute::SCOPE_GLOBAL,
+                'visible' => true,
+                'required' => false,
+                ]
+            );
+
+        }
     }
 }

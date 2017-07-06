@@ -4003,6 +4003,9 @@ ProductDesigner.prototype = {
                 if (jQuery('#add_text_area')) {
                     jQuery('#add_text_area').val(null);
                 }
+                if (jQuery('#add_text_area_2')) {
+                    jQuery('#add_text_area_2').val(null);
+                }
                 this._observeControlButtons();
                 this._observeTextButtons();
                 this._observeTextColorButtons();
@@ -4333,6 +4336,9 @@ ProductDesigner.prototype = {
             jQuery('#add_text_area').val(null);
 
         }
+        if (jQuery('#add_text_area_2')) {
+            jQuery('#add_text_area_2').val(null);
+        }
 
         this.canvas.on('object:selected', function (e) {
 
@@ -4569,6 +4575,9 @@ ProductDesigner.prototype = {
                 if (jQuery('#add_text_area')) {
                     jQuery('#add_text_area').val(null);
                 }
+                if (jQuery('#add_text_area_2')) {
+                    jQuery('#add_text_area_2').val(null);
+                }
 
                 if (e.target.type == 'path-group' || e.target.type == 'path')
                 {
@@ -4611,6 +4620,9 @@ ProductDesigner.prototype = {
             jQuery('#select_image').show();
             if (jQuery('#add_text_area')) {
                 jQuery('#add_text_area').val(null);
+            }
+            if (jQuery('#add_text_area_2')) {
+                jQuery('#add_text_area_2').val(null);
             }
             this._observeControlButtons();
             this._observeTextButtons();
@@ -6749,12 +6761,20 @@ ProductDesigner.prototype = {
                     jQuery('#text_prop_container').addClass('disabled');
                     jQuery('#text_prop_container').attr('disabled', 'disabled');
                 }
+                if (jQuery('#add_text_area_2')) {
+                    jQuery('#add_text_area_2').val(null);
+                    jQuery('#text_prop_container').addClass('disabled');
+                    jQuery('#text_prop_container').attr('disabled', 'disabled');
+                }
             } else {
                 for (var i = 0; i < allObj.length; i++) {
                     if (allObj[i].type != 'text' && allObj[i].type != 'group' && allObj[i].type != 'image' &&
                             allObj[i].type != 'path' && allObj[i].type != 'path-group') {
                         if (jQuery('#add_text_area')) {
                             jQuery('#add_text_area').val(null);
+                        }
+                        if (jQuery('#add_text_area_2')) {
+                            jQuery('#add_text_area_2').val(null);
                         }
                     }
                 }
@@ -7618,6 +7638,9 @@ ProductDesigner.prototype = {
                 if (jQuery('#add_text_area')) {
                     jQuery('#add_text_area').val(null);
                 }
+                if (jQuery('#add_text_area_2')) {
+                    jQuery('#add_text_area_2').val(null);
+                }
                 jQuery('text_prop_container').addClass('disabled');
                 jQuery('.inner-tab-option').each(function (index, val) {
                     jQuery(val).css("display", "none");
@@ -7638,6 +7661,9 @@ ProductDesigner.prototype = {
                 this.canvas.deactivateAll().renderAll();
                 if (jQuery('#add_text_area')) {
                     jQuery('#add_text_area').val(null);
+                }
+                if (jQuery('#add_text_area_2')) {
+                    jQuery('#add_text_area_2').val(null);
                 }
                 jQuery('text_prop_container').addClass('disabled');
                 jQuery('.inner-tab-option').each(function (index, val) {
@@ -7665,6 +7691,9 @@ ProductDesigner.prototype = {
                 if (jQuery('#add_text_area')) {
                     jQuery('#add_text_area').val(null);
                 }
+                if (jQuery('#add_text_area_2')) {
+                    jQuery('#add_text_area_2').val(null);
+                }
 
                 jQuery('#text_prop_container').addClass('disabled');
                 jQuery('.inner-tab-option').each(function (index, val) {
@@ -7686,6 +7715,9 @@ ProductDesigner.prototype = {
             this.canvas.deactivateAll().renderAll();
             if (jQuery('#add_text_area')) {
                 jQuery('#add_text_area').val(null);
+            }
+            if (jQuery('#add_text_area_2')) {
+                jQuery('#add_text_area_2').val(null);
             }
             jQuery('#text_prop_container').addClass('disabled');
             jQuery('.nav_tab').each(function (index, val) {
@@ -7740,6 +7772,9 @@ ProductDesigner.prototype = {
                 if (jQuery('#add_text_area')) {
                     jQuery('#add_text_area').val(null);
                 }
+                if (jQuery('#add_text_area_2')) {
+                    jQuery('#add_text_area_2').val(null);
+                }
                 jQuery('#text_prop_container').addClass('disabled');
                 jQuery('.inner-tab-option').each(function (index, val) {
                     jQuery(val).css("display", "none");
@@ -7791,6 +7826,9 @@ ProductDesigner.prototype = {
             this.canvas.deactivateAll().renderAll();
             if (jQuery('#add_text_area')) {
                 jQuery('#add_text_area').val(null);
+            }
+            if (jQuery('#add_text_area_2')) {
+                jQuery('#add_text_area_2').val(null);
             }
             jQuery('#text_prop_container').addClass('disabled');
             jQuery('.nav_tab').each(function (index, val) {
@@ -11727,6 +11765,7 @@ TextDesigner.prototype = {
         //}
         TextDesigner.text_limit_data = text_limit_data.data;
         this.observeTextAdd();
+        this.observeText2Add();
         this.observeTextSizeChange();
         this.observeTextFontChange();
         this.observeTextStyleChange();
@@ -11761,7 +11800,7 @@ TextDesigner.prototype = {
             textShadowBlur: 0
         };
         this.fieldsMap = {
-            text: jQuery('#add_text_area'), fontFamily: jQuery('#font_selection'),
+            text: jQuery('#add_text_area,#add_text_area_2'), fontFamily: jQuery('#font_selection'),
             fontSize: jQuery('#font_size_selection'),
             strokeWidth: jQuery('#stroke_width'),
             textShadowOffsetX: jQuery('#shadow_x_range'),
@@ -12230,6 +12269,127 @@ TextDesigner.prototype = {
                 cmd.exec();
                 jQuery('#add_text_area').focus();
                 jQuery('#add_text_area')[0].selectionStart = jQuery('#add_text_area')[0].selectionEnd = jQuery('#add_text_area').val().length;
+                jQuery('#text_prop_container').removeClass("disabled");
+                History.prototype.push(cmd);
+                jQuery('#text_color_title').html('Black');
+                jQuery('#text_bgcolor_title').html('Black');
+                jQuery('#text_shadowcolor_title').html('Black');
+                jQuery('#text_strokecolor_title').html('Black');
+
+
+
+            }
+        });
+    },
+    observeText2Add: function () {
+        jQuery('#add_text_area_2').on('keyup', function (e) {
+            if (jQuery('#add_text_area_2').val()) {
+                this.productDesigner.canvas.deactiveAll();
+            }
+            this.productDesigner = ProductDesigner.prototype;
+            var canvas = this.productDesigner.canvas;
+            var obj = canvas.getActiveObject();
+            if (!jQuery('#add_text_area_2').val() && e.which != 13 && obj) {
+
+                var cmd = new RemoveCanvasObject(this.productDesigner, obj);
+                cmd.exec();
+                jQuery('#text_prop_container').addClass('disabled');
+                History.prototype.push(cmd);
+                return;
+            }
+            if (e.which == 13 || e.which == 46) {
+                if (jQuery('#add_text_area_2')[0].selectionEnd == jQuery('#add_text_area_2').val().length) {
+                    return;
+                }
+            }
+
+            var text = jQuery('#add_text_area_2').val();
+            var a = new RGBColor(jQuery('#text_color span').css('border-color'));
+            var textObjectData = {
+                fontSize: parseInt(jQuery('#font_size_selection').val()),
+                fontFamily: jQuery('#font_selection').val(),
+                /*fill: a.toHex(),*/
+                obj_side: this.productDesigner.data.product.images[this.productDesigner.currentProductColor][this.productDesigner.currentProduct].side
+            };
+            if (obj && (obj.type == 'text' || obj.type == 'group')) {
+                if (obj.type == 'group')
+                {
+                    for (var i = 0; i < obj.getObjects().length; i++) {
+                        var newObj = obj.getObjects()[i];
+                        if (newObj.type == 'text') {
+                            oldText = oldText + newObj.getText();
+                        }
+                    }
+                    if (text != oldText) {
+
+                        var cmd = new RemoveCanvasObject(this.productDesigner, obj);
+                        cmd.exec();
+                        History.prototype.push(cmd);
+                        var textObjectData = {
+                            fontSize: parseInt(jQuery('#font_size_selection').val()),
+                            fontFamily: jQuery('#font_selection').val(),
+                            fill: a.toHex(),
+                            opacity: jQuery('#opacity').val(),
+                        };
+
+                        var textObject = new fabric.Text(text, textObjectData);
+                        textObject.set({
+                            top: obj.top,
+                            left: obj.left,
+                            image_side: obj.image_side,
+                            scaleX: obj.scaleX,
+                            scaleY: obj.scaleY,
+                            width: obj.width,
+                            height: obj.height
+                        });
+                        var cmd = new InsertCanvasObject(this.productDesigner, textObject, true);
+                        cmd.exec();
+                        History.prototype.push(cmd);
+                        var currentArc = parseInt(jQuery('#text_arc').val());
+                        var currentSpacing = parseInt(jQuery('#text_spacing').val());
+                        var defaultArc = obj.arc ? obj.arc : 0;
+                        var defaultSpacing = obj.spacing ? obj.spacing : 0;
+                        cmd = new TextSpaceAngleChange(this.productDesigner, canvas,
+                                {arc: defaultArc, spacing: defaultSpacing},
+                                {arc: currentArc, spacing: currentSpacing});
+                        cmd.exec();
+                        History.prototype.push(cmd);
+
+
+
+                    }
+                } else {
+                    oldText = obj.getText();
+                    if (text != oldText) {
+                        var cmd = new UpdateCommand(canvas, obj, {text: text});
+                        cmd.exec();
+                        jQuery('#text_prop_container').removeClass("disabled");
+                        History.prototype.push(cmd);
+                    }
+                }
+            } else {
+                var textCount = 0;
+                if (TextDesigner.text_limit_data.is_limit == 1) {
+                    var canvas = this.productDesigner.canvas;
+                    var allObj = canvas.getObjects();
+                    for (var i = 0; i < allObj.length; i++)
+                    {
+                        if (allObj[i].type == 'text' || allObj[i].type == 'group')
+                        {
+                            textCount++;
+                        }
+                    }
+                    if (textCount > parseInt(TextDesigner.text_limit_data.limit) - 1) {
+                        jQuery('#add_text_area_2').val("");
+                        alert(TextDesigner.text_limit_data.limit_text);
+                        return false;
+                    }
+                }
+                var textObject = new fabric.Text(text, textObjectData);
+                var cmd = new InsertCanvasObject(this.productDesigner, textObject, true);
+                cmd.exec();
+                jQuery('#add_text_area_2').focus();
+                jQuery('#add_text_area_2')[0].selectionStart = jQuery('#add_text_area_2')[0].selectionEnd = jQuery('#add_text_area_2').val().length;
                 jQuery('#text_prop_container').removeClass("disabled");
                 History.prototype.push(cmd);
                 jQuery('#text_color_title').html('Black');
@@ -12927,6 +13087,9 @@ var LayersManager = function () {
 
                     if (jQuery('#add_text_area')) {
                         jQuery('#add_text_area').val(null);
+                    }
+                    if (jQuery('#add_text_area_2')) {
+                        jQuery('#add_text_area_2').val(null);
                     }
                     jQuery('#text_prop_container').addClass('disabled');
                     jQuery('.inner-tab-option').each(function (index, val) {
