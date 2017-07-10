@@ -46,7 +46,6 @@ class Info extends \Magento\Framework\App\Helper\AbstractHelper
         $resize_height      = $this->_scopeConfig->getValue(self::ResizeHeight, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
         $resize_width_band  = $this->_scopeConfig->getValue(self::ResizeWidthBand, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
         $resize_height_band = $this->_scopeConfig->getValue(self::ResizeHeightBand, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-        
 
         if (!isset($resize_width) && $resize_width == null) {
             $resize_width = 540;
@@ -69,7 +68,7 @@ class Info extends \Magento\Framework\App\Helper\AbstractHelper
                 $resize_width = 540;
             }
             if (!isset($resize_height_band) && $resize_height_band == null) {
-                $resize_width = 100;
+                $resize_height = 100;
             }
         }
 
