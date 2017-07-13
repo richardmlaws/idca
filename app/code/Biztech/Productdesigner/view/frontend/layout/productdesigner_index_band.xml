@@ -55,7 +55,7 @@
 
                 <block class="Biztech\Productdesigner\Block\Designer" name="mydesigns" template="Biztech_Productdesigner::productdesigner/mydesigns/list.phtml" />    
                 
-                <block class="Biztech\Productdesigner\Block\Group" name="grouporder" template="Biztech_Productdesigner::productdesigner/grouporder/grouporder.phtml" />    
+                <!-- <block class="Biztech\Productdesigner\Block\Group" name="grouporder" template="Biztech_Productdesigner::productdesigner/grouporder/grouporder.phtml" />  -->   
                 
                 <block class="Biztech\Productdesigner\Block\Designer" name="priceHtml" as="priceHtml" template="Biztech_Productdesigner::productdesigner/additional/price.phtml" />
                 <block class="Biztech\Productdesigner\Block\Designer" name="pd_additional_info" as="pd_additional_info" template="Biztech_Productdesigner::productdesigner/additional/wristband_colors.phtml" />

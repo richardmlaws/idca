@@ -4125,7 +4125,8 @@ ProductDesigner.prototype = {
         /*if (ProductDesigner.prototype.data.productType == 'simple') {
          this.observeGroupToolTipSimple();
      }*/
-        //this.reloadPrice();
+        this.reloadPrice();
+        this.reloadPrintingPrice();
         jQuery('#choose_masking').click();
         jQuery('#text_tab').click();
         this.layersManager = new LayersManager();
@@ -9149,9 +9150,11 @@ reloadPrintingPrice: function(isclicked) {
                     var added_products_price = Array();
                     var price_html = '';
                     var tier_price_details = ProductDesigner.prototype.data.product.printing_method_array[selected_printing_method]['product_details'];
-                    var used_colors_count = ProductDesigner.prototype.data.used_colors.length;
-                    if (used_colors_count > ProductDesigner.prototype.data.area.color_count) {
-                        used_colors_count = ProductDesigner.prototype.data.area.color_count;
+                    if(ProductDesigner.prototype.data.used_colors != "undefined") {
+                        var used_colors_count = ProductDesigner.prototype.data.used_colors.length;
+                        if (used_colors_count > ProductDesigner.prototype.data.area.color_count) {
+                            used_colors_count = ProductDesigner.prototype.data.area.color_count;
+                        }
                     }
                     for (var tierprice in tier_price_details) {
                         if (tier_price_details[tierprice]['color_counter'] == used_colors_count) {
@@ -9496,9 +9499,11 @@ reloadPrintingPrice: function(isclicked) {
                 var added_products_price = Array();
                 var price_html = '';
                 // var tier_price_details = ProductDesigner.prototype.data.product.printing_method_array[selected_printing_method]['product_details'];
-                var used_colors_count = ProductDesigner.prototype.used_colors.length;
-                if (used_colors_count > ProductDesigner.prototype.data.area.color_count) {
-                    used_colors_count = ProductDesigner.prototype.data.area.color_count;
+                if(ProductDesigner.prototype.used_colors != undefined) {
+                    var used_colors_count = ProductDesigner.prototype.used_colors.length;
+                    if (used_colors_count > ProductDesigner.prototype.data.area.color_count) {
+                        used_colors_count = ProductDesigner.prototype.data.area.color_count;
+                    }
                 }
                 /*for (var tierprice in tier_price_details) {
                  if (tier_price_details[tierprice]['color_counter'] == used_colors_count) {
@@ -9687,15 +9692,15 @@ reloadPrintingPrice: function(isclicked) {
                         var response = JSON.parse(data);
                         if (response.status == 'success') {
                           //  jQuery('#add-to-cart').modal('closeModal');
-                            window.onbeforeunload = null;
-                            window.top.location.href = response.url;
-                        } else if (response.status == 'fail') {
-                            jQuery("#cart-add").removeAttr('disabled');
-                            jQuery('#cart-error-msg').html('');
-                            jQuery('#cart-error-msg').html(response.message);
-                        }
+                          window.onbeforeunload = null;
+                          window.top.location.href = response.url;
+                      } else if (response.status == 'fail') {
+                        jQuery("#cart-add").removeAttr('disabled');
+                        jQuery('#cart-error-msg').html('');
+                        jQuery('#cart-error-msg').html(response.message);
                     }
-                });
+                }
+            });
             }
         } else if (response.status == 'fail') {
             console.log(response.message);
@@ -10280,9 +10285,9 @@ canvasesHasDesigns: function() {
                 if (this.currentProductColor != color) {
                     if (!jQuery(e.currentTarget).hasClass('selected')) {
                        jQuery(jQuery(e.currentTarget)).parent().siblings().find('.color-img').removeClass("selected");
-                    }
-                    jQuery(e.currentTarget).addClass('selected');
-                    this.changeProductColor(color, ProductDesigner.prototype.ImageSideObject);
+                   }
+                   jQuery(e.currentTarget).addClass('selected');
+                   this.changeProductColor(color, ProductDesigner.prototype.ImageSideObject);
                     //$('product-sides').children[1].children[0].children[0].click();
                     this.product_default_color = e.currentTarget.getAttribute('data-color_id');
                     var obj = this.canvas.getObjects();

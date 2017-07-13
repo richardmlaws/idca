@@ -337,7 +337,8 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
                                                                     $j(function () {
                                                                         $j('#brush_type').selectric();
                                                                     });
-                                                                });</script>                                
+                                                                });
+                                                            </script>                                
                                                         </li>
                                                         <li>
                                                             <input type="range" value="0" min="0" max="40" id="drawing-line-width" name="width">
@@ -379,10 +380,8 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
                                                                         }
                                                                     });
                                                                 }
-
-
                                                             });
-                                                            //var cp5 = new colorPicker('brush_color');</script>   
+                                                        </script>   
                                                     </ul>
                                                 </div>   
                                             </div>
@@ -468,7 +467,7 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
                                 <?php if ($product->getTypeId() == 'configurable'): ?>
                                     <div id="add_name_num_content" class="desgin-detail desgin-name-number">                            
                                         <?php
-                                        echo $this->getChildHtml("grouporder");
+                                       // echo $this->getChildHtml("grouporder");
                                         ?>   
                                     </div>
                                 <?php endif; ?>
@@ -947,22 +946,6 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
                     });
 
 
-        <?php
-        if ($block->getProductGeneralEnable()):
-            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-            $config = $objectManager->create('Magento\Framework\App\Config\ScopeConfigInterface');
-            ?>
-
-                        var default_category = '<?php echo $config->getValue('productdesigner/categoryproductsconfiguration/setdefaultcategory'); ?>';
-                        var filter_product_url = '<?php echo $this->getUrl('*/*/filterProduct'); ?>';
-                        require(['jquery', 'jquery/ui'], function ($) {
-                            var Category = new Categorydesigner();
-                            Category.initialize(default_category, filter_product_url);
-                            Category.observeFields();
-                        });
-        <?php endif; ?>
-
-
                     var filter_url = '<?php
         echo $this->getUrl('*/*/filterClipart', array('_secure' => $this->getRequest()->isSecure()))
         ?>';
@@ -978,95 +961,6 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
                         Clipart.observeFields();
                     });
 
-        <?php if ($block->quotesEnable()): ?>
-
-                        var filter_quotes_url = '<?php
-            echo $this->getUrl("*/*/filterquotes", array("_secure" => $this->getRequest()->isSecure()))
-            ?>';
-
-                        var QuotesDesigner = new QuotesDesigner();
-                        require(['jquery', 'jquery/ui'], function ($) {
-                            QuotesDesigner.initialize(filter_quotes_url);
-                            QuotesDesigner.observeFields();
-                        });
-
-        <?php endif; ?>
-
-
-
-
-        <?php if ($block->shapeEnable()): ?>
-                        var filter_shape_url = '<?php
-            echo $this->getUrl("*/*/filterShapes", array("_secure" => $this->getRequest()->isSecure()))
-            ?>';
-                        require(['jquery', 'jquery/ui'], function ($) {
-                            var Shapes = new Shapesdesigner();
-                            Shapes.initialize(filter_shape_url);
-                            Shapes.observeFields();
-                        });
-        <?php endif; ?>
-
-                    var Brush = new Brush();
-                    require(['jquery', 'jquery/ui'], function ($) {
-                        Brush.initialize();
-                    });
-
-        <?php if ($block->MaskingEnabled()): ?>
-                        var filter_masking_url = '<?php
-            echo $this->getUrl("*/*/filterMasking", array("_secure" => $this->getRequest()->isSecure()))
-            ?>';
-
-                        var Masking = new Masking();
-                        require(['jquery', 'jquery/ui'], function ($) {
-                            Masking.initialize(filter_masking_url);
-                            Masking.observeFields();
-                        });
-        <?php endif; ?>
-
-                    var EffectDesigner = new EffectDesigner();
-                    require(['jquery', 'jquery/ui'], function ($) {
-                        EffectDesigner.initialize();
-                        EffectDesigner.observeFields();
-                    });
-
-        <?php if ($block->DesigntemplatesEnable()): ?>
-                        var filter_template_url = '<?php
-            echo $this->getUrl("*/*/filterTemplate", array("_secure" => $this->getRequest()->isSecure()))
-            ?>';
-                        var my_design_url1 = '<?php
-            echo $this->getUrl("*/designtemplates/getMyDesigntemplate", array("_secure" => $this->getRequest()->isSecure()))
-            ?>';
-                        var data1 = {};
-                        var product_data1 = '<?php echo $this->helper('Biztech\Productdesigner\Helper\Info')->getProductInfo($product_id); ?>';
-                        var DesignTemplates = new DesignTemplates();
-                        require(['jquery', 'jquery/ui'], function ($) {
-                            data1.product = jQuery.parseJSON(product_data1);
-                            DesignTemplates.initialize(filter_template_url, my_design_url1, data1);
-                            DesignTemplates.observeFields();
-                        });
-        <?php endif; ?>
-
-        <?php if ($block->myDesign()): ?>
-                        var my_design_url = '<?php
-            echo $this->getUrl("*/designtemplates/getMyDesign", array("_secure" => $this->getRequest()->isSecure()))
-            ?>';
-
-                        var delete_design_url = '<?php
-            echo $this->getUrl("*/designtemplates/delete", array("_secure" => $this->getRequest()->isSecure()))
-            ?>';
-
-                        var data = {};
-
-                        var product_data = '<?php echo $this->helper('Biztech\Productdesigner\Helper\Info')->getProductInfo($product_id); ?>';
-                        require(['jquery', 'jquery/ui'], function ($) {
-                            data.product = jQuery.parseJSON(product_data);
-                        });
-                        MyDesigns = new MyDesigns();
-                        require(['jquery', 'jquery/ui'], function ($) {
-                            MyDesigns.initialize(my_design_url, delete_design_url, data);
-                        });
-
-        <?php endif; ?>
 
                     setTimeout(function () {
                         if (jQuery('#product-images-loader')) {
@@ -1198,18 +1092,6 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
                             }
                         }).blur();
                     });
-
-                    /*var InstagramDesigner  = new InstagramDesigner();
-                     require(['jquery', 'jquery/ui'], function ($) {
-                     InstagramDesigner.initialize();
-                     });
-                             
-                     var FacebookDesigner  = new FacebookDesigner();
-                     require(['jquery', 'jquery/ui'], function ($) {
-                     FacebookDesigner.initialize();
-                     }); */
-
-
 
                 </script>
             </div>
