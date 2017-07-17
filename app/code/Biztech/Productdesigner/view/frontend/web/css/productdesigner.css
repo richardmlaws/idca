@@ -1092,11 +1092,15 @@ input,button,select,textarea{-webkit-box-shadow:none!important;box-shadow:none!i
 .productdesigner-index-band .product-colors .choose-color:hover .color-img::before {background-color: #eceff1;box-shadow: 0px 5px 5px 0px rgba(50, 50, 50, 0.31);}
 .productdesigner-index-band .product-colors .color-img.selected+span {visibility: visible;}
 
-.productdesigner-index-band .left-all-other {width: 78%;float: left;padding-right: 15px}
-.productdesigner-index-band .right-form-addtocart {width: 22%;float: right;padding-left: 15px;}
+.productdesigner-index-band .left-all-other {width: 72%;float: left;padding-right: 15px}
+.productdesigner-index-band .right-form-addtocart {width: 28%;float: right;padding-left: 15px;}
 .productdesigner-index-band .right-form-addtocart #customOptionFormProdSettings {padding: 15px;border: 1px solid #c5c5c5;padding-top: 0;}
 .productdesigner-index-band .right-form-addtocart #customOptionFormProdSettings .size-qty {width: 50px;float: left;text-align: center;}
-.productdesigner-index-band .right-form-addtocart #customOptionFormProdSettings #cart-add {margin: 0;margin-left: 10px;}
+.productdesigner-index-band .right-form-addtocart #customOptionFormProdSettings #cart-add {margin: 0;}
+
+.productdesigner-index-band .right-form-addtocart .product-pricing {display:inline-block;padding:4px 8px;background:#FBF4DE;border:1px solid #E2D4C7;margin-top:7px;clear: both;}
+.productdesigner-index-band .right-form-addtocart .product-pricing ul li {margin-bottom: 5px;}
+
 .productdesigner-index-band .pd-wrapper {margin-top: 30px;background: transparent;padding-bottom: 10px;}
 
 .productdesigner-index-band .resp-vtabs ul.resp-tabs-list {width: 10%;}
@@ -1115,4 +1119,12 @@ input,button,select,textarea{-webkit-box-shadow:none!important;box-shadow:none!i
     .productdesigner-index-band .pd-wrapper {background-color: #ececec;}
     .productdesigner-index-band .left-all-other {width: 100%;float: none;padding-right: 0;}
     .productdesigner-index-band .right-form-addtocart {width: 100%;float: none;padding-left: 0;padding-top: 20px;clear: both;}
+    .productdesigner-index-band .right-form-addtocart #customOptionFormProdSettings .size-qty {margin-bottom: 10px;}
+    .productdesigner-index-band .right-form-addtocart .product-pricing {display: block;}
+    .productdesigner-view .share-save .social-icons .label {padding-left: 6px;}
+}
+@media screen and (max-width: 502px) {
+    .productdesigner-index-band .share-save {text-align: center;}
+    .productdesigner-index-band .share-save .social-icons {float: none;display: inline-block;vertical-align: top;}
+    .productdesigner-index-band .share-save .block-btn-process {display:inline-block;vertical-align: top;}
 }

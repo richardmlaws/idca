@@ -28,7 +28,7 @@
         <attribute name="class" value="productdesigner view" />
         <attribute name="class" value="boxed layout"/>
         
-        <referenceBlock name="page.main.title" remove = "true"/>  
+        <referenceBlock name="page.main.title" remove="true"/>  
         <referenceContainer name="content">            
             <block class="Biztech\Productdesigner\Block\Productdesigner" name="Custom" as="product_list" template="Biztech_Productdesigner::productdesigner/wristband_productdesigner.phtml">
                 <block class="Biztech\Productdesigner\Block\Designer" name="product_categories" as="product_categories" template="Biztech_Productdesigner::productdesigner/products/product_categories.phtml" />

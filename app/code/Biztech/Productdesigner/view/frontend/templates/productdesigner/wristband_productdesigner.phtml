@@ -1,4 +1,5 @@
 <?php
+$tier_prices = [];
 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 
 $store = $objectManager->get('Magento\Store\Model\StoreManagerInterface');
@@ -63,8 +64,8 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
         </div>
     </div>
     <!--
-    <script src="<?php //echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS)."biztech/productdesigner/select.js"                                                                                       ?>"></script>
-    <script src="<?php //echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS)."biztech/productdesigner/easyResponsiveTabs.js"                                                                                       ?>"></script>-->
+    <script src="<?php //echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS)."biztech/productdesigner/select.js"                                                                                        ?>"></script>
+    <script src="<?php //echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS)."biztech/productdesigner/easyResponsiveTabs.js"                                                                                        ?>"></script>-->
 
     <?php
     if ($this->helper('Biztech\Productdesigner\Helper\Data')->isEnable()):
@@ -79,6 +80,7 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
         $action = $requestOb->getActionName();
         $obj_product = $objectManager->create('Magento\Catalog\Model\Product');
         $product = $obj_product->load($product_id);
+        $productTypeInstance = $product->getTypeInstance();
         $side = array();
         $sidecollection = $objectManager->create('Biztech\Productdesigner\Model\Mysql4\Side\Collection')->addFieldToFilter('status', array('eq' => 1))->getData();
         foreach ($sidecollection as $sidecollect) {
@@ -102,6 +104,13 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
             } else {
                 $printing_method_avail = '0';
             }
+            $simpleTierCollection = $productTypeInstance->getUsedProductCollection($product)
+                    ->addAttributeToSelect('*');
+            $tier_prices = array();
+
+            foreach ($simpleTierCollection as $simple) {
+                $tier_prices[$simple->getId()] = $simple->getTierPrice();
+            }
         } else {
             $simpleprintingCollection = $objectManager->create('Biztech\Productdesigner\Model\Mysql4\Simpleprintingmethod\Collection')->addFieldToFilter('status', array('eq' => 1));
             if (count($simpleprintingCollection) != 0) {
@@ -112,7 +121,7 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
         }
 
 
-
+        $jsonHelper = $objectManager->create('Magento\Framework\Json\Helper\Data');
         $isPdEnable = $this->helper('Biztech\Productdesigner\Helper\Info')->isPdEnable($product_id);
 
         // $params = $this->getRequest()->getParams();
@@ -188,7 +197,7 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
                                     <span class="sprite ico-designs"></span>
                                     <span class="label" id="add_mydesigns"><?php echo __('My Designs'); ?></span>
                                 </li>
-                                <?php //endif;  ?>
+                                <?php //endif;   ?>
 
                                 <!-- social media -->
                                 <li class="nav_tab" id="socialmedia_tab" <?php echo $band_enable ? 'style="display:none;"' : ''; ?>> 
@@ -467,7 +476,7 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
                                 <?php if ($product->getTypeId() == 'configurable'): ?>
                                     <div id="add_name_num_content" class="desgin-detail desgin-name-number">                            
                                         <?php
-                                       // echo $this->getChildHtml("grouporder");
+                                        // echo $this->getChildHtml("grouporder");
                                         ?>   
                                     </div>
                                 <?php endif; ?>
@@ -495,13 +504,13 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
                                     </div>
                                 <?php endif; ?>
 
-                                <?php //if($helper->getConfig('mydesigns_general/enabled')):    ?>
+                                <?php //if($helper->getConfig('mydesigns_general/enabled')):     ?>
                                 <div id="add_mydesigns_content" class="desgin-detail" style="display: none;">
                                     <div id="mydesigns_images_container" class="">
                                         <?php echo $this->getChildHtml("mydesigns"); ?>
                                     </div>
                                 </div>
-                                <?php //endif;   ?>   
+                                <?php //endif;    ?>   
 
                                 <!-- Social Media -->
                                 <div id="add_social_content" class="desgin-detail socialmedia_content" style="display: none;">
@@ -635,7 +644,7 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
                     <!--            <div id="login_popup" class="background-opacity" style="display: none; background: none repeat scroll 0% 0% rgb(0, 0, 0);"></div>-->
                     <?php echo $this->getChildHtml("customer_login"); ?>
                     <?php echo $this->getChildHtml("customer_register"); ?>
-                   
+
 
 
                     <div id="productdesigner-preview" style="display: none;">
@@ -746,6 +755,7 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
                             "custom_image_price": "<?php echo $config->getValue('productdesigner/general/pricepercustomuploadedimage') ?>"
 
                         };
+                        data.tierprice = '<?php echo $jsonHelper->jsonEncode($tier_prices) ?>';
                         data.area = {
                             "color_count": "<?php echo $config->getValue('productdesigner/printingmethod/color_qty') ?>",
                             "small_area_start": "<?php echo $config->getValue('productdesigner/printingmethod/small_area_size_start') ?>",
@@ -757,7 +767,7 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
                             "extralarge_area_start": "<?php echo $config->getValue('productdesigner/printingmethod/extra_large_area_size_start') ?>",
                             "extralarge_area_end": "<?php echo $config->getValue('productdesigner/printingmethod/extra_large_area_size_end') ?>",
                         };
-
+                        data.multiper = "<?php echo $config->getValue('productdesigner/general/multipler_value') ?>",
 
         <?php
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
@@ -820,6 +830,9 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
                         var getmydesignUrl = '<?php
         echo $this->getUrl('*/*/getmydesign', array('_secure' => $this->getRequest()->isSecure()));
         ?>';
+        var tierPriceUrl = '<?php
+        echo $this->getUrl('*/*/getTierPrice', array('_secure' => $this->getRequest()->isSecure()));
+        ?>';
 
                         var productUrl = '<?php echo $product->getProductUrl(); ?>';
                         var allowDownload = '<?php echo $config->getValue('productdesigner/enabled') ?>';
@@ -839,7 +852,7 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
 
 
                         require(['jquery', 'jquery/ui'], function ($) {
-                            Product.initialize(data, loginUrl, logindesignUrl, registerUrl, downloadUrl, saveDesignUrl, continueUrl, productUrl, allowDownload, brushUrl, previewImageUrl, addtocarturl, getmydesignUrl, facebookUrl, googleUrl, sendmailUrl, '', mediaUrl);
+                            Product.initialize(data, loginUrl, logindesignUrl, registerUrl, downloadUrl, saveDesignUrl, continueUrl, productUrl, allowDownload, brushUrl, previewImageUrl, addtocarturl, getmydesignUrl, facebookUrl, googleUrl, sendmailUrl, '', mediaUrl,tierPriceUrl);
                         });
 
                         var textSize = "<?php echo $config->getValue('productdesigner/textconfiguration/defaultfontsize') ?>";
@@ -1096,7 +1109,9 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
                 </script>
             </div>
             <div class="right-form-addtocart">
+             <form name="customOptionFormProdSettings" id="customOptionFormProdSettings" data-mage-init='{"validation":{}}' onsubmit="return false" method="POST" >
                 <?php echo $this->getChildHtml("add_to_cart"); ?>
+                </form>
             </div>
         <?php endif; ?>
 

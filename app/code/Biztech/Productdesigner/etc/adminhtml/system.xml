@@ -66,21 +66,25 @@
                     <label>Image height for Wristband, px</label>
                     <comment>Max height is 100.</comment>
                 </field>  
+                <field id="multipler_value" translate="label" type="text" sortOrder="12" showInDefault="500" showInWebsite="1" showInStore="1" >
+                    <label>Add Multiper for Subtotal</label>
+                    <comment>Eg: 50</comment>
+                </field>  
 
-                <field id="pagetitle" translate="label" type="text" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1" >
+                <field id="pagetitle" translate="label" type="text" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1" >
                     <label>Page Title</label>
                 </field>
-                <field id="downloadimagetype" translate="label" type="select" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1" >
+                <field id="downloadimagetype" translate="label" type="select" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1" >
                     <label>Download Image Type</label>
                     <source_model>Biztech\Productdesigner\Block\Adminhtml\Config\Imageformat</source_model>
                 </field> 
 
-                <field id="generatesvg" translate="label" type="select" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1" >
+                <field id="generatesvg" translate="label" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1" >
                     <label>Generate SVG</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
                 </field> 
                 
-                <field id="delete_unused_designs" translate="label" type="text" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1" >
+                <field id="delete_unused_designs" translate="label" type="text" sortOrder="16" showInDefault="1" showInWebsite="1" showInStore="1" >
                     <label>How many days after unused designs images need to removed?</label>                   
                     <comment>Enter full day Example: 1</comment>
                     <validate>required-entry validate-digits</validate>
@@ -389,7 +393,7 @@
                 </field>
 
             </group>
-
+             
 
         </section>
         
