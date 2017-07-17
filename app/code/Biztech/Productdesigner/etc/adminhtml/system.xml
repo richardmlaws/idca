@@ -208,21 +208,25 @@
                     <label>Default Font Size</label>
                     <source_model>Biztech\Productdesigner\Model\Adminhtml\Config\Source\Fontsizes</source_model>
                 </field>
-                <field id="defaultfont" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1" >
+                <field id="defaultfontsizeband" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label>Default Font Size for Wristband</label>
+                    <source_model>Biztech\Productdesigner\Model\Adminhtml\Config\Source\Fontsizesband</source_model>
+                </field>
+                <field id="defaultfont" translate="label" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1" >
                     <label>Default Font</label>
                     <source_model>Biztech\Productdesigner\Model\Adminhtml\Config\Source\FontFamily</source_model>
                 </field>
-                <field id="settextlimit" translate="label" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1" >
+                <field id="settextlimit" translate="label" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1" >
                     <label>Set Text Limit</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="textlimit" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1" >
+                <field id="textlimit" translate="label" type="text" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1" >
                     <label>Text limit(Per object)</label>
                     <depends>
                         <field id="settextlimit">1</field>
                     </depends>
                 </field>
-                <field id="errormessagetext" translate="label" type="textarea" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1" >
+                <field id="errormessagetext" translate="label" type="textarea" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1" >
                     <label>Error message</label> 
                     <depends>
                         <field id="settextlimit">1</field>
@@ -303,7 +307,31 @@
                 <field id="check1" translate="label comment" type="button" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
                     <frontend_model>Biztech\Productdesigner\Block\System\Config\Collect</frontend_model>
                 </field> 
-            </group>  
+            </group>
+
+             <group id="downloaddesign_general_band" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="150">
+                <label>Download Design From Designer Page for Wristband</label>
+                <field id="enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label>Download Design From Designer Page for Wristband</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field> 
+                
+                <field id="watermark" translate="label comment" type="image" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Watermark</label>
+                    <backend_model>Biztech\Productdesigner\Model\Config\Backend\Image</backend_model>
+                    <base_url type="media" scope_info="1">productdesigner\uploadwatermark</base_url>
+                    <comment>Allowed file types: jpeg, gif, png.</comment>
+                </field>
+                
+                <field id="watermark_text" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label>Text for Watermark Image for Wristband</label>
+                    <comment>Please add maximum 8 character text to create watermark png image.If more text it will not dispaly full.</comment>
+                </field>  
+                
+                <field id="check1" translate="label comment" type="button" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <frontend_model>Biztech\Productdesigner\Block\System\Config\Collectband</frontend_model>
+                </field> 
+            </group>    
 
 
             <group id="printingmethod" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="140">

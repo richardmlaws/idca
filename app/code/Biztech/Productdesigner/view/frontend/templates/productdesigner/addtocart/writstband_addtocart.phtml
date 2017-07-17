@@ -40,7 +40,7 @@ if (isset($printingMethod) && $printingMethod != '') {
                 <?php
             }
         }
-    }
+  
     ?>
     <ul>
         <?php if ($product->getTypeId() == 'configurable'): ?>
@@ -103,7 +103,7 @@ if (isset($printingMethod) && $printingMethod != '') {
             endif;
         }
         ?>
-    <?php endif; ?>
+    <?php endif;   }?>
 </div>
 <?php
 if ($product->getTypeId() == 'configurable') {

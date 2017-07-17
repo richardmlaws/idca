@@ -96,10 +96,11 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
         }
 
         $band_enable = $product->getEnableWristband();
-
+        $printingMethod = $product->getData('printingmethodattr');
         if ($product->getTypeId() == 'configurable') {
             $printingCollection = $objectManager->create('Biztech\Productdesigner\Model\Mysql4\Printingmethod\Collection')->addFieldToFilter('status', array('eq' => 1));
-            if (count($printingCollection) != 0) {
+            //if (count($printingCollection) != 0) {
+             if($printingMethod != '') {
                 $printing_method_avail = '1';
             } else {
                 $printing_method_avail = '0';
@@ -113,7 +114,8 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
             }
         } else {
             $simpleprintingCollection = $objectManager->create('Biztech\Productdesigner\Model\Mysql4\Simpleprintingmethod\Collection')->addFieldToFilter('status', array('eq' => 1));
-            if (count($simpleprintingCollection) != 0) {
+           // if (count($simpleprintingCollection) != 0) {
+             if($printingMethod != '') {
                 $printing_method_avail = '1';
             } else {
                 $printing_method_avail = '0';
@@ -610,12 +612,12 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
                                 <li id="obj_duplicate" class="disabled" title="<?php echo __('Duplicate'); ?>"><span class="sprite ico-copy"></span><span class="label">Copy</span></li>                        </ul>
                         </div>
 
-                        <div class="progress-bar-wrapper">
+                      <?php /*  <div class="progress-bar-wrapper">
                             <div class="bar-div">
                                 <span id="display2" class="display-count"></span>
                                 <span id="progress_message2" class="progress-message"></span>
                             </div>
-                        </div> 
+                        </div>  */ ?>
 
                     </div>        
                     <div class="pd-right-panel" <?php echo $band_enable ? 'style="display:none;"' : ''; ?>>
@@ -855,7 +857,7 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
                             Product.initialize(data, loginUrl, logindesignUrl, registerUrl, downloadUrl, saveDesignUrl, continueUrl, productUrl, allowDownload, brushUrl, previewImageUrl, addtocarturl, getmydesignUrl, facebookUrl, googleUrl, sendmailUrl, '', mediaUrl,tierPriceUrl);
                         });
 
-                        var textSize = "<?php echo $config->getValue('productdesigner/textconfiguration/defaultfontsize') ?>";
+                        var textSize = "<?php echo $config->getValue('productdesigner/textconfiguration/defaultfontsizeband') ?>";
                         var textFamily = "<?php echo $config->getValue('productdesigner/textconfiguration/defaultfont') ?>";
                         var text_limit_data = {};
                         text_limit_data.data = {
@@ -924,7 +926,7 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
                             var progressInterval = setInterval(func, 10);
                             function func()
                             {
-                                jQuery('.progress-bar-wrapper').show();
+                                //jQuery('.progress-bar-wrapper').show();
                                 jQuery("#display2").text(parseInt(i) + '%');
                                 if (progressCount >= 0)
                                 {
@@ -951,7 +953,7 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
                                 if (i == 101) {
                                     clearInterval(progressInterval);
                                     jQuery('#pd_loading_img').hide();
-                                    jQuery('.progress-bar-wrapper').hide();
+                                    //jQuery('.progress-bar-wrapper').hide();
                                     initProductDesigner();
                                 }
                             }
