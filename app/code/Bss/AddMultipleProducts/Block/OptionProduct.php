@@ -43,6 +43,7 @@ class OptionProduct extends \Magento\Framework\View\Element\Template
     protected $pricingHelper;
     protected $_blockFactory;
     protected $resultPageFactory;
+    protected $registry;
 
     public function __construct(
         Context $context,
@@ -52,6 +53,7 @@ class OptionProduct extends \Magento\Framework\View\Element\Template
         \Magento\Framework\Pricing\Helper\Data $pricingHelper,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Magento\Framework\View\Element\BlockFactory $blockFactory,
+        \Magento\Framework\Registry $registry,
         array $data = []
     ) {
         $this->helperData      = $helperData;
@@ -60,6 +62,7 @@ class OptionProduct extends \Magento\Framework\View\Element\Template
         $this->resultPageFactory = $resultPageFactory;
         $this->pricingHelper   = $pricingHelper;
         $this->_catalogProductOptionTypeDate = $catalogProductOptionTypeDate;
+        $this->registry = $registry;
         parent::__construct($context, $data);
     }
 
@@ -140,6 +143,8 @@ class OptionProduct extends \Magento\Framework\View\Element\Template
     
     public function getProductPriceHtml(\Magento\Catalog\Model\Product $product)
     {
+        $this->registry->unregister("recent_product");
+        $this->registry->register("recent_product", $product);
         $resultPage = $this->resultPageFactory->create();
         $priceRender = $resultPage->getLayout()->getBlock('product.price.render.default');
 

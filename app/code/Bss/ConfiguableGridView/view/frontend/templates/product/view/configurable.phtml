@@ -212,7 +212,8 @@ $taxRate  = $taxRate/100;
 
 				if(showTotalDetailed) {
 					var totalDetailTable = '<?php echo $this->getDetailHtml(); ?>';
-					$('#product-options-wrapper').append(totalDetailTable);
+					<!-- $('#product-options-wrapper').append(totalDetailTable); -->
+					$('.product-options-bottom').prepend(totalDetailTable);
 				}
 
 				function convertPriceConfiguableProduct(price) {
@@ -349,13 +350,13 @@ $taxRate  = $taxRate/100;
 							
 							$('.total-area .qty-total .value').text(totalQty);
 							$('.total-area .price-total .value').text(convertPriceConfiguableProduct(configuble_sum_total));
-							$('.total-area .price-total .price-total-excl').text(' (Excl. Tax: ' + convertPriceConfiguableProduct(configuble_sum_total*(1/(1+taxrate))) + ')');
+							$('.total-area .price-total .price-total-excl').text('' + convertPriceConfiguableProduct(configuble_sum_total*(1/(1+taxrate))) + '');
 							var unitprice = 0;
 							if (totalQty > 0) {
 								unitprice = configuble_sum_total/totalQty;
 							}
 							$('.total-area .price-unit .value').text(convertPriceConfiguableProduct(unitprice));
-							$('.total-area .price-unit .price-unit-excl').text(' (Excl. Tax: ' + convertPriceConfiguableProduct(unitprice*(1/(1+taxrate))) + ')');
+							$('.total-area .price-unit .price-unit-excl').text('' + convertPriceConfiguableProduct(unitprice*(1/(1+taxrate))) + '');
 						}
 					})
 				});
@@ -379,9 +380,9 @@ $taxRate  = $taxRate/100;
 					$('.total-area .qty-detail').html("");
 					$('.total-area .qty-total .value').text(0);
 					$('.total-area .price-total .value').text(convertPriceConfiguableProduct(0));
-					$('.total-area .price-total .price-total-excl').text(' (Excl. Tax: ' + convertPriceConfiguableProduct(0) + ')');
+					$('.total-area .price-total .price-total-excl').text(' Exc. Tax: ' + convertPriceConfiguableProduct(0) + '');
 					$('.total-area .price-unit .value').text(convertPriceConfiguableProduct(0));
-					$('.total-area .price-unit .price-unit-excl').text(' (Excl. Tax: ' + convertPriceConfiguableProduct(0) + ')');
+					$('.total-area .price-unit .price-unit-excl').text(' Exc. Tax: ' + convertPriceConfiguableProduct(0) + '');
                                         
 				});
 			});

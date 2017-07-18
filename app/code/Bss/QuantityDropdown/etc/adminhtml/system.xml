@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!-- 
+/**
+ * BSS Commerce Co.  
+ *
+ * NOTICE OF LICENSE  
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * =================================================================
+ *                 MAGENTO EDITION USAGE NOTICE
+ * =================================================================
+ * This package designed for Magento COMMUNITY edition
+ * BSS Commerce does not guarantee correct work of this extension
+ * on any other Magento edition except Magento COMMUNITY edition.
+ * BSS Commerce does not provide extension support in case of
+ * incorrect edition usage.
+ * =================================================================
+ *
+ * @category  BSS
+ * @package   Bss_QuantityDropdown
+ * @author    Extension Team
+ * @copyright Copyright (c) 2015-2016 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license   http://bsscommerce.com/Bss-Commerce-License.txt
+ */ 
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="bss" translate="label" sortOrder="300">             
+            <label> <![CDATA[Bss Commerce]]></label> 
+        </tab>
+        <section id="quantitydropdown" translate="label" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Quantity Dropdown </label>
+            <tab>bss</tab>
+            <resource>Bss_QuantityDropdown::quantitydropdown_configuration</resource>        
+            <group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Quantity Dropdown Configuration</label>
+                <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>               
+                <field id="value" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default Quantity Value</label>
+                    <source_model>Bss\QuantityDropdown\Model\Config\Source\Value</source_model>
+                </field>
+                <field id="max" translate="label" type="text" sortOrder="2.3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Max Quantity Value</label>
+                    <validate>required-entry validate-digits validate-greater-than-zero</validate>
+                    <comment>For Using Quantity Increment Value</comment>
+                </field>
+                <field id="custom" translate="label" type="text" sortOrder="2.5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Custom Value</label>
+                    <comment> Input Format: number1,number2,numberX </comment>
+                </field>
+                <field id="display" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Display On Product List Page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Display on Category, Wishlist, Compare Page and Search Page</comment>
+                </field>
+                <field id="show" translate="label" type="select" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show Price In List</label>
+                    <source_model>Bss\QuantityDropdown\Model\Config\Source\Show</source_model>
+                </field>
+                <field id="hide" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Hide Quantity Value Which Is Larger Than Stock Quantity</label>
+                    <source_model>Bss\QuantityDropdown\Model\Config\Source\Hide</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
