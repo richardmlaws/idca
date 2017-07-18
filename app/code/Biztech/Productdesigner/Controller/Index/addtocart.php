@@ -31,9 +31,7 @@ class addtocart extends \Magento\Framework\App\Action\Action {
     protected $product;
 
     public function __construct(
-    \Magento\Framework\App\Action\Context $context,
-            \Magento\Framework\View\Result\PageFactory $resultPageFactory,
-            \Magento\Catalog\Model\Product $product
+    \Magento\Framework\App\Action\Context $context, \Magento\Framework\View\Result\PageFactory $resultPageFactory, \Magento\Catalog\Model\Product $product
     ) {
         $this->resultPageFactory = $resultPageFactory;
 
@@ -54,75 +52,92 @@ class addtocart extends \Magento\Framework\App\Action\Action {
             if (isset($params1['data']['qty'])) {
                 $qty = $params1['data']['qty'];
             }
-             
+
             if (isset($params1['data']['custom'])) {
 
                 $option = $params1['data']['custom'];
-                 
+
                 $options = array();
-                
+
                 foreach ($option as $key => $value) {
-                    if (array_key_exists($value['name'],
-                                    $options)) {
+                    if (array_key_exists($value['name'], $options)) {
                         $options[$value['name']] = array($options[$value['name']], $value['value']);
                     } else {
                         $options[$value['name']] = $value['value'];
                     }
-                   
                 }
             }
-             
             $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+            
+            if ($params1['data']['producttype'] == 'configurable') {
+                if (isset($params1['data']['configattr'])) {
+                    $attr = $params1['data']['configattr'];
+                    foreach ($attr as $key => $value) {
 
-            if (isset($params1['data']['configattr'])) {
+                        $params = array();
+                        $params['product'] = $prod_id;
+                        //$params['qty'] = 1; //product quantity
+                        if (isset($options)) {
+                            $params['options'] = $options;
+                        }
 
-                $attr = $params1['data']['configattr'];
-                foreach ($attr as $key => $value) {
+                        $attrs = array();
 
+                        $attrs[$color] = $params1['data']['color'];
+                        if ($value['name'] == 'size-quantity') {
+                            $test = '';
+                            $test = $value['value'];
+                        } else {
+                            if (isset($test) && $test > 0) {
+                                $params['product'] = $prod_id;
+                                $params['qty'] = $test;
+
+                                $attrs[$value['name']] = $value['value'];
+                                $params['super_attribute'] = $attrs;
+                                if (isset($options)) {
+                                    $params['options'] = $options;
+                                }
+                               // print_r($params);
+                                $customCart = $objectManager->create('\Magento\Checkout\Model\Cart');
+                                $obj_product = $objectManager->create('Magento\Catalog\Model\Product');
+                                $_product = $obj_product->load($prod_id);
+                                $customCart->addProduct($_product, $params);
+                            }
+                        }
+                    }
+                    
+                    //print_r($params['super_attribute']); die;
+                    if (isset($customCart)) {
+
+                        $customCart->save();
+                        $response['url'] = $this->_url->getUrl('checkout/cart');
+                        $response['status'] = 'success';
+                        $this->messageManager->addSuccess(__('Add to cart successfully.'));
+                    } else {
+                        $response['status'] = 'fail';
+                        $response['message'] = 'please provide quantity';
+                    }
+                } else {
                     $params = array();
                     $params['product'] = $prod_id;
-                    //$params['qty'] = 1; //product quantity
+                    $params['qty'] = $qty;
+                    $attrs = array();
+                    $attrs[$color] = $params1['data']['color'];
+                    $params['super_attribute'] = $attrs;
                     if (isset($options)) {
                         $params['options'] = $options;
                     }
+                    $customCart = $objectManager->create('\Magento\Checkout\Model\Cart');                    
+                    $obj_product = $objectManager->create('Magento\Catalog\Model\Product');
+                    $_product = $obj_product->load($prod_id);
+                    $customCart->addProduct($_product, $params);
 
-                    $attrs = array();
-
-                    $attrs[$color] = $params1['data']['color'];
-                    if ($value['name'] == 'size-quantity') {
-                        $test = '';
-                        $test = $value['value'];
-                    } else {
-                        if ($test != '') {
-                            $params['product'] = $prod_id;
-                            $params['qty'] = $test;
-
-                            $attrs[$value['name']] = $value['value'];
-                            $params['super_attribute'] = $attrs;
-                            if (isset($options)) {
-                                $params['options'] = $options;
-                            }
-                            $customCart = $objectManager->create('\Magento\Checkout\Model\Cart');
-
-                            $obj_product = $objectManager->create('Magento\Catalog\Model\Product');
-                            $_product = $obj_product->load($prod_id);
-                            $customCart->addProduct($_product,
-                                    $params);
-                        }
-                    }
-                }
-                if (isset($customCart)) {
                     $customCart->save();
                     $response['url'] = $this->_url->getUrl('checkout/cart');
                     $response['status'] = 'success';
                     $this->messageManager->addSuccess(__('Add to cart successfully.'));
-                } else {
-                    $response['status'] = 'fail';
-                    $response['message'] = 'please provide quantity';
                 }
             } else {
-                $obj_product = $objectManager->create('Magento\Catalog\Model\Product');
-                $_product = $obj_product->load($prod_id);
                 $params = array();
                 $params['product'] = $prod_id;
                 $params['qty'] = $qty;
@@ -130,8 +145,9 @@ class addtocart extends \Magento\Framework\App\Action\Action {
                     $params['options'] = $options;
                 }
                 $customCart = $objectManager->create('\Magento\Checkout\Model\Cart');
-                $customCart->addProduct($_product,
-                        $params);
+                $obj_product = $objectManager->create('Magento\Catalog\Model\Product');
+                $_product = $obj_product->load($prod_id);
+                $customCart->addProduct($_product, $params);
                 $carts = $customCart->getQuote();
 
                 $customCart->save();

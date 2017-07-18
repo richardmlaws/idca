@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <!-- <preference for="\Magento\Customer\Api\Data\AddressInterfaceFactory" type="\Swissup\Geoip\Api\Data\AddressInterfaceFactory"/> -->
-    <!-- <preference for="\Magento\Customer\Model\AddressFactory" type="\Swissup\Geoip\Model\AddressFactory"/> -->
-    <preference for="Magento\Checkout\Block\Checkout\AttributeMerger" type="Swissup\Geoip\Block\Checkout\AttributeMerger"/>
-    <preference for="Magento\Customer\Block\Address\Edit" type="Swissup\Geoip\Block\Address\Edit"/>
-</config>

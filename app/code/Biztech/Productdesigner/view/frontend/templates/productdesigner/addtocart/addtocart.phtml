@@ -5,24 +5,30 @@ $obj_product = $objectManager->create('Magento\Catalog\Model\Product');
 $product = $obj_product->load($product_id);
 $storeManager = $objectManager->get('Magento\Store\Model\StoreManagerInterface');
 $storeid = $storeManager->getStore()->getId();
+$printingMethod = $product->getPrintingmethodattr();
+if (isset($printingMethod) && $printingMethod != '') {
+    $printingMethods = explode(',', $printingMethod);
+}
 ?>
 <form name="customOptionFormProdSettings" id="customOptionFormProdSettings" data-mage-init='{"validation":{}}' onsubmit="return false" method="POST" >
     <div class="printing-method-block" id="printing-method-block">
         <?php
-        if ($product->getTypeId() == 'configurable') {
-            $printingCollection = $objectManager->create('Biztech\Productdesigner\Model\Mysql4\Printingmethod\Collection')->addFieldToFilter('status', array('eq' => 1))->addFieldToFilter('store_id', array('in' => array(0, $storeid)));
-            if (count($printingCollection) != 0) {
-                ?>
-                <h3 id="quantity"><?php echo __('Printing Method'); ?></h3>
-                <?php
-            }
-        } else {
-            $simpleprintingCollection = $objectManager->create('Biztech\Productdesigner\Model\Mysql4\Simpleprintingmethod\Collection')->addFieldToFilter('status', array('eq' => 1))->addFieldToFilter('store_id', array('in' => array(0, $storeid)));
-            if (count($simpleprintingCollection) != 0) {
-                ?>
-                <h3 id="quantity"><?php echo __('Printing Method'); ?></h3>
-                <?php
-            }
+         if ($product->getprintingmethodattr() != '') {
+                if ($product->getTypeId() == 'configurable') {
+                    $printingCollection = $objectManager->create('Biztech\Productdesigner\Model\Mysql4\Printingmethod\Collection')->addFieldToFilter('status', array('eq' => 1))->addFieldToFilter('store_id', array('in' => array(0, $storeid)));
+                    if (count($printingCollection) != 0) {
+                        ?>
+                        <h3 id="quantity"><?php echo __('Printing Method'); ?></h3>
+                        <?php
+                    }
+                } else {
+                    $simpleprintingCollection = $objectManager->create('Biztech\Productdesigner\Model\Mysql4\Simpleprintingmethod\Collection')->addFieldToFilter('status', array('eq' => 1))->addFieldToFilter('store_id', array('in' => array(0, $storeid)));
+                    if (count($simpleprintingCollection) != 0) {
+                        ?>
+                        <h3 id="quantity"><?php echo __('Printing Method'); ?></h3>
+                        <?php
+                    }
+                }
         }
         ?>
         <ul>

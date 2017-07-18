@@ -53,28 +53,41 @@
                 <field id="imagewidth" translate="label" type="text" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1" >
                     <label>Image width, px</label>
                     <comment>Max width is 540.</comment>
-                </field> 
+                </field>
                 <field id="imageheight" translate="label" type="text" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1" >
                     <label>Image height, px</label>
                     <comment>Max height is 650.</comment>
                 </field>  
-                <field id="pagetitle" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" >
+                <field id="imagewidthband" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label>Image width for Wristband, px</label>
+                    <comment>Max width is 650.</comment>
+                </field> 
+                <field id="imageheightband" translate="label" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label>Image height for Wristband, px</label>
+                    <comment>Max height is 100.</comment>
+                </field>  
+                <field id="multipler_value" translate="label" type="text" sortOrder="12" showInDefault="500" showInWebsite="1" showInStore="1" >
+                    <label>Add Multiper for Subtotal</label>
+                    <comment>Eg: 50</comment>
+                </field>  
+
+                <field id="pagetitle" translate="label" type="text" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1" >
                     <label>Page Title</label>
                 </field>
-                <field id="downloadimagetype" translate="label" type="select" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1" >
+                <field id="downloadimagetype" translate="label" type="select" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1" >
                     <label>Download Image Type</label>
                     <source_model>Biztech\Productdesigner\Block\Adminhtml\Config\Imageformat</source_model>
                 </field> 
 
-                <field id="generatesvg" translate="label" type="select" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1" >
+                <field id="generatesvg" translate="label" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1" >
                     <label>Generate SVG</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model> 
                 </field> 
                 
-                 <field id="delete_unused_designs" translate="label" type="text" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1" >
+                <field id="delete_unused_designs" translate="label" type="text" sortOrder="16" showInDefault="1" showInWebsite="1" showInStore="1" >
                     <label>How many days after unused designs images need to removed?</label>                   
                     <comment>Enter full day Example: 1</comment>
-                     <validate>required-entry validate-digits</validate>
+                    <validate>required-entry validate-digits</validate>
                 </field>  
 
             </group>
@@ -195,21 +208,25 @@
                     <label>Default Font Size</label>
                     <source_model>Biztech\Productdesigner\Model\Adminhtml\Config\Source\Fontsizes</source_model>
                 </field>
-                <field id="defaultfont" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1" >
+                <field id="defaultfontsizeband" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label>Default Font Size for Wristband</label>
+                    <source_model>Biztech\Productdesigner\Model\Adminhtml\Config\Source\Fontsizesband</source_model>
+                </field>
+                <field id="defaultfont" translate="label" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1" >
                     <label>Default Font</label>
                     <source_model>Biztech\Productdesigner\Model\Adminhtml\Config\Source\FontFamily</source_model>
                 </field>
-                <field id="settextlimit" translate="label" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1" >
+                <field id="settextlimit" translate="label" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1" >
                     <label>Set Text Limit</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="textlimit" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1" >
+                <field id="textlimit" translate="label" type="text" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1" >
                     <label>Text limit(Per object)</label>
                     <depends>
                         <field id="settextlimit">1</field>
                     </depends>
                 </field>
-                <field id="errormessagetext" translate="label" type="textarea" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1" >
+                <field id="errormessagetext" translate="label" type="textarea" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1" >
                     <label>Error message</label> 
                     <depends>
                         <field id="settextlimit">1</field>
@@ -268,29 +285,53 @@
                 </field>                          
             </group>   
             
-             <group id="downloaddesign_general" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="150">
+            <group id="downloaddesign_general" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="150">
                 <label>Download Design From Designer Page</label>
                 <field id="enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1" >
                     <label>Download Design From Designer Page</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field> 
                 
-              <field id="watermark" translate="label comment" type="image" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>Watermark</label>
-                <backend_model>Biztech\Productdesigner\Model\Config\Backend\Image</backend_model>
-                <base_url type="media" scope_info="1">productdesigner\uploadwatermark</base_url>
-                 <comment>Allowed file types: jpeg, gif, png.</comment>
+                <field id="watermark" translate="label comment" type="image" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Watermark</label>
+                    <backend_model>Biztech\Productdesigner\Model\Config\Backend\Image</backend_model>
+                    <base_url type="media" scope_info="1">productdesigner\uploadwatermark</base_url>
+                    <comment>Allowed file types: jpeg, gif, png.</comment>
                 </field>
                 
-                 <field id="watermark_text" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1" >
+                <field id="watermark_text" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1" >
                     <label>Text for Watermark Image</label>
                     <comment>Please add maximum 8 character text to create watermark png image.If more text it will not dispaly full.</comment>
                 </field>  
                 
-                 <field id="check1" translate="label comment" type="button" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="check1" translate="label comment" type="button" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
                     <frontend_model>Biztech\Productdesigner\Block\System\Config\Collect</frontend_model>
-                 </field> 
-            </group>  
+                </field> 
+            </group>
+
+             <group id="downloaddesign_general_band" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="150">
+                <label>Download Design From Designer Page for Wristband</label>
+                <field id="enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label>Download Design From Designer Page for Wristband</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field> 
+                
+                <field id="watermark" translate="label comment" type="image" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Watermark</label>
+                    <backend_model>Biztech\Productdesigner\Model\Config\Backend\Image</backend_model>
+                    <base_url type="media" scope_info="1">productdesigner\uploadwatermark</base_url>
+                    <comment>Allowed file types: jpeg, gif, png.</comment>
+                </field>
+                
+                <field id="watermark_text" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1" >
+                    <label>Text for Watermark Image for Wristband</label>
+                    <comment>Please add maximum 8 character text to create watermark png image.If more text it will not dispaly full.</comment>
+                </field>  
+                
+                <field id="check1" translate="label comment" type="button" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <frontend_model>Biztech\Productdesigner\Block\System\Config\Collectband</frontend_model>
+                </field> 
+            </group>    
 
 
             <group id="printingmethod" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="140">
@@ -334,7 +375,7 @@
                     <comment>New are size will not be added directly, It requires some customization.</comment>
                 </field>
 
-                                       
+
             </group>     
 
 
@@ -363,7 +404,7 @@
 
             </group> 
 
-           
+
             <group id="social_media_upload" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="180">
                 <label>Social Media Upload</label>
 
@@ -380,7 +421,7 @@
                 </field>
 
             </group>
-
+             
 
         </section>
         

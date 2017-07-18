@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
-    <menu>
-    	<add id="Customweb_SagePayCw::transactions" title="Sage Pay Transactions" module="Customweb_SagePayCw" sortOrder="10" parent="Customweb_Base::sales_customweb" action="sagepaycw/transaction" resource="Customweb_SagePayCw::transaction" />
-
-        <add id="Customweb_SagePayCw::config" title="Sage Pay" module="Customweb_SagePayCw" sortOrder="100" parent="Customweb_Base::config" action="sagepaycw/config" resource="Customweb_SagePayCw::config"/>
-    </menu>
-</config>

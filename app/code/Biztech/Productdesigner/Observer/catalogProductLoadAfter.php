@@ -35,18 +35,20 @@ class catalogProductLoadAfter implements ObserverInterface {
             $obj_product = $objectManager->create('Magento\Catalog\Model\Product');
             $product = $obj_product->load($id);
 
-
-            if ($product->getTypeId() == 'configurable') {
-                $printingCollection = $objectManager->create('Biztech\Productdesigner\Model\Mysql4\Printingmethod\Collection')->addFieldToFilter('status', array('eq' => 1));
-                if (count($printingCollection) != 0) {
-                    $prining_code = $data['data']['printing_code'];
-                    $printing_type_id = $data['data']['printing_type_id'];
-                }
-            } else {
-                $simpleprintingCollection = $objectManager->create('Biztech\Productdesigner\Model\Mysql4\Simpleprintingmethod\Collection')->addFieldToFilter('status', array('eq' => 1));
-                if (count($simpleprintingCollection) != 0) {
-                    $prining_code = $data['data']['printing_code'];
-                    $printing_type_id = $data['data']['printing_type_id'];
+            if($product->getData('printingmethodattr') != '')
+            {
+                if ($product->getTypeId() == 'configurable') {
+                    $printingCollection = $objectManager->create('Biztech\Productdesigner\Model\Mysql4\Printingmethod\Collection')->addFieldToFilter('status', array('eq' => 1));
+                    if (count($printingCollection) != 0) {
+                        $prining_code = $data['data']['printing_code'];
+                        $printing_type_id = $data['data']['printing_type_id'];
+                    }
+                } else {
+                    $simpleprintingCollection = $objectManager->create('Biztech\Productdesigner\Model\Mysql4\Simpleprintingmethod\Collection')->addFieldToFilter('status', array('eq' => 1));
+                    if (count($simpleprintingCollection) != 0) {
+                        $prining_code = $data['data']['printing_code'];
+                        $printing_type_id = $data['data']['printing_type_id'];
+                    }
                 }
             }
 

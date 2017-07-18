@@ -16,6 +16,7 @@ class Designer extends Field {
     const EnableFont = 'productdesigner/textconfiguration/enablegooglefonts';
     const FontList = 'productdesigner/textconfiguration/googlefontlist';
     const FontSize = 'productdesigner/textconfiguration/defaultfontsize';
+    const FontSizeBand = "productdesigner/textconfiguration/defaultfontsizeband";
     const QuotesCategory = 'productdesigner/quotesconfiguration/setdefaultquotescategory';
     const Confirmation = 'productdesigner/customimageuploadconfiguration/askforusersconfirmationbeforeuploadingimage';
     const ImageText = 'productdesigner/customimageuploadconfiguration/textforuserconfirmationbeforeuploadimage';
@@ -60,6 +61,9 @@ class Designer extends Field {
 
     public function getFontSize() {
         return $this->_scopeConfig->getValue(self::FontSize, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+    }
+    public function getFontSizeBand() {
+        return $this->_scopeConfig->getValue(self::FontSizeBand, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     public function getDefaultQuotesCategory() {

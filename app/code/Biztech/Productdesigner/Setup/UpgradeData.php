@@ -107,5 +107,54 @@ class UpgradeData implements UpgradeDataInterface
                     ]
             );
         }
+        if (version_compare($context->getVersion(), '1.0.9', '<')) {
+            $eavSetup = $this->eavSetupFactory->create(['setup' => $setup]);
+            $eavSetup->addAttribute(
+                \Magento\Catalog\Model\Product::ENTITY, 'enable_wristband', [
+                'type' => 'int',
+                'backend' => '',
+                'frontend' => '',
+                'label' => 'Enable For Wristband',
+                'input' => 'boolean',
+                'class' => '',
+                'source' => 'Magento\Catalog\Model\Product\Attribute\Source\Boolean',
+                'global' => \Magento\Catalog\Model\ResourceModel\Eav\Attribute::SCOPE_GLOBAL,
+                'visible' => true,
+                'required' => false,
+                ]
+            );
+
+        }
+         if (version_compare($context->getVersion(), '1.0.10', '<')) {
+            $eavSetup = $this->eavSetupFactory->create(['setup' => $setup]);
+            $eavSetup->addAttribute(
+                \Magento\Catalog\Model\Product::ENTITY, 'printingmethodattr', [
+               
+                'type'              => 'varchar',
+                'backend'           => '',
+                'frontend_input'    => '',
+                'frontend'          => '',
+                'label'             => 'Printing Method',
+                'input'             => 'multiselect',
+                'class'             => '',
+                'source'            => 'Biztech\Productdesigner\Model\Entity\Attribute\Source\Printingmethodattr',
+                'global'             => \Magento\Catalog\Model\ResourceModel\Eav\Attribute::SCOPE_GLOBAL,
+                'visible'           => true,
+                'used_in_product_listing' =>false,
+                'frontend_class'     => '',
+                'required'          => false,
+                'user_defined'      => true,
+                'default'           => '',
+                'searchable'        => false,
+                'filterable'        => false,
+                'comparable'        => false,
+                'visible_on_front'  => false,
+                'unique'            => false,
+                'position'            => 60,
+                ]
+            );
+
+        }
+
     }
 }

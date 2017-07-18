@@ -10,12 +10,19 @@ namespace Biztech\Productdesigner\Controller\Index;
 class saveDesign extends \Magento\Framework\App\Action\Action {
 
     protected $image;
+    protected $_scopeConfig;
+
+    const ResizeWidth      = 'productdesigner/general/imagewidth';
+    const ResizeHeight     = 'productdesigner/general/imageheight';
+    const ResizeWidthBand  = 'productdesigner/general/imagewidthband';
+    const ResizeHeightBand = 'productdesigner/general/imageheightband';
 
     public function __construct(
-    \Magento\Framework\App\Action\Context $context, \Magento\Catalog\Helper\Image $image
+    \Magento\Framework\App\Action\Context $context, \Magento\Catalog\Helper\Image $image,\Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
     ) {
         parent::__construct($context);
         $this->image = $image;
+        $this->_scopeConfig = $scopeConfig;
     }
 
     /**
@@ -183,7 +190,8 @@ class saveDesign extends \Magento\Framework\App\Action\Action {
                 "wInnerWidth" => isset($layer[0]->wInnerWidth) ? $layer[0]->wInnerWidth : '',
                 "zIndex" =>  isset($layer[0]->zIndex) ? $layer[0]->zIndex : '',
                 "oldFontSize" => isset($layer[0]->oldFontSize) ? $layer[0]->oldFontSize : '',
-               "zIndex" =>  isset($layer[0]->zIndex) ? $layer[0]->zIndex : '',
+                "zIndex" =>  isset($layer[0]->zIndex) ? $layer[0]->zIndex : '',
+                "textarea" =>  isset($layer[0]->textarea) ? $layer[0]->textarea : '',
             );
              if (isset($layer[0]->image_url) && $layer[0]->image_url) {
                 file_put_contents($dirImg, file_get_contents($image));
@@ -284,6 +292,7 @@ class saveDesign extends \Magento\Framework\App\Action\Action {
             $parentImageids[$newkey1] = $parentImage;
         }
         
+        $isEnableBand = $product->getEnableWristband();
 
         foreach ($merged_images as $key => $image) {
             foreach ($grouped_product_images as $product_image) {
@@ -295,7 +304,7 @@ class saveDesign extends \Magento\Framework\App\Action\Action {
                     $image_id = $parentImageids[$key];
                     $large_image = $merged_large_images[$key];
 
-                    $design_images = $this->saveDesignImages($prod_image_path, $image, $large_image, $image_id,$isSVG);
+                    $design_images = $this->saveDesignImages($prod_image_path, $image, $large_image, $image_id,$isSVG,$isEnableBand);
 
 
                     try {
@@ -367,7 +376,7 @@ class saveDesign extends \Magento\Framework\App\Action\Action {
         return $result;
     }
 
-    public function saveDesignImages($prod_image_path, $image, $large_image, $image_id, $isSVG = '') {
+    public function saveDesignImages($prod_image_path, $image, $large_image, $image_id, $isSVG = '',$isEnableBand = 0) {
 
 
         
@@ -444,10 +453,31 @@ class saveDesign extends \Magento\Framework\App\Action\Action {
 
 
         $config = $objectManager->create('Magento\Framework\App\Config\ScopeConfigInterface');
-        $resize_width = $config->getValue('productdesigner/general/imagewidth');
-        $resize_height = $config->getValue('productdesigner/general/imageheight');
-        //$resize_width = Mage::helper('productdesigner')->getConfig('productdesigner_general/design_image_width');
-        //$resize_height = Mage::helper('productdesigner')->getConfig('productdesigner_general/design_image_height');
+        
+        $resize_width       = $this->_scopeConfig->getValue(self::ResizeWidth, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        $resize_height      = $this->_scopeConfig->getValue(self::ResizeHeight, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        $resize_width_band  = $this->_scopeConfig->getValue(self::ResizeWidthBand, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        $resize_height_band = $this->_scopeConfig->getValue(self::ResizeHeightBand, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+
+        if (!isset($resize_width) && $resize_width == null) {
+            $resize_width = 540;
+        }
+        if (!isset($resize_height) && $resize_height == null) {
+            $resize_height = 650;
+        }
+
+        if ($isEnableBand) {
+
+            $resize_width  = $resize_width_band;
+            $resize_height = $resize_height_band;
+            if (!isset($resize_width_band) && $resize_width_band == null) {
+                $resize_width = 540;
+            }
+            if (!isset($resize_height_band) && $resize_height_band == null) {
+                $resize_height = 100;
+            }
+        }
+
         $base_image_name = "pd_" . $time . ".jpg";
         //$base_path = $this->getDispretionPath($base_image_name);
 
@@ -463,14 +493,6 @@ class saveDesign extends \Magento\Framework\App\Action\Action {
             mkdir($prod_image_dir, 0777, true);
         }
         $newPath_c = $new_prod_image;
-        if (!isset($resize_width) && $resize_width == null) {
-            $resize_width = 540;
-        }
-        if (!isset($resize_height) && $resize_height == null) {
-            $resize_height = 650;
-        }
-
-
 
         $resize = $this->resizeAndCreateDesignImage($prod_image_path, $newPath_c, $resize_width, $resize_height);
 
