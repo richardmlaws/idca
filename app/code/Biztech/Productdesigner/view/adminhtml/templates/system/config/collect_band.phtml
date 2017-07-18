@@ -9,7 +9,7 @@
     //<![CDATA[
     function watermarkcheckband() {
         var data = {};
-        data['watermarktext'] = $('productdesigner_downloaddesign_general_band_watermark_text').value;
+        data['watermarktext'] = $('productdesigner_downloaddesign_general_watermark_text_band').value;
         new Ajax.Request('<?php echo $this->getUrl('productdesigner/system_config/collectband/'); ?>', {
             method:     'get',
             parameters: data,

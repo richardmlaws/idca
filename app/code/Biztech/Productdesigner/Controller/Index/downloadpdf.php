@@ -114,7 +114,7 @@ class downloadpdf extends \Magento\Framework\App\Action\Action
             $isEnableBand = 0;
         }
 
-        $config        = $objectManager->create('Magento\Framework\App\Config\ScopeConfigInterface');
+        $config = $objectManager->create('Magento\Framework\App\Config\ScopeConfigInterface');
         // $resize_width  = $config->getValue('productdesigner/general/imagewidth');
         // $resize_height = $config->getValue('productdesigner/general/imageheight');
 
@@ -122,7 +122,6 @@ class downloadpdf extends \Magento\Framework\App\Action\Action
         $resize_height      = $config->getValue(self::ResizeHeight);
         $resize_width_band  = $config->getValue(self::ResizeWidthBand);
         $resize_height_band = $config->getValue(self::ResizeHeightBand);
-
 
         $demo = $objectManager->create('\Magento\Store\Model\StoreManagerInterface');
 
@@ -201,6 +200,8 @@ class downloadpdf extends \Magento\Framework\App\Action\Action
 
         if ($isEnableBand) {
 
+
+
             $resize_width  = $resize_width_band;
             $resize_height = $resize_height_band;
             if (!isset($resize_width_band) && $resize_width_band == null) {
@@ -209,135 +210,267 @@ class downloadpdf extends \Magento\Framework\App\Action\Action
             if (!isset($resize_height_band) && $resize_height_band == null) {
                 $resize_height = 100;
             }
-        }
-        
 
-        $resize = $this->resizeAndCreateDesignImage($prod_image_path, $newPath_c, $resize_width, $resize_height);
+            $resize = $this->resizeAndCreateDesignImage($prod_image_path, $newPath_c, $resize_width, $resize_height);
 
-        if ($resize) {
-            $info    = getimagesize($newPath_c);
-            $imgtype = $info['mime'];
-            switch ($imgtype) {
-                case 'image/jpeg':
-                    $dest = imagecreatefromjpeg($newPath_c);
-                    break;
-                case 'image/gif':
-                    $dest = imagecreatefromgif($newPath_c);
-                    break;
-                case 'image/png':
-                    $dest = imagecreatefrompng($newPath_c);
-                    break;
-                default:
-                    die('Invalid image type.');
-            }
-
-            $parent_images_id_final = '@' . $parent_images_id_final;
-            $objectManager          = \Magento\Framework\App\ObjectManager::getInstance();
-            $obj_product            = $objectManager->create('Biztech\Productdesigner\Model\Mysql4\Selectionarea\Collection')->addFieldToFilter('image_id', str_replace('@', '', $parent_images_id_final));
-            $dimensions             = $obj_product->getData();
-            //$dimensions = Mage::getModel('productdesigner/selectionarea')->getCollection()->addFieldToFilter('image_id',str_replace('@','',$parent_images_id_final))->getData();
-            // add water mark start
-
-            $om         = \Magento\Framework\App\ObjectManager::getInstance();
-            $filesystem = $om->get('Magento\Framework\Filesystem');
-            $reader     = $filesystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
-            $config     = $om->create('Magento\Framework\App\Config\ScopeConfigInterface');
-
-            //$logo = $reader->getAbsolutePath(). 'productdesigner/uploadwatermark/'.$config->getValue('productdesigner/downloaddesign_general/watermark');
-
-            if (($config->getValue('productdesigner/downloaddesign_general/watermark_text') != null) || ($config->getValue('productdesigner/downloaddesign_general/watermark_text') != '')):
-                //$logo = Mage::getBaseDir('media') . DS ."theme/default/textwatermark.png";
-                $logo = $reader->getAbsolutePath() . 'productdesigner/uploadwatermark/default/textwatermark.png';
-
-            elseif (($config->getValue('productdesigner/downloaddesign_general/watermark') != null) || ($config->getValue('productdesigner/downloaddesign_general/watermark') != '')):
-                //$logo = Mage::getBaseUrl('media') . DS . 'theme' . DS . Mage::getStoreConfig('productdesigner/downloaddesign_general/watermark');
-                $logo = $reader->getAbsolutePath() . 'productdesigner/uploadwatermark/' . $config->getValue('productdesigner/downloaddesign_general/watermark');
-            endif;
-
-            if (($config->getValue('productdesigner/downloaddesign_general/watermark_text') != null) || ($config->getValue('productdesigner/downloaddesign_general/watermark_text') != '')):
-                $info    = getimagesize($logo);
-                $imgtype = image_type_to_mime_type($info[2]);
+            if ($resize) {
+                $info    = getimagesize($newPath_c);
+                $imgtype = $info['mime'];
                 switch ($imgtype) {
                     case 'image/jpeg':
-                        $src = imagecreatefromjpeg($logo);
+                        $dest = imagecreatefromjpeg($newPath_c);
                         break;
                     case 'image/gif':
-                        $src = imagecreatefromgif($logo);
+                        $dest = imagecreatefromgif($newPath_c);
                         break;
                     case 'image/png':
-
-                        //$src = imagecreatefrompng($logo);
-
-                        $percent              = 0.5;
-                        list($width, $height) = getimagesize($logo);
-                        $newwidth             = $width * $percent;
-                        $newheight            = $height * $percent;
-
-                        $thumb  = imagecreate($newwidth, $newheight);
-                        $source = imagecreatefrompng($logo);
-
-                        imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-
+                        $dest = imagecreatefrompng($newPath_c);
                         break;
                     default:
-                        Mage::throwException('Invalid image type.');
+                        die('Invalid image type.');
                 }
-                imagecopy($dest, $thumb, 100, 200, 20, 13, imagesx($thumb), imagesy($thumb));
-            elseif (($config->getValue('productdesigner/downloaddesign_general/watermark') != null) || ($config->getValue('productdesigner/downloaddesign_general/watermark') != '')):
-                $info    = getimagesize($logo);
-                $imgtype = image_type_to_mime_type($info[2]);
-                switch ($imgtype) {
-                    case 'image/jpeg':
-                        $src = imagecreatefromjpeg($logo);
-                        break;
-                    case 'image/gif':
-                        $src = imagecreatefromgif($logo);
-                        break;
-                    case 'image/png':
 
-                        //$src = imagecreatefrompng($logo);
+                $parent_images_id_final = '@' . $parent_images_id_final;
+                $objectManager          = \Magento\Framework\App\ObjectManager::getInstance();
+                $obj_product            = $objectManager->create('Biztech\Productdesigner\Model\Mysql4\Selectionarea\Collection')->addFieldToFilter('image_id', str_replace('@', '', $parent_images_id_final));
+                $dimensions             = $obj_product->getData();
+                //$dimensions = Mage::getModel('productdesigner/selectionarea')->getCollection()->addFieldToFilter('image_id',str_replace('@','',$parent_images_id_final))->getData();
+                // add water mark start
 
-                        $percent              = 0.5;
-                        list($width, $height) = getimagesize($logo);
-                        $newwidth             = $width * $percent;
-                        $newheight            = $height * $percent;
+                $om         = \Magento\Framework\App\ObjectManager::getInstance();
+                $filesystem = $om->get('Magento\Framework\Filesystem');
+                $reader     = $filesystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
+                $config     = $om->create('Magento\Framework\App\Config\ScopeConfigInterface');
 
-                        $thumb  = imagecreate($newwidth, $newheight);
-                        $source = imagecreatefrompng($logo);
+                //$logo = $reader->getAbsolutePath(). 'productdesigner/uploadwatermark/'.$config->getValue('productdesigner/downloaddesign_general/watermark');
 
-                        imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+                if (($config->getValue('productdesigner/downloaddesign_general/watermark_text_band') != null) || ($config->getValue('productdesigner/downloaddesign_general/watermark_text') != '')):
+                    //$logo = Mage::getBaseDir('media') . DS ."theme/default/textwatermark.png";
+                    $logo = $reader->getAbsolutePath() . 'productdesigner/uploadwatermark/default/textwatermarkband.png';
 
-                        break;
-                    default:
-                        Mage::throwException('Invalid image type.');
+                elseif (($config->getValue('productdesigner/downloaddesign_general/watermark_band') != null) || ($config->getValue('productdesigner/downloaddesign_general/watermark') != '')):
+                    //$logo = Mage::getBaseUrl('media') . DS . 'theme' . DS . Mage::getStoreConfig('productdesigner/downloaddesign_general/watermark');
+                    $logo = $reader->getAbsolutePath() . 'productdesigner/uploadwatermark/' . $config->getValue('productdesigner/downloaddesign_general/watermark');
+                endif;
+
+
+                if (($config->getValue('productdesigner/downloaddesign_general/watermark_text_band') != null) || ($config->getValue('productdesigner/downloaddesign_general/watermark_text_band') != '')):
+                    $info    = getimagesize($logo);
+                    $imgtype = image_type_to_mime_type($info[2]);
+                    switch ($imgtype) {
+                        case 'image/jpeg':
+                            $src = imagecreatefromjpeg($logo);
+                            break;
+                        case 'image/gif':
+                            $src = imagecreatefromgif($logo);
+                            break;
+                        case 'image/png':
+
+                            //$src = imagecreatefrompng($logo);
+
+                            $percent              = 0.5;
+                            list($width, $height) = getimagesize($logo);
+                            $newwidth             = $width * $percent;
+                            $newheight            = $height * $percent;
+
+                            $thumb  = imagecreate($newwidth, $newheight);
+                            $source = imagecreatefrompng($logo);
+
+                            imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+
+                            break;
+                        default:
+                            Mage::throwException('Invalid image type.');
+                    }
+                    imagecopy($dest, $thumb, 100, 200, 20, 13, imagesx($thumb), imagesy($thumb));
+                elseif (($config->getValue('productdesigner/downloaddesign_general/watermark_band') != null) || ($config->getValue('productdesigner/downloaddesign_general/watermark_band') != '')):
+                    $info    = getimagesize($logo);
+                    $imgtype = image_type_to_mime_type($info[2]);
+                    switch ($imgtype) {
+                        case 'image/jpeg':
+                            $src = imagecreatefromjpeg($logo);
+                            break;
+                        case 'image/gif':
+                            $src = imagecreatefromgif($logo);
+                            break;
+                        case 'image/png':
+
+                            //$src = imagecreatefrompng($logo);
+
+                            $percent              = 0.5;
+                            list($width, $height) = getimagesize($logo);
+                            $newwidth             = $width * $percent;
+                            $newheight            = $height * $percent;
+
+                            $thumb  = imagecreate($newwidth, $newheight);
+                            $source = imagecreatefrompng($logo);
+
+                            imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+
+                            break;
+                        default:
+                            Mage::throwException('Invalid image type.');
+                    }
+                    imagecopy($dest, $thumb, 100, 200, 20, 13, imagesx($thumb), imagesy($thumb));
+                endif;
+                // print_r($thumb);
+                // imagecopy($dest, $thumb, 100, 200, 20, 13, imagesx($thumb), imagesy($thumb));
+                // add water mark close
+
+                foreach ($dimensions as $d) {
+                    $x1 = json_decode($d['selection_area'])->x1;
+                    $y1 = json_decode($d['selection_area'])->y1;
+                    imagecopy($dest, $srcNew[$d['design_area_id']], $x1, $y1, 0, 0, imagesx($srcNew[$d['design_area_id']]), imagesy($srcNew[$d['design_area_id']]));
                 }
-                imagecopy($dest, $thumb, 100, 200, 20, 13, imagesx($thumb), imagesy($thumb));
-            endif;
-            // print_r($thumb);
-            // imagecopy($dest, $thumb, 100, 200, 20, 13, imagesx($thumb), imagesy($thumb));
-            // add water mark close
 
-            foreach ($dimensions as $d) {
-                $x1 = json_decode($d['selection_area'])->x1;
-                $y1 = json_decode($d['selection_area'])->y1;
-                imagecopy($dest, $srcNew[$d['design_area_id']], $x1, $y1, 0, 0, imagesx($srcNew[$d['design_area_id']]), imagesy($srcNew[$d['design_area_id']]));
+                imagesavealpha($dest, true);
+                imagejpeg($dest, $newPath_c, 100);
+                $newPath_c_new = imagecreatefromstring(file_get_contents($newPath_c));
+
+                //copy($newPath_c , $imagepng_new);
+                //imagedestroy($imagepng_new);
+                imagedestroy($newPath_c_new);
+                imagedestroy($dest);
+                //imagedestroy($src);
+                //imagedestroy($newPath_c);
+                //imagedestroy($srcNew);
+                //imagedestroy($default_prod_image);
             }
 
-            imagesavealpha($dest, true);
-            imagejpeg($dest, $newPath_c, 100);
-            $newPath_c_new = imagecreatefromstring(file_get_contents($newPath_c));
+            return $download_img_url;
 
-            //copy($newPath_c , $imagepng_new);
-            //imagedestroy($imagepng_new);
-            imagedestroy($newPath_c_new);
-            imagedestroy($dest);
-            //imagedestroy($src);
-            //imagedestroy($newPath_c);
-            //imagedestroy($srcNew);
-            //imagedestroy($default_prod_image);
+        } else {
+            $resize = $this->resizeAndCreateDesignImage($prod_image_path, $newPath_c, $resize_width, $resize_height);
+
+            if ($resize) {
+                $info    = getimagesize($newPath_c);
+                $imgtype = $info['mime'];
+                switch ($imgtype) {
+                    case 'image/jpeg':
+                        $dest = imagecreatefromjpeg($newPath_c);
+                        break;
+                    case 'image/gif':
+                        $dest = imagecreatefromgif($newPath_c);
+                        break;
+                    case 'image/png':
+                        $dest = imagecreatefrompng($newPath_c);
+                        break;
+                    default:
+                        die('Invalid image type.');
+                }
+
+                $parent_images_id_final = '@' . $parent_images_id_final;
+                $objectManager          = \Magento\Framework\App\ObjectManager::getInstance();
+                $obj_product            = $objectManager->create('Biztech\Productdesigner\Model\Mysql4\Selectionarea\Collection')->addFieldToFilter('image_id', str_replace('@', '', $parent_images_id_final));
+                $dimensions             = $obj_product->getData();
+                echo "<pre>";
+                print_r($dimensions);
+                exit;
+                //$dimensions = Mage::getModel('productdesigner/selectionarea')->getCollection()->addFieldToFilter('image_id',str_replace('@','',$parent_images_id_final))->getData();
+                // add water mark start
+
+                $om         = \Magento\Framework\App\ObjectManager::getInstance();
+                $filesystem = $om->get('Magento\Framework\Filesystem');
+                $reader     = $filesystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
+                $config     = $om->create('Magento\Framework\App\Config\ScopeConfigInterface');
+
+                //$logo = $reader->getAbsolutePath(). 'productdesigner/uploadwatermark/'.$config->getValue('productdesigner/downloaddesign_general/watermark');
+
+                if (($config->getValue('productdesigner/downloaddesign_general/watermark_text') != null) || ($config->getValue('productdesigner/downloaddesign_general/watermark_text') != '')):
+                    //$logo = Mage::getBaseDir('media') . DS ."theme/default/textwatermark.png";
+                    $logo = $reader->getAbsolutePath() . 'productdesigner/uploadwatermark/default/textwatermark.png';
+
+                elseif (($config->getValue('productdesigner/downloaddesign_general/watermark') != null) || ($config->getValue('productdesigner/downloaddesign_general/watermark') != '')):
+                    //$logo = Mage::getBaseUrl('media') . DS . 'theme' . DS . Mage::getStoreConfig('productdesigner/downloaddesign_general/watermark');
+                    $logo = $reader->getAbsolutePath() . 'productdesigner/uploadwatermark/' . $config->getValue('productdesigner/downloaddesign_general/watermark');
+                endif;
+
+                if (($config->getValue('productdesigner/downloaddesign_general/watermark_text') != null) || ($config->getValue('productdesigner/downloaddesign_general/watermark_text') != '')):
+                    $info    = getimagesize($logo);
+                    $imgtype = image_type_to_mime_type($info[2]);
+                    switch ($imgtype) {
+                        case 'image/jpeg':
+                            $src = imagecreatefromjpeg($logo);
+                            break;
+                        case 'image/gif':
+                            $src = imagecreatefromgif($logo);
+                            break;
+                        case 'image/png':
+
+                            //$src = imagecreatefrompng($logo);
+
+                            $percent              = 0.5;
+                            list($width, $height) = getimagesize($logo);
+                            $newwidth             = $width * $percent;
+                            $newheight            = $height * $percent;
+
+                            $thumb  = imagecreate($newwidth, $newheight);
+                            $source = imagecreatefrompng($logo);
+
+                            imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+
+                            break;
+                        default:
+                            Mage::throwException('Invalid image type.');
+                    }
+                    imagecopy($dest, $thumb, 100, 200, 20, 13, imagesx($thumb), imagesy($thumb));
+                elseif (($config->getValue('productdesigner/downloaddesign_general/watermark') != null) || ($config->getValue('productdesigner/downloaddesign_general/watermark') != '')):
+                    $info    = getimagesize($logo);
+                    $imgtype = image_type_to_mime_type($info[2]);
+                    switch ($imgtype) {
+                        case 'image/jpeg':
+                            $src = imagecreatefromjpeg($logo);
+                            break;
+                        case 'image/gif':
+                            $src = imagecreatefromgif($logo);
+                            break;
+                        case 'image/png':
+
+                            //$src = imagecreatefrompng($logo);
+
+                            $percent              = 0.5;
+                            list($width, $height) = getimagesize($logo);
+                            $newwidth             = $width * $percent;
+                            $newheight            = $height * $percent;
+
+                            $thumb  = imagecreate($newwidth, $newheight);
+                            $source = imagecreatefrompng($logo);
+
+                            imagecopyresized($thumb, $source, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+
+                            break;
+                        default:
+                            Mage::throwException('Invalid image type.');
+                    }
+                    imagecopy($dest, $thumb, 100, 200, 20, 13, imagesx($thumb), imagesy($thumb));
+                endif;
+                // print_r($thumb);
+                // imagecopy($dest, $thumb, 100, 200, 20, 13, imagesx($thumb), imagesy($thumb));
+                // add water mark close
+
+                foreach ($dimensions as $d) {
+                    $x1 = json_decode($d['selection_area'])->x1;
+                    $y1 = json_decode($d['selection_area'])->y1;
+                    imagecopy($dest, $srcNew[$d['design_area_id']], $x1, $y1, 0, 0, imagesx($srcNew[$d['design_area_id']]), imagesy($srcNew[$d['design_area_id']]));
+                }
+
+                imagesavealpha($dest, true);
+                imagejpeg($dest, $newPath_c, 100);
+                $newPath_c_new = imagecreatefromstring(file_get_contents($newPath_c));
+
+                //copy($newPath_c , $imagepng_new);
+                //imagedestroy($imagepng_new);
+                imagedestroy($newPath_c_new);
+                imagedestroy($dest);
+                //imagedestroy($src);
+                //imagedestroy($newPath_c);
+                //imagedestroy($srcNew);
+                //imagedestroy($default_prod_image);
+            }
+
+            return $download_img_url;
         }
 
-        return $download_img_url;
     }
 
     public function resizeAndCreateDesignImage($source_image, $destination, $tn_w, $tn_h, $quality = 100)

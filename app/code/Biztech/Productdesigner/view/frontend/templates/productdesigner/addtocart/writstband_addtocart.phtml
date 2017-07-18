@@ -40,7 +40,7 @@ if (isset($printingMethod) && $printingMethod != '') {
                 <?php
             }
         }
-  
+
     ?>
     <ul>
         <?php if ($product->getTypeId() == 'configurable'): ?>
@@ -146,12 +146,13 @@ if ($product->getTypeId() == 'configurable') {
     endforeach;
     if (!isset($sizes)) {
         ?>
-        <ul class = "messages">
+
+         <h3 id="quantity"><?php echo __('Qty'); ?></h3>
+        <input type = "text" value = "1" id = "qty" class = "size-qty" data-validate = "{'required-number':true,'validate-item-quantity':{'minAllowed':1}}">
+         <ul class = "messages">
             <li id = "cart-error-msg" class = "error-msg" style = "color:red;font-size:large">
             </li>
         </ul>
-         <h3 id="quantity"><?php echo __('Qty'); ?></h3>
-        <input type = "text" value = "1" id = "qty" class = "size-qty" data-validate = "{'required-number':true,'validate-item-quantity':{'minAllowed':1}}">
         <?php
         $default_color = $this->helper('Biztech\Productdesigner\Helper\Info')->getDefaultImage($product_id);
         $productTypeInstance = $product->getTypeInstance();
@@ -198,10 +199,10 @@ if ($product->getTypeId() == 'configurable') {
         <?php
     }
     ?>
-    <ul class="messages">
+    <?php /*<ul class="messages">
         <li id="cart-error-msg" class="error-msg" style="color:red;font-size:large">
         </li>
-    </ul>
+    </ul> */ ?>
     <?php
 }
 ?>
@@ -383,12 +384,13 @@ if ($product->getTypeId() == 'configurable') {
 <?php
 if ($product->getTypeId() != 'configurable') {
     ?>
+
+     <h3 id="quantity"><?php echo __('Qty'); ?></h3>
+    <input type="text" value="1" id="qty" class="size-qty" data-validate="{'required-number':true,'validate-item-quantity':{'minAllowed':1}}">
     <ul class="messages">
         <li id="cart-error-msg" class="error-msg" style="color:red;font-size:large">
         </li>
     </ul>
-     <h3 id="quantity"><?php echo __('Qty'); ?></h3>
-    <input type="text" value="1" id="qty" class="size-qty" data-validate="{'required-number':true,'validate-item-quantity':{'minAllowed':1}}">
     <?php
     $currencysymbol = $objectManager->get('Magento\Store\Model\StoreManagerInterface');
     $code = $currencysymbol->getStore()->getCurrentCurrencyCode();
@@ -407,7 +409,7 @@ if ($product->getTypeId() != 'configurable') {
                 $tier_prices = $product->getTierPrice();
                 foreach ($tier_prices as $tierPrice) {
                     $qty = (int) $tierPrice['price_qty'];
-                    $tierPrice = (int) $tierPrice['price'];
+                    $tierPrice = (float) number_format($tierPrice['price'], 2);
                     $getsave = ($tierPrice * 100) / $finalProductPrice;
                     $getsaveIntPart = (int) ($getsave);
                     $save = 100 - $getsaveIntPart;

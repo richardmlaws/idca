@@ -307,31 +307,23 @@
                 <field id="check1" translate="label comment" type="button" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
                     <frontend_model>Biztech\Productdesigner\Block\System\Config\Collect</frontend_model>
                 </field> 
-            </group>
-
-             <group id="downloaddesign_general_band" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="150">
-                <label>Download Design From Designer Page for Wristband</label>
-                <field id="enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1" >
-                    <label>Download Design From Designer Page for Wristband</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                </field> 
-                
-                <field id="watermark" translate="label comment" type="image" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Watermark</label>
+                <field id="watermark_band" translate="label comment" type="image" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Watermark for Wristband</label>
                     <backend_model>Biztech\Productdesigner\Model\Config\Backend\Image</backend_model>
                     <base_url type="media" scope_info="1">productdesigner\uploadwatermark</base_url>
                     <comment>Allowed file types: jpeg, gif, png.</comment>
                 </field>
                 
-                <field id="watermark_text" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1" >
+                <field id="watermark_text_band" translate="label" type="text" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1" >
                     <label>Text for Watermark Image for Wristband</label>
                     <comment>Please add maximum 8 character text to create watermark png image.If more text it will not dispaly full.</comment>
                 </field>  
                 
-                <field id="check1" translate="label comment" type="button" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="check1_band" translate="label comment" type="button" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="0">
                     <frontend_model>Biztech\Productdesigner\Block\System\Config\Collectband</frontend_model>
                 </field> 
-            </group>    
+            </group>
+
 
 
             <group id="printingmethod" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="140">
@@ -421,7 +413,7 @@
                 </field>
 
             </group>
-             
+
 
         </section>
         

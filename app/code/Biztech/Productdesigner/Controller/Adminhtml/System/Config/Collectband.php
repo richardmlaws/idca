@@ -102,8 +102,8 @@ class Collectband extends Action
                 //         imagettftext($im, 110, 45, 120, 730, $newgrey, $font, $text);
                 //         imagettftext($im, 110, 45, 120, 730, $red, $font, $text);
                 //       }
-                $imgWidth  = 750;
-                $imgHeight = 723;
+                $imgWidth  = 540;
+                $imgHeight = 173;
                 $im        = imagecreatetruecolor($imgWidth, $imgHeight);
                 $font      = $reader->getAbsolutePath() . 'productdesigner/fonts/Ubuntu-regular.ttf';
                 $text      = $this->getRequest()->getParam('watermarktext');
@@ -128,7 +128,7 @@ class Collectband extends Action
 
                     //add some shadow to the text
                     //add the text
-                    imagettftext($im, 100, 30, $x, $y, $black, $font, $txt);
+                    imagettftext($im, 68, 30, $x, $y, $black, $font, $txt);
 
                 }
 

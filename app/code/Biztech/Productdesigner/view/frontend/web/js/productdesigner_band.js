@@ -1,22 +1,20 @@
-var TierPriceClass = function () {};
+var TierPriceClass = function() {};
 TierPriceClass.prototype = {
-    initialize: function (tierPrice) {
+    initialize: function(tierPrice) {
         TierPriceClass.tierPrice = JSON.parse(tierPrice);
         if (ProductDesigner.prototype.tier != undefined) {
-
             ProductDesigner.prototype.tier = TierPriceClass.tierPrice;
             ProductDesigner.prototype.observQtyChange();
             ProductDesigner.prototype.reloadPrintingPrice();
             ProductDesigner.prototype.observAddToCart();
-
         }
     },
 }
-var Clipartdesigner = function () {
+var Clipartdesigner = function() {
     jQuery.extend(Clipartdesigner.prototype, {
         filterImageUrl: null,
         clipart_limit_data: null,
-        initialize: function (filter_url, clipart_limit_data) {
+        initialize: function(filter_url, clipart_limit_data) {
             Clipartdesigner.prototype.clipart_limit_data = clipart_limit_data.data;
             Clipartdesigner.prototype.filterImageUrl = filter_url;
             this.observeImageSelect();
@@ -24,9 +22,9 @@ var Clipartdesigner = function () {
             this.setCurrentSvgColor();
             var event = document.createEvent('Event');
         },
-        observeFields: function () {
+        observeFields: function() {
             if (jQuery('#clipart_categories')) {
-                jQuery('.clipart-categories').on('selectric-change', function (ele) {
+                jQuery('.clipart-categories').on('selectric-change', function(ele) {
                     var data = {};
                     data['clipart_category_id'] = jQuery('#clipart_categories').val();
                     if (jQuery('#search_tag_field')) {
@@ -37,7 +35,7 @@ var Clipartdesigner = function () {
                     this.filterImagesByClipart(data);
                 }.bind(this));
             }
-            jQuery('#search_tag_field').on('keyup', function (e) {
+            jQuery('#search_tag_field').on('keyup', function(e) {
                 var data = {};
                 data['clipart_category_id'] = jQuery('#clipart_categories').val();
                 if (jQuery('#search_tag_field')) {
@@ -46,7 +44,7 @@ var Clipartdesigner = function () {
                 this.filterImagesByClipart(data);
             }.bind(this));
         },
-        filterImagesByClipart: function (data) {
+        filterImagesByClipart: function(data) {
             var data = data || {};
             if (jQuery('#product-images-loader') && jQuery('#product_list_container')) {
                 jQuery('#product-images-loader').css("display", "block");
@@ -60,7 +58,7 @@ var Clipartdesigner = function () {
                 data: {
                     data: data
                 },
-                success: function (data, textStatus, jqXHR) {
+                success: function(data, textStatus, jqXHR) {
                     var response = JSON.parse(data);
                     if (response.status == 'success') {
                         jQuery('#more_clipart').attr("style", "display:block");
@@ -71,15 +69,15 @@ var Clipartdesigner = function () {
                         alert('Something is wrong... Please try again.');
                     }
                 }.bind(this),
-                onFailure: function () {
+                onFailure: function() {
                     alert('Something is wrong... Please try again.');
                 }
             });
         },
-        observeImageSelectScroll: function () {
+        observeImageSelectScroll: function() {
             var offsetClipart = 0;
             var devicecheck = 0;
-            jQuery('#more_clipart').on('click', function () {
+            jQuery('#more_clipart').on('click', function() {
                 if (screen.width <= 699) {
                     devicecheck = 'mobile';
                 } else {
@@ -103,8 +101,8 @@ var Clipartdesigner = function () {
                 }
             });
         },
-        observeImageSelect: function () {
-            jQuery('#image_list .clipart-image').click(function (e, elm) {
+        observeImageSelect: function() {
+            jQuery('#image_list .clipart-image').click(function(e, elm) {
                 this.productDesigner = ProductDesigner.prototype;
                 //e.stop();
                 var img = e.target || e.srcElement;
@@ -140,7 +138,7 @@ var Clipartdesigner = function () {
                 }
                 jQuery('#pd_loading_img').show();
                 if (ext == 'svg') {
-                    fabric.loadSVGFromURL(url, function (objects, options) {
+                    fabric.loadSVGFromURL(url, function(objects, options) {
                         var obj = fabric.util.groupSVGElements(objects, options);
                         var canvas = ProductDesigner.prototype.canvas;
                         obj.set({
@@ -177,15 +175,17 @@ var Clipartdesigner = function () {
                             left: 5,
                             scaleY: 1,
                             scaleX: 1,
-                            height : 20,
-                            width : 20
+                            height: 20,
+                            width: 20
                         });
                         if (jQuery('#add_text_area').val() != '' || jQuery('#add_text_area_2').val() != '') {
                             var allObj = canvas.getObjects();
                             for (var i = 0; i < allObj.length; i++) {
                                 if (allObj[i].textarea != "undefined") {
                                     if (allObj[i].textarea == 'one' || allObj[i].textarea == 'two') {
-                                        var cmd = new UpdateCommand(canvas, allObj[i], { left: 35 });
+                                        var cmd = new UpdateCommand(canvas, allObj[i], {
+                                            left: 35
+                                        });
                                         cmd.exec();
                                         allObj[i].setCoords();
                                     }
@@ -198,7 +198,7 @@ var Clipartdesigner = function () {
                         History.prototype.push(cmd);
                     }.bind(this));
                 } else {
-                    fabric.Image.fromURL(url, function (obj) {
+                    fabric.Image.fromURL(url, function(obj) {
                         //var canvas = window.canvas;
                         var canvas = ProductDesigner.prototype.canvas;
                         if (obj.width != obj.height) {
@@ -225,7 +225,9 @@ var Clipartdesigner = function () {
                             for (var i = 0; i < allObj.length; i++) {
                                 if (allObj[i].textarea != "undefined") {
                                     if (allObj[i].textarea == 'one' || allObj[i].textarea == 'two') {
-                                        var cmd = new UpdateCommand(canvas, allObj[i], { left: 35 });
+                                        var cmd = new UpdateCommand(canvas, allObj[i], {
+                                            left: 35
+                                        });
                                         cmd.exec();
                                         allObj[i].setCoords();
                                     }
@@ -238,8 +240,8 @@ var Clipartdesigner = function () {
                             width: parseFloat(t_width) - 10,
                             resized_url: resized_url,
                             price: price,
-                            left : 5,
-                            top : 5
+                            left: 5,
+                            top: 5
                         });
                         var cmd = new InsertCanvasObject(this.productDesigner, obj, true);
                         cmd.exec();
@@ -249,9 +251,9 @@ var Clipartdesigner = function () {
                 }
             }.bind(this));
         },
-        setCurrentSvgColor: function () {
-            jQuery('#used_color_container_obj').on('click', '.used-color', function (e, elm) {
-                jQuery('.used-color').each(function (index, val) {
+        setCurrentSvgColor: function() {
+            jQuery('#used_color_container_obj').on('click', '.used-color', function(e, elm) {
+                jQuery('.used-color').each(function(index, val) {
                     jQuery(val).removeClass('selected');
                 });
                 var eleattr = e.target || e.srcElement;
@@ -262,7 +264,7 @@ var Clipartdesigner = function () {
         },
     });
 }
-var ImageUploader = function () {};
+var ImageUploader = function() {};
 ImageUploader.prototype = {
     upload_limit_data: null,
     uploadedImageObject: {},
@@ -270,7 +272,7 @@ ImageUploader.prototype = {
     allowedImageExtension: null,
     uploadImgUrl: null,
     imageCount: 0,
-    initialize: function (maxFileSize, allowedImageExtensions, allowedImageExtensionsFormate, uploadImgUrl, upload_limit_data) {
+    initialize: function(maxFileSize, allowedImageExtensions, allowedImageExtensionsFormate, uploadImgUrl, upload_limit_data) {
         ImageUploader.upload_limit_data = upload_limit_data.data;
         ImageUploader.prototypemaxFileSize = maxFileSize;
         ImageUploader.allowedImageExtension = allowedImageExtensions;
@@ -281,16 +283,15 @@ ImageUploader.prototype = {
         this.observeImageSelect();
         this.observeRemoveImages();
         this.imageFileName();
-        if (jQuery('#upload_agreement') != null)
-            this.observeAgrrementButton();
+        if (jQuery('#upload_agreement') != null) this.observeAgrrementButton();
     },
-    imageFileName: function () {
-        jQuery('#image_upload').on('change', function (e) {
+    imageFileName: function() {
+        jQuery('#image_upload').on('change', function(e) {
             jQuery('#filename').val(e.target.value.replace("C:\\fakepath\\", ""));
         }.bind(this));
     },
-    observeSubmitForm: function () {
-        jQuery('#upload_images').submit(function () {
+    observeSubmitForm: function() {
+        jQuery('#upload_images').submit(function() {
             if (jQuery('#image_upload')) {
                 var errorContainer = jQuery('#upload-image-error');
                 jQuery('#image_upload_loader').show();
@@ -300,7 +301,7 @@ ImageUploader.prototype = {
                 errorContainer.html('');
                 errorContainer.hide();
                 jQuery('#upload_images')[0].target = 'uploadedImageSave';
-                jQuery('#uploadedImageSave').one('load', function () {
+                jQuery('#uploadedImageSave').one('load', function() {
                     var response = window.frames['uploadedImageSave'].document.body.innerHTML;
                     var IS_JSON = true;
                     try {
@@ -327,8 +328,8 @@ ImageUploader.prototype = {
             }
         });
     },
-    observeAgrrementButton: function () {
-        jQuery('#upload_agreement').on('click', function (e) {
+    observeAgrrementButton: function() {
+        jQuery('#upload_agreement').on('click', function(e) {
             if (jQuery('#upload_agreement').is(":checked")) {
                 jQuery('#image_upload_btn').removeAttr('disabled');
                 jQuery('#image_upload_btn').removeClass('disabled');
@@ -338,8 +339,8 @@ ImageUploader.prototype = {
             }
         }.bind(this));
     },
-    observeRemoveImages: function () {
-        jQuery('#remove_uploaded_img').on('click', function (e) {
+    observeRemoveImages: function() {
+        jQuery('#remove_uploaded_img').on('click', function(e) {
             jQuery('#uploaded_images').html('');
             jQuery('#upload-image-error').removeClass('validation-advice');
             jQuery('#upload-image-error').html('');
@@ -350,7 +351,7 @@ ImageUploader.prototype = {
             //                this.productDesigner.canvas.remove(this.uploadedImageObject[key]);
             //            }
         }.bind(this));
-        jQuery('#uploaded_images .delete_image').click(function (e, elm) {
+        jQuery('#uploaded_images .delete_image').click(function(e, elm) {
             var r = confirm("Are you sure to delete this image?");
             if (r == true) {
                 var img = e.target || e.srcElement;
@@ -358,8 +359,8 @@ ImageUploader.prototype = {
             }
         }.bind(this));
     },
-    observeImageSelect: function () {
-        jQuery('#uploaded_images').on('click', '.clipart-image', function (e) {
+    observeImageSelect: function() {
+        jQuery('#uploaded_images').on('click', '.clipart-image', function(e) {
             this.productDesigner = ProductDesigner.prototype;
             var img = e.target || e.srcElement;
             var url = decodeURIComponent(img.getAttribute('data-orig-url'));
@@ -393,7 +394,7 @@ ImageUploader.prototype = {
             }
             jQuery('#pd_loading_img').show();
             if (ext == 'svg') {
-                fabric.loadSVGFromURL(url, function (objects, options) {
+                fabric.loadSVGFromURL(url, function(objects, options) {
                     var canvas = this.productDesigner.canvas;
                     var obj = fabric.util.groupSVGElements(objects, options);
                     obj.set({
@@ -436,7 +437,9 @@ ImageUploader.prototype = {
                         for (var i = 0; i < allObj.length; i++) {
                             if (allObj[i].textarea != "undefined") {
                                 if (allObj[i].textarea == 'one' || allObj[i].textarea == 'two') {
-                                    var cmd = new UpdateCommand(canvas, allObj[i], { left: 35 });
+                                    var cmd = new UpdateCommand(canvas, allObj[i], {
+                                        left: 35
+                                    });
                                     cmd.exec();
                                     allObj[i].setCoords();
                                 }
@@ -450,7 +453,7 @@ ImageUploader.prototype = {
                     ImageUploader.imageCount++;
                 }.bind(this));
             } else {
-                fabric.Image.fromURL(url, function (obj) {
+                fabric.Image.fromURL(url, function(obj) {
                     var canvas = this.productDesigner.canvas;
                     ImageUploader.uploadedImageObject[ImageUploader.imageCount] = obj;
                     if (obj.width != obj.height) {
@@ -479,7 +482,9 @@ ImageUploader.prototype = {
                         for (var i = 0; i < allObj.length; i++) {
                             if (allObj[i].textarea != "undefined") {
                                 if (allObj[i].textarea == 'one' || allObj[i].textarea == 'two') {
-                                    var cmd = new UpdateCommand(canvas, allObj[i], { left: 35 });
+                                    var cmd = new UpdateCommand(canvas, allObj[i], {
+                                        left: 35
+                                    });
                                     cmd.exec();
                                     allObj[i].setCoords();
                                 }
@@ -492,8 +497,8 @@ ImageUploader.prototype = {
                         width: parseFloat(t_width) - 10,
                         resized_url: resized_url,
                         obj_side: this.productDesigner.data.product.images[this.productDesigner.currentProductColor][this.productDesigner.currentProduct].side,
-                        top : 5,
-                        left : 5
+                        top: 5,
+                        left: 5
                     });
                     var cmd = new InsertCanvasObject(this.productDesigner, obj, true);
                     cmd.exec();
@@ -505,7 +510,7 @@ ImageUploader.prototype = {
         });
     }
 };
-var ProductDesigner = function () {};
+var ProductDesigner = function() {};
 ProductDesigner.prototype = {
     opt: {
         product_side_id: 'product-sides'
@@ -573,7 +578,7 @@ ProductDesigner.prototype = {
     templateslimit: 0,
     templatescount: 0,
     addtocartbuttonclicked: 0,
-    initialize: function (data, loginUrl, logindesignUrl, registerUrl, downloadUrl, saveDesignUrl, continueUrl, productUrl, allowDownload, brushUrl, previewImageUrl, addtocarturl, getmydesignUrl, facebookUrl, googleUrl, sendmailUrl, isAdmin, mediaUrl, tierPriceUrl) {
+    initialize: function(data, loginUrl, logindesignUrl, registerUrl, downloadUrl, saveDesignUrl, continueUrl, productUrl, allowDownload, brushUrl, previewImageUrl, addtocarturl, getmydesignUrl, facebookUrl, googleUrl, sendmailUrl, isAdmin, mediaUrl, tierPriceUrl) {
         if (data.action == 'full') {
             jQuery('#maincontent').removeClass("page-main");
         }
@@ -647,7 +652,7 @@ ProductDesigner.prototype = {
         this.observeShareButtons();
         this.observeContinueButton();
         this.observAddToCart();
-        setTimeout(function () {
+        setTimeout(function() {
             ProductDesigner.prototype.clickMaskingImage();
         }, 3000);
         this.observeSelectDesignArea();
@@ -683,23 +688,21 @@ ProductDesigner.prototype = {
                 }
             }
         }.bind(this));*/
-        jQuery('.resp-tabs-container').click(function (e, elm) {
-            if (jQuery(e.target).hasClass('color-img') || jQuery(e.target).hasClass('text-color') || jQuery(e.target).parent().hasClass('text-color') || jQuery(e.target).hasClass('color-img') || jQuery(e.target).hasClass('button-bg') || jQuery(e.target).parent().hasClass('button-bg') || jQuery(e.target).hasClass('text-shadow-color') || jQuery(e.target).parent().hasClass('text-shadow-color') || jQuery(e.target).hasClass('text-stroke-color') || jQuery(e.target).parent().hasClass('text-stroke-color') || jQuery(e.target).hasClass('clipart-color-container') || jQuery(e.target).hasClass('masking-color') || jQuery(e.target).parent().hasClass('masking-color') || jQuery(e.target).hasClass('brush_color') || jQuery(e.target).parent().hasClass('brush_color') || jQuery(e.target).parent().hasClass('obj_color') || jQuery(e.target).hasClass('obj_color')) {
-            } else {
+        jQuery('.resp-tabs-container').click(function(e, elm) {
+            if (jQuery(e.target).hasClass('color-img') || jQuery(e.target).hasClass('text-color') || jQuery(e.target).parent().hasClass('text-color') || jQuery(e.target).hasClass('color-img') || jQuery(e.target).hasClass('button-bg') || jQuery(e.target).parent().hasClass('button-bg') || jQuery(e.target).hasClass('text-shadow-color') || jQuery(e.target).parent().hasClass('text-shadow-color') || jQuery(e.target).hasClass('text-stroke-color') || jQuery(e.target).parent().hasClass('text-stroke-color') || jQuery(e.target).hasClass('clipart-color-container') || jQuery(e.target).hasClass('masking-color') || jQuery(e.target).parent().hasClass('masking-color') || jQuery(e.target).hasClass('brush_color') || jQuery(e.target).parent().hasClass('brush_color') || jQuery(e.target).parent().hasClass('obj_color') || jQuery(e.target).hasClass('obj_color')) {} else {
                 if (ProductDesigner.prototype.data.colorpicker_enable == 0) {
                     jQuery('#text-shadowcolor-container').hide();
                     jQuery('#text-strokecolor-container').hide();
                     jQuery('#text-bgcolor-container').hide();
                     jQuery('#text-strokecolor-container').hide();
                     jQuery('#text-color-container').hide();
-                    if (jQuery('#grouptext-color-container'))
-                        jQuery('#grouptext-color-container').hide();
+                    if (jQuery('#grouptext-color-container')) jQuery('#grouptext-color-container').hide();
                     jQuery('#clipart-color-container').hide();
                     jQuery('#clipart-color-container_brush').hide();
                 }
             }
         }.bind(this));
-        jQuery('.pd-container').click(function (e, elm) {
+        jQuery('.pd-container').click(function(e, elm) {
             if (e.target.className != "upper-canvas canvas-panel" && e.target.parentElement.parentElement.className != 'product-controls' && e.target.parentElement.parentElement.parentElement.className != 'product-controls') {
                 jQuery('#text_prop_container').addClass('disabled');
                 jQuery('#text_prop_container').attr('disabled', 'disabled');
@@ -723,7 +726,7 @@ ProductDesigner.prototype = {
             }
         }.bind(this));
     },
-    _observeTextButtons: function () {
+    _observeTextButtons: function() {
         var textButtons = TextDesigner.buttonsMap;
         var method = this.canvas.getActiveObject() ? 'addClass' : 'removeClass';
         for (var key in textButtons) {
@@ -733,12 +736,12 @@ ProductDesigner.prototype = {
             }
         }
     },
-    observeGroupToolTip: function () {
-        jQuery(function () {
-            jQuery(".printing-method-block input[name='printing_type']").click(function () {
+    observeGroupToolTip: function() {
+        jQuery(function() {
+            jQuery(".printing-method-block input[name='printing_type']").click(function() {
                 if (jQuery('input:radio[name=printing_type]:checked').val()) {
                     var printCode = document.querySelector('input[name="printing_type"]:checked').getAttribute('data-code');
-                    jQuery('.printing-method-description').each(function (val, index) {
+                    jQuery('.printing-method-description').each(function(val, index) {
                         jQuery('#' + index.id).hide();
                     });
                     jQuery('#' + printCode + '-des').show();
@@ -749,12 +752,12 @@ ProductDesigner.prototype = {
             });
         });
     },
-    observeGroupToolTipSimple: function () {
-        jQuery(function () {
-            jQuery("#printing-method-block-simple input[name='printing_type']").click(function () {
+    observeGroupToolTipSimple: function() {
+        jQuery(function() {
+            jQuery("#printing-method-block-simple input[name='printing_type']").click(function() {
                 if (jQuery('input:radio[name=printing_type]:checked').val()) {
                     var printCode = document.querySelector('input[name="printing_type"]:checked').getAttribute('data-code');
-                    $$('.printing-method-description').each(function (index, val) {
+                    $$('.printing-method-description').each(function(index, val) {
                         $(index.id).style.display = 'none';
                     });
                     $(printCode + '-des').show();
@@ -762,28 +765,28 @@ ProductDesigner.prototype = {
                     $('price_calculation').show();
                 }
             });
-            jQuery('.change_text').keyup(function (event) {
+            jQuery('.change_text').keyup(function(event) {
                 ProductDesigner.reloadPrintingPrice();
             });
-            jQuery('.dropdowncustomOption').change(function () {
+            jQuery('.dropdowncustomOption').change(function() {
                 ProductDesigner.reloadPrintingPrice();
             });
-            jQuery('.multipleOption').change(function () {
+            jQuery('.multipleOption').change(function() {
                 ProductDesigner.reloadPrintingPrice();
             });
-            jQuery('.CustomRadioOption').change(function () {
+            jQuery('.CustomRadioOption').change(function() {
                 ProductDesigner.reloadPrintingPrice();
             });
-            jQuery('.CustomCheckboxOption').change(function () {
+            jQuery('.CustomCheckboxOption').change(function() {
                 ProductDesigner.reloadPrintingPrice();
             });
-            jQuery('#customOptionFormProdSettings input:checkbox').click(function () {
+            jQuery('#customOptionFormProdSettings input:checkbox').click(function() {
                 var $this = jQuery(this);
                 ProductDesigner.reloadPrintingPrice();
             });
         });
     },
-    _observeTextColorButtons: function () {
+    _observeTextColorButtons: function() {
         var textColorButtons = TextDesigner.textColorMap;
         var method = this.canvas.getActiveObject() ? 'addClassName' : 'removeClassName';
         for (var key in textColorButtons) {
@@ -798,18 +801,18 @@ ProductDesigner.prototype = {
             }
         }
     },
-    observeCanvas: function () {
+    observeCanvas: function() {
         this.observeCanvasObjectMoving();
         this.observeCanvasSelection();
         this.observeObjectModified();
         this.observeCanvasObjectRendered();
         this.observeCanvasObjectScalling();
     },
-    observeCanvasObjectScalling: function () {
+    observeCanvasObjectScalling: function() {
         if ((this.canvas == null) || this.canvas == 'undefined') {
             return;
         }
-        this.canvas.on('object:scaling', function (event) {
+        this.canvas.on('object:scaling', function(event) {
             var el = event.target;
             if (el && (el.height * el.scaleX) > 1 && (el.left + (el.width * el.scaleX)) < this.canvas.width && (el.top + (el.height * el.scaleY)) < this.canvas.height && el.left > 0 && el.top > 0) {
                 previous_scaleY = el.scaleY;
@@ -857,11 +860,11 @@ ProductDesigner.prototype = {
          
          }.bind(this));*/
     },
-    observeObjectModified: function () {
+    observeObjectModified: function() {
         if ((this.canvas == null) || this.canvas == 'undefined') {
             return;
         }
-        this.canvas.observe('object:modified', function (e) {
+        this.canvas.observe('object:modified', function(e) {
             var currentState = e.target.originalState;
             var target = e.target;
             // Check when object is moving
@@ -906,13 +909,13 @@ ProductDesigner.prototype = {
             }
         }.bind(this));
     },
-    observeCanvasObjectRendered: function () {
+    observeCanvasObjectRendered: function() {
         if ((this.canvas == null) || this.canvas == 'undefined') {
             return;
         }
-        this.canvas.observe('after:render', function (e) {
+        this.canvas.observe('after:render', function(e) {
             var n = 0;
-            this.canvas.forEachObject(function (o) {
+            this.canvas.forEachObject(function(o) {
                 var objectCanvas = o.canvas;
                 if (ProductDesigner.prototype.data.base_unit == "cm") {
                     o.canvas.areaWidth = o.canvas.width / (37.79);
@@ -943,14 +946,10 @@ ProductDesigner.prototype = {
                 var w = Math.round(o.getWidth() / 2);
                 var h = Math.round(o.getHeight() / 2);
                 var f = false;
-                if (l < 0)
-                    f = true;
-                if (t < 0)
-                    f = true;
-                if (parseFloat(t) + parseFloat(o.getBoundingRect().height) > this.canvas.getHeight())
-                    f = true;
-                if (parseFloat(l) + parseFloat(o.getBoundingRect().width) > this.canvas.getWidth())
-                    f = true;
+                if (l < 0) f = true;
+                if (t < 0) f = true;
+                if (parseFloat(t) + parseFloat(o.getBoundingRect().height) > this.canvas.getHeight()) f = true;
+                if (parseFloat(l) + parseFloat(o.getBoundingRect().width) > this.canvas.getWidth()) f = true;
                 if (f) {
                     n++;
                 }
@@ -967,15 +966,14 @@ ProductDesigner.prototype = {
             }
         }.bind(this));
     },
-    observeCanvasSelection: function () {
+    observeCanvasSelection: function() {
         if ((this.canvas == null) || this.canvas == 'undefined') {
             return;
         }
-        this.canvas.on('object:selected', function (e) {
+        this.canvas.on('object:selected', function(e) {
             ProductDesigner.prototype.observColorCountObj();
             //this.objSelectEvent(this.canvas.getActiveObject());
-            if(isMobile) {
-                jQuery('#resp-tabs-container').show();
+            if (isMobile.any()) {
                 jQuery('#res-overlay').show();
             }
             jQuery('#resp-tabs-container').show();
@@ -986,8 +984,7 @@ ProductDesigner.prototype = {
                     jQuery('#text-bgcolor-container').hide();
                     jQuery('#text-strokecolor-container').hide();
                     jQuery('#text-color-container').hide();
-                    if (jQuery('#grouptext-color-container'))
-                        jQuery('#grouptext-color-container').hide();
+                    if (jQuery('#grouptext-color-container')) jQuery('#grouptext-color-container').hide();
                     jQuery('#clipart-color-container').hide();
                     jQuery('#clipart-color-container_brush').hide();
                 }
@@ -999,9 +996,8 @@ ProductDesigner.prototype = {
                     jQuery('#group_font_size_selection').val(font_size);
                     var field = jQuery('#group_text_color');
                     jQuery(field).children().css('borderColor', e.target.fill ? e.target.fill : '#FFFFFF');
-                    if (jQuery('#group_font_properties .selectric .label')[0] != undefined)
-                        jQuery('#group_font_properties .selectric .label')[0].textContent = e.target.fontFamily;
-                    jQuery('#group_font_properties .font_option').each(function (index) {
+                    if (jQuery('#group_font_properties .selectric .label')[0] != undefined) jQuery('#group_font_properties .selectric .label')[0].textContent = e.target.fontFamily;
+                    jQuery('#group_font_properties .font_option').each(function(index) {
                         jQuery(index).removeClass('selected');
                         if (jQuery(index).textContent == e.target.fontFamily) {
                             jQuery(index).addClass('selected');
@@ -1025,7 +1021,7 @@ ProductDesigner.prototype = {
                                 }
                                 //ProductDesigner.setPrintSize();
                                 //ProductDesigner.reloadPrice(len);
-                                jQuery('.product-side-img').each(function (index, val) {
+                                jQuery('.product-side-img').each(function(index, val) {
                                     var currentProduct = jQuery(val)[0].getAttribute('data-image_id');
                                     if (ProductDesigner.prototype.currentProduct == currentProduct) {
                                         jQuery('#group_side_label').show();
@@ -1055,7 +1051,7 @@ ProductDesigner.prototype = {
                                 }
                                 //ProductDesigner.setPrintSize();
                                 //ProductDesigner.reloadPrice(len);
-                                jQuery('.product-side-img').each(function (index, val) {
+                                jQuery('.product-side-img').each(function(index, val) {
                                     var currentProduct = jQuery(val)[0].getAttribute('data-image_id');
                                     if (ProductDesigner.prototype.currentProduct == currentProduct) {
                                         jQuery('#group_side_label').show();
@@ -1087,9 +1083,8 @@ ProductDesigner.prototype = {
                     jQuery('#opacity_label').html(" (" + opacity + ")");
                     jQuery('#opacity').val(opacity);
                     var obj = e.target;
-                    if (jQuery('#font_properties .selectric .label')[0] != undefined)
-                        jQuery('#font_properties .selectric .label')[0].textContent = e.target.fontFamily;
-                    jQuery('#font_properties .font_option').each(function (index, val) {
+                    if (jQuery('#font_properties .selectric .label')[0] != undefined) jQuery('#font_properties .selectric .label')[0].textContent = e.target.fontFamily;
+                    jQuery('#font_properties .font_option').each(function(index, val) {
                         jQuery(val).removeClass('selected');
                         if (jQuery(val)[0].textContent == e.target.fontFamily) {
                             jQuery(val).addClass('selected');
@@ -1105,8 +1100,7 @@ ProductDesigner.prototype = {
                         jQuery('#shadow_y_range').val(yoffset);
                         var blur = obj.shadow.blur ? obj.shadow.blur : jQuery('#shadow_blur').val();
                         jQuery('#blur_label').html(" (" + blur + ")");
-                        jQuery('#shadow_blur').val(blur);
-                        ;
+                        jQuery('#shadow_blur').val(blur);;
                     } else {
                         var xoffset = 0;
                         jQuery('#xoffset_label').html(" (" + xoffset + ")");
@@ -1175,7 +1169,7 @@ ProductDesigner.prototype = {
                 } else {
                     jQuery("#effects").show();
                 }
-                jQuery('#effects input').each(function (index) {
+                jQuery('#effects input').each(function(index) {
                     jQuery(index).prop("checked", false);
                 });
                 var filters = e.target.filters;
@@ -1198,7 +1192,7 @@ ProductDesigner.prototype = {
             }
             this._observeControlButtons();
         }.bind(this));
-        this.canvas.on('selection:cleared', function (e) {
+        this.canvas.on('selection:cleared', function(e) {
             jQuery('#img_customize').hide();
             this._observeControlButtons();
             this._observeTextButtons();
@@ -1209,11 +1203,11 @@ ProductDesigner.prototype = {
             jQuery('#name-number-content').addClass('disabled');
         }.bind(this));
     },
-    observeCanvasObjectMoving: function () {
+    observeCanvasObjectMoving: function() {
         if ((this.canvas == null) || this.canvas == 'undefined') {
             return;
         }
-        this.canvas.observe('object:moving', function (e) {
+        this.canvas.observe('object:moving', function(e) {
             var obj = e.target; // if object is too big ignore
             if (obj.currentHeight > obj.canvas.height || obj.currentWidth > obj.canvas.width) {
                 return;
@@ -1236,7 +1230,7 @@ ProductDesigner.prototype = {
             }
         }.bind(this));
     },
-    objSelectEvent: function (obj) {
+    objSelectEvent: function(obj) {
         if (obj) {
             var event = document.createEvent('Event');
             event.obj = obj;
@@ -1244,7 +1238,7 @@ ProductDesigner.prototype = {
             document.dispatchEvent(event);
         }
     },
-    initProduct: function (product, color) {
+    initProduct: function(product, color) {
         if (!product) {
             return;
         }
@@ -1261,7 +1255,7 @@ ProductDesigner.prototype = {
                 ProductDesigner.prototype.firstImageId = prop;
                 var img = images[prop];
                 this.setDesignArea(img);
-                jQuery('.product-side-img').each(function (index, val) {
+                jQuery('.product-side-img').each(function(index, val) {
                     //e.currentTarget.getAttribute('data-image_id')
                     if (val.getAttribute('data-image_id') == prop) {
                         jQuery(val).parent().addClass('selected');
@@ -1272,13 +1266,13 @@ ProductDesigner.prototype = {
             }
         }
     },
-    getClipartColorContent: function () {
-        jQuery('#obj_color').on('click', function (e) {
+    getClipartColorContent: function() {
+        jQuery('#obj_color').on('click', function(e) {
             jQuery('#clipart-color-container').toggle();
         });
     },
-    observerClipartColorChange: function () {
-        jQuery('#clipart-color-container').on('click', '.clipart-color-img', function (event) {
+    observerClipartColorChange: function() {
+        jQuery('#clipart-color-container').on('click', '.clipart-color-img', function(event) {
             var self = this;
             var ele = event.target;
             var color = event.target.getAttribute('data-color_id');
@@ -1309,13 +1303,13 @@ ProductDesigner.prototype = {
              ele.up().addClassName('selected');*/
         });
     },
-    getClipartColorBrushContent: function () {
-        jQuery('#brush_color').on('click', function (e) {
+    getClipartColorBrushContent: function() {
+        jQuery('#brush_color').on('click', function(e) {
             jQuery('#clipart-color-container_brush').toggle();
         });
     },
-    observerClipartColorBrushChange: function () {
-        jQuery('#clipart-color-container_brush').on('click', '.clipart-color-img-brush', function (event) {
+    observerClipartColorBrushChange: function() {
+        jQuery('#clipart-color-container_brush').on('click', '.clipart-color-img-brush', function(event) {
             var self = this;
             var ele = event.target;
             var color = event.target.getAttribute('data-color_id');
@@ -1323,16 +1317,16 @@ ProductDesigner.prototype = {
             jQuery('#clipart_color_title_brush').html(event.target.getAttribute('data-color_name'));
         });
     },
-    setzIndexes: function () {
+    setzIndexes: function() {
         jQuery('#pd_loading_img').show();
         for (var i in ProductDesigner.prototype.zIndexes) {
-            jQuery(ProductDesigner.prototype.containerCanvases[ProductDesigner.prototype.currentDesignArea].getObjects()).each(function (i, obj) {
+            jQuery(ProductDesigner.prototype.containerCanvases[ProductDesigner.prototype.currentDesignArea].getObjects()).each(function(i, obj) {
                 obj.moveTo(ProductDesigner.prototype.zIndexes[obj.obj_id]);
             });
         }
         jQuery('#pd_loading_img').hide();
     },
-    loadSavedDesign: function () {
+    loadSavedDesign: function() {
         var params = getUrlParams();
         var data = {};
         if ((this.data.my_design_url != undefined) && (params.design != undefined)) {
@@ -1344,12 +1338,12 @@ ProductDesigner.prototype = {
                 data: {
                     data: data
                 },
-                success: function (data, textStatus, jqXHR) {
+                success: function(data, textStatus, jqXHR) {
                     var response = JSON.parse(data);
                     ProductDesigner.prototype.zIndexes = {};
                     if (response.design_id != null && response.design_id != '') {
                         var p_color = response.selected_product_color;
-                        jQuery('.product-colors .color-img').each(function (index, val) {
+                        jQuery('.product-colors .color-img').each(function(index, val) {
                             if (val.getAttribute('data-color_id') == p_color) {
                                 var color = val.getAttribute('data-color_id');
                                 if (ProductDesigner.prototype.currentProductColor != color) {
@@ -1361,9 +1355,8 @@ ProductDesigner.prototype = {
                                 }
                             }
                         });
-                        jQuery('.product-side-img').each(function (index, val) {
-                            if (index != 0)
-                                jQuery('.product-side-img')[index].click();
+                        jQuery('.product-side-img').each(function(index, val) {
+                            if (index != 0) jQuery('.product-side-img')[index].click();
                             jQuery('#pd_loading_img').show();
                         }.bind(this));
                         jQuery('#product-sides')[0].children[1].children[0].children[0].click();
@@ -1579,7 +1572,7 @@ ProductDesigner.prototype = {
                                         textObject.set({
                                             group_type: group_type,
                                             last_row_size: last_row_size,
-                                            textarea : design_obj.textarea
+                                            textarea: design_obj.textarea
                                         })
                                         var cmd = new InsertCanvasObject(ProductDesigner.prototype, textObject);
                                         ProductDesigner.prototype.zIndexes[textObject.obj_id] = design_obj.zIndex;
@@ -1591,11 +1584,10 @@ ProductDesigner.prototype = {
                                             jQuery('#pd_loading_img').show();
                                             ProductDesigner.prototype.setzIndexes();
                                             jQuery('#pd_loading_img').show();
-                                            setTimeout(function () {
+                                            setTimeout(function() {
                                                 jQuery('#pd_loading_img').show();
-                                                jQuery('.product-side-img').each(function (index, val) {
-                                                    if (index != 0)
-                                                        jQuery('.product-side-img')[index].click();
+                                                jQuery('.product-side-img').each(function(index, val) {
+                                                    if (index != 0) jQuery('.product-side-img')[index].click();
                                                 }.bind(this));
                                                 jQuery('#pd_loading_img').show();
                                                 if (jQuery('#product-sides')[0].children[1].children[1] != undefined) {
@@ -1632,8 +1624,8 @@ ProductDesigner.prototype = {
                                         var used_colors = design_obj.used_colors;
                                         var used_colors_old = design_obj.used_colors_old;
                                         var textObject = designs[i];
-                                        fabric.loadSVGFromURL(url, (function (objData) {
-                                            return function (objects, options) {
+                                        fabric.loadSVGFromURL(url, (function(objData) {
+                                            return function(objects, options) {
                                                 var obj = fabric.util.groupSVGElements(objects, options);
                                                 obj.set({
                                                     top: objData.top,
@@ -1667,11 +1659,10 @@ ProductDesigner.prototype = {
                                                     jQuery('#pd_loading_img').show();
                                                     ProductDesigner.prototype.setzIndexes();
                                                     jQuery('#pd_loading_img').show();
-                                                    setTimeout(function () {
+                                                    setTimeout(function() {
                                                         jQuery('#pd_loading_img').show();
-                                                        jQuery('.product-side-img').each(function (index, val) {
-                                                            if (index != 0)
-                                                                jQuery('.product-side-img')[index].click();
+                                                        jQuery('.product-side-img').each(function(index, val) {
+                                                            if (index != 0) jQuery('.product-side-img')[index].click();
                                                         }.bind(this));
                                                         jQuery('#pd_loading_img').show();
                                                         if (jQuery('#product-sides')[0].children[1].children[1] != undefined) {
@@ -1731,8 +1722,8 @@ ProductDesigner.prototype = {
                                         var used_colors_old = design_obj.used_colors_old;
                                         var textObject = designs[i];
                                         var url = ProductDesigner.prototype.mediaUrl + design_obj.url;
-                                        fabric.Image.fromURL(url, (function (objData) {
-                                            return function (obj) {
+                                        fabric.Image.fromURL(url, (function(objData) {
+                                            return function(obj) {
                                                 obj.set({
                                                     top: objData.top,
                                                     left: objData.left,
@@ -1765,11 +1756,10 @@ ProductDesigner.prototype = {
                                                     jQuery('#pd_loading_img').show();
                                                     ProductDesigner.prototype.setzIndexes();
                                                     jQuery('#pd_loading_img').show();
-                                                    setTimeout(function () {
+                                                    setTimeout(function() {
                                                         jQuery('#pd_loading_img').show();
-                                                        jQuery('.product-side-img').each(function (index, val) {
-                                                            if (index != 0)
-                                                                jQuery('.product-side-img')[index].click();
+                                                        jQuery('.product-side-img').each(function(index, val) {
+                                                            if (index != 0) jQuery('.product-side-img')[index].click();
                                                         }.bind(this));
                                                         jQuery('#pd_loading_img').show();
                                                         if (jQuery('#product-sides')[0].children[1].children[1] != undefined) {
@@ -1840,8 +1830,8 @@ ProductDesigner.prototype = {
                                 var canvas = ProductDesigner.prototype.containerCanvases[i];
                                 var url = ProductDesigner.prototype.mediaUrl + masking[i].url;
                                 var DesignId = i;
-                                fabric.loadSVGFromURL(url, (function (objData) {
-                                    return function (objects, options) {
+                                fabric.loadSVGFromURL(url, (function(objData) {
+                                    return function(objects, options) {
                                         var canvas = objData.Canvas;
                                         var url = objData.Url;
                                         var DesignId = objData.design_id;
@@ -2069,11 +2059,10 @@ ProductDesigner.prototype = {
                                                 jQuery('#pd_loading_img').show();
                                                 ProductDesigner.prototype.setzIndexes();
                                                 jQuery('#pd_loading_img').show();
-                                                setTimeout(function () {
+                                                setTimeout(function() {
                                                     jQuery('#pd_loading_img').show();
-                                                    jQuery('.product-side-img').each(function (index, val) {
-                                                        if (index != 0)
-                                                            jQuery('.product-side-img')[index].click();
+                                                    jQuery('.product-side-img').each(function(index, val) {
+                                                        if (index != 0) jQuery('.product-side-img')[index].click();
                                                     }.bind(this));
                                                     jQuery('#pd_loading_img').show();
                                                     if (jQuery('#product-sides')[0].children[1].children[1] != undefined) {
@@ -2110,8 +2099,8 @@ ProductDesigner.prototype = {
                                             var used_colors = design_obj.used_colors;
                                             var used_colors_old = design_obj.used_colors_old;
                                             var textObject = designs[i];
-                                            fabric.loadSVGFromURL(url, (function (objData) {
-                                                return function (objects, options) {
+                                            fabric.loadSVGFromURL(url, (function(objData) {
+                                                return function(objects, options) {
                                                     var obj = fabric.util.groupSVGElements(objects, options);
                                                     obj.set({
                                                         top: objData.top,
@@ -2144,11 +2133,10 @@ ProductDesigner.prototype = {
                                                         jQuery('#pd_loading_img').show();
                                                         ProductDesigner.prototype.setzIndexes();
                                                         jQuery('#pd_loading_img').show();
-                                                        setTimeout(function () {
+                                                        setTimeout(function() {
                                                             jQuery('#pd_loading_img').show();
-                                                            jQuery('.product-side-img').each(function (index, val) {
-                                                                if (index != 0)
-                                                                    jQuery('.product-side-img')[index].click();
+                                                            jQuery('.product-side-img').each(function(index, val) {
+                                                                if (index != 0) jQuery('.product-side-img')[index].click();
                                                             }.bind(this));
                                                             jQuery('#pd_loading_img').show();
                                                             if (jQuery('#product-sides')[0].children[1].children[1] != undefined) {
@@ -2207,8 +2195,8 @@ ProductDesigner.prototype = {
                                             var used_colors_old = design_obj.used_colors_old;
                                             var textObject = designs[i];
                                             var url = ProductDesigner.prototype.mediaUrl + design_obj.url;
-                                            fabric.Image.fromURL(url, (function (objData) {
-                                                return function (obj) {
+                                            fabric.Image.fromURL(url, (function(objData) {
+                                                return function(obj) {
                                                     obj.set({
                                                         top: objData.top,
                                                         left: objData.left,
@@ -2240,11 +2228,10 @@ ProductDesigner.prototype = {
                                                         jQuery('#pd_loading_img').show();
                                                         ProductDesigner.prototype.setzIndexes();
                                                         jQuery('#pd_loading_img').show();
-                                                        setTimeout(function () {
+                                                        setTimeout(function() {
                                                             jQuery('#pd_loading_img').show();
-                                                            jQuery('.product-side-img').each(function (index, val) {
-                                                                if (index != 0)
-                                                                    jQuery('.product-side-img')[index].click();
+                                                            jQuery('.product-side-img').each(function(index, val) {
+                                                                if (index != 0) jQuery('.product-side-img')[index].click();
                                                             }.bind(this));
                                                             jQuery('#pd_loading_img').show();
                                                             if (jQuery('#product-sides')[0].children[1].children[1] != undefined) {
@@ -2317,7 +2304,7 @@ ProductDesigner.prototype = {
                         ProductDesigner.prototype.observeCanvas();
                     }
                 }.bind(this),
-                onFailure: function () {
+                onFailure: function() {
                     alert('Something is wrong... Please try again.');
                 }
             });
@@ -2335,12 +2322,12 @@ ProductDesigner.prototype = {
                 data: {
                     data: data
                 },
-                success: function (data, textStatus, jqXHR) {
+                success: function(data, textStatus, jqXHR) {
                     var response = JSON.parse(data);
                     ProductDesigner.prototype.zIndexes = {};
                     if (response.design_id != null && response.design_id != '') {
                         var p_color = response.selected_product_color;
-                        jQuery('.product-colors .color-img').each(function (index, val) {
+                        jQuery('.product-colors .color-img').each(function(index, val) {
                             if (val.getAttribute('data-color_id') == p_color) {
                                 var color = val.getAttribute('data-color_id');
                                 if (ProductDesigner.prototype.currentProductColor != color) {
@@ -2352,9 +2339,8 @@ ProductDesigner.prototype = {
                                 }
                             }
                         });
-                        jQuery('.product-side-img').each(function (index, val) {
-                            if (index != 0)
-                                jQuery('.product-side-img')[index].click();
+                        jQuery('.product-side-img').each(function(index, val) {
+                            if (index != 0) jQuery('.product-side-img')[index].click();
                             jQuery('#pd_loading_img').show();
                         }.bind(this));
                         jQuery('#product-sides')[0].children[1].children[0].children[0].click();
@@ -2581,11 +2567,10 @@ ProductDesigner.prototype = {
                                             jQuery('#pd_loading_img').show();
                                             ProductDesigner.prototype.setzIndexes();
                                             jQuery('#pd_loading_img').show();
-                                            setTimeout(function () {
+                                            setTimeout(function() {
                                                 jQuery('#pd_loading_img').show();
-                                                jQuery('.product-side-img').each(function (index, val) {
-                                                    if (index != 0)
-                                                        jQuery('.product-side-img')[index].click();
+                                                jQuery('.product-side-img').each(function(index, val) {
+                                                    if (index != 0) jQuery('.product-side-img')[index].click();
                                                 }.bind(this));
                                                 jQuery('#pd_loading_img').show();
                                                 if (jQuery('#product-sides')[0].children[1].children[1] != undefined) {
@@ -2622,8 +2607,8 @@ ProductDesigner.prototype = {
                                         var used_colors = design_obj.used_colors;
                                         var used_colors_old = design_obj.used_colors_old;
                                         var textObject = designs[i];
-                                        fabric.loadSVGFromURL(url, (function (objData) {
-                                            return function (objects, options) {
+                                        fabric.loadSVGFromURL(url, (function(objData) {
+                                            return function(objects, options) {
                                                 var obj = fabric.util.groupSVGElements(objects, options);
                                                 obj.set({
                                                     top: objData.top,
@@ -2657,11 +2642,10 @@ ProductDesigner.prototype = {
                                                     jQuery('#pd_loading_img').show();
                                                     ProductDesigner.prototype.setzIndexes();
                                                     jQuery('#pd_loading_img').show();
-                                                    setTimeout(function () {
+                                                    setTimeout(function() {
                                                         jQuery('#pd_loading_img').show();
-                                                        jQuery('.product-side-img').each(function (index, val) {
-                                                            if (index != 0)
-                                                                jQuery('.product-side-img')[index].click();
+                                                        jQuery('.product-side-img').each(function(index, val) {
+                                                            if (index != 0) jQuery('.product-side-img')[index].click();
                                                         }.bind(this));
                                                         jQuery('#pd_loading_img').show();
                                                         if (jQuery('#product-sides')[0].children[1].children[1] != undefined) {
@@ -2721,8 +2705,8 @@ ProductDesigner.prototype = {
                                         var used_colors_old = design_obj.used_colors_old;
                                         var textObject = designs[i];
                                         var url = ProductDesigner.prototype.mediaUrl + design_obj.url;
-                                        fabric.Image.fromURL(url, (function (objData) {
-                                            return function (obj) {
+                                        fabric.Image.fromURL(url, (function(objData) {
+                                            return function(obj) {
                                                 obj.set({
                                                     top: objData.top,
                                                     left: objData.left,
@@ -2755,11 +2739,10 @@ ProductDesigner.prototype = {
                                                     jQuery('#pd_loading_img').show();
                                                     ProductDesigner.prototype.setzIndexes();
                                                     jQuery('#pd_loading_img').show();
-                                                    setTimeout(function () {
+                                                    setTimeout(function() {
                                                         jQuery('#pd_loading_img').show();
-                                                        jQuery('.product-side-img').each(function (index, val) {
-                                                            if (index != 0)
-                                                                jQuery('.product-side-img')[index].click();
+                                                        jQuery('.product-side-img').each(function(index, val) {
+                                                            if (index != 0) jQuery('.product-side-img')[index].click();
                                                         }.bind(this));
                                                         jQuery('#pd_loading_img').show();
                                                         if (jQuery('#product-sides')[0].children[1].children[1] != undefined) {
@@ -2830,8 +2813,8 @@ ProductDesigner.prototype = {
                                 var canvas = ProductDesigner.prototype.containerCanvases[i];
                                 var url = ProductDesigner.prototype.mediaUrl + masking[i].url;
                                 var DesignId = i;
-                                fabric.loadSVGFromURL(url, (function (objData) {
-                                    return function (objects, options) {
+                                fabric.loadSVGFromURL(url, (function(objData) {
+                                    return function(objects, options) {
                                         var canvas = objData.Canvas;
                                         var url = objData.Url;
                                         var DesignId = objData.design_id;
@@ -3059,11 +3042,10 @@ ProductDesigner.prototype = {
                                                 jQuery('#pd_loading_img').show();
                                                 ProductDesigner.prototype.setzIndexes();
                                                 jQuery('#pd_loading_img').show();
-                                                setTimeout(function () {
+                                                setTimeout(function() {
                                                     jQuery('#pd_loading_img').show();
-                                                    jQuery('.product-side-img').each(function (index, val) {
-                                                        if (index != 0)
-                                                            jQuery('.product-side-img')[index].click();
+                                                    jQuery('.product-side-img').each(function(index, val) {
+                                                        if (index != 0) jQuery('.product-side-img')[index].click();
                                                     }.bind(this));
                                                     jQuery('#pd_loading_img').show();
                                                     if (jQuery('#product-sides')[0].children[1].children[1] != undefined) {
@@ -3100,8 +3082,8 @@ ProductDesigner.prototype = {
                                             var used_colors = design_obj.used_colors;
                                             var used_colors_old = design_obj.used_colors_old;
                                             var textObject = designs[i];
-                                            fabric.loadSVGFromURL(url, (function (objData) {
-                                                return function (objects, options) {
+                                            fabric.loadSVGFromURL(url, (function(objData) {
+                                                return function(objects, options) {
                                                     var obj = fabric.util.groupSVGElements(objects, options);
                                                     obj.set({
                                                         top: objData.top,
@@ -3134,11 +3116,10 @@ ProductDesigner.prototype = {
                                                         jQuery('#pd_loading_img').show();
                                                         ProductDesigner.prototype.setzIndexes();
                                                         jQuery('#pd_loading_img').show();
-                                                        setTimeout(function () {
+                                                        setTimeout(function() {
                                                             jQuery('#pd_loading_img').show();
-                                                            jQuery('.product-side-img').each(function (index, val) {
-                                                                if (index != 0)
-                                                                    jQuery('.product-side-img')[index].click();
+                                                            jQuery('.product-side-img').each(function(index, val) {
+                                                                if (index != 0) jQuery('.product-side-img')[index].click();
                                                             }.bind(this));
                                                             jQuery('#pd_loading_img').show();
                                                             if (jQuery('#product-sides')[0].children[1].children[1] != undefined) {
@@ -3197,8 +3178,8 @@ ProductDesigner.prototype = {
                                             var used_colors_old = design_obj.used_colors_old;
                                             var textObject = designs[i];
                                             var url = ProductDesigner.prototype.mediaUrl + design_obj.url;
-                                            fabric.Image.fromURL(url, (function (objData) {
-                                                return function (obj) {
+                                            fabric.Image.fromURL(url, (function(objData) {
+                                                return function(obj) {
                                                     obj.set({
                                                         top: objData.top,
                                                         left: objData.left,
@@ -3230,11 +3211,10 @@ ProductDesigner.prototype = {
                                                         jQuery('#pd_loading_img').show();
                                                         ProductDesigner.prototype.setzIndexes();
                                                         jQuery('#pd_loading_img').show();
-                                                        setTimeout(function () {
+                                                        setTimeout(function() {
                                                             jQuery('#pd_loading_img').show();
-                                                            jQuery('.product-side-img').each(function (index, val) {
-                                                                if (index != 0)
-                                                                    jQuery('.product-side-img')[index].click();
+                                                            jQuery('.product-side-img').each(function(index, val) {
+                                                                if (index != 0) jQuery('.product-side-img')[index].click();
                                                             }.bind(this));
                                                             jQuery('#pd_loading_img').show();
                                                             if (jQuery('#product-sides')[0].children[1].children[1] != undefined) {
@@ -3307,13 +3287,13 @@ ProductDesigner.prototype = {
                         ProductDesigner.prototype.observeCanvas();
                     }
                 }.bind(this),
-                onFailure: function () {
+                onFailure: function() {
                     alert('Something is wrong... Please try again.');
                 }
             });
         }
     },
-    setDesignArea: function (prod, selection_Area) {
+    setDesignArea: function(prod, selection_Area) {
         if (typeof prod === 'undefined') {
             return;
         }
@@ -3423,9 +3403,9 @@ ProductDesigner.prototype = {
             width: ProductDesigner.prototype.data.product.images[ProductDesigner.prototype.currentProductColor][ProductDesigner.prototype.currentProduct].width
         };
     },
-    observeSelectDesignArea: function () {
+    observeSelectDesignArea: function() {
         // Event.on($('diff_canvas'), 'click', '.diff_canvas', function(e, elm){
-        jQuery('#product_designer_main_content').on('click', '.design-container', function (e, elm) {
+        jQuery('#product_designer_main_content').on('click', '.design-container', function(e, elm) {
             this.resetCanvasBorder();
             var selectionArea = e.currentTarget.getAttribute('selection_area');
             var designAreaId = e.currentTarget.getAttribute('designAreaId');
@@ -3462,8 +3442,7 @@ ProductDesigner.prototype = {
                 }
             } else {
                 for (var i = 0; i < allObj.length; i++) {
-                    if (allObj[i].type != 'text' && allObj[i].type != 'group' && allObj[i].type != 'image' && allObj[i].type != 'path' && allObj[i].type != 'path-group') {
-                    }
+                    if (allObj[i].type != 'text' && allObj[i].type != 'group' && allObj[i].type != 'image' && allObj[i].type != 'path' && allObj[i].type != 'path-group') {}
                 }
             }
             ProductDesigner.prototype.currentDesignArea = selectionArea;
@@ -3482,7 +3461,7 @@ ProductDesigner.prototype = {
             //this.addBrush(this.canvas);
         }.bind(this));
     },
-    removeAllSelectedObject: function (canvas_current) {
+    removeAllSelectedObject: function(canvas_current) {
         for (var index in ProductDesigner.prototype.containerCanvases) {
             var canvas = ProductDesigner.prototype.containerCanvases[index];
             if (canvas != canvas_current) {
@@ -3490,20 +3469,20 @@ ProductDesigner.prototype = {
             }
         }
     },
-    resetCanvasBorder: function () {
-        jQuery('.design-container').each(function (index, val) {
+    resetCanvasBorder: function() {
+        jQuery('.design-container').each(function(index, val) {
             jQuery(val).css('border', '1px dashed');
             jQuery(val).css('border-color', 'black');
         });
     },
-    initPrices: function () {
+    initPrices: function() {
         ProductDesigner.prototype.pricesContainers[0] = jQuery('#fixed_price');
         // this.pricesContainers[1] = $('design_areas_price');
         ProductDesigner.prototype.pricesContainers[1] = jQuery('#image_price');
         ProductDesigner.prototype.pricesContainers[2] = jQuery('#text_price');
         ProductDesigner.prototype.pricesContainers[3] = jQuery('#custom_image_price');
     },
-    reloadPrice: function () {
+    reloadPrice: function() {
         var imagesPrice = 0.0;
         var textsPrice = 0.0;
         var customImagesPrice = 0.0;
@@ -3617,8 +3596,8 @@ ProductDesigner.prototype = {
         }
         this.updatePriceInfo(this.designerPrices);
     },
-    updatePriceInfo: function (prices) {
-        jQuery.each(this.pricesContainers, function (key, value) {
+    updatePriceInfo: function(prices) {
+        jQuery.each(this.pricesContainers, function(key, value) {
             if (prices.hasOwnProperty(jQuery(value).attr('id'))) {
                 var id1 = jQuery(value).attr('id');
                 var price = prices[id1];
@@ -3634,7 +3613,7 @@ ProductDesigner.prototype = {
             }
         });
     },
-    observColorCountObj: function () {
+    observColorCountObj: function() {
         jQuery('#used_color_container_obj').html('');
         this.productDesigner = ProductDesigner.prototype;
         var canvas = this.productDesigner.canvas;
@@ -3708,8 +3687,7 @@ ProductDesigner.prototype = {
                         spanEle.appendChild(text);
                         jQuery('#used_color_container_obj').append(spanEle);
                     }
-                } else {
-                }
+                } else {}
                 // this.reloadPrice();
             } else if (obj.type == 'text') {
                 var obj_used_colors = Array();
@@ -3753,7 +3731,7 @@ ProductDesigner.prototype = {
             }
         }
     },
-    observColorCount: function () {
+    observColorCount: function() {
         ProductDesigner.prototype.used_colors = Array();
         for (var key in LayersManager.prototype.layers) {
             var obj_used_colors = Array();
@@ -3849,8 +3827,7 @@ ProductDesigner.prototype = {
                          }
                          
                          }*/
-                    } else {
-                    }
+                    } else {}
                     ProductDesigner.prototype.reloadPrice();
                     ProductDesigner.prototype.reloadPrintingPrice();
                 } else if (obj.type == 'text') {
@@ -3989,12 +3966,12 @@ ProductDesigner.prototype = {
          }
          }*/
     },
-    observeControls: function () {
+    observeControls: function() {
         this.productDesigner = ProductDesigner.prototype;
         /**
          * Object horizantal flip function
          */
-        jQuery('#obj_flip_horizantal').on('click', function (e) {
+        jQuery('#obj_flip_horizantal').on('click', function(e) {
             var canvas = this.productDesigner.canvas;
             var obj = this.canvas.getActiveObject();
             if (!obj) {
@@ -4017,7 +3994,7 @@ ProductDesigner.prototype = {
         /**
          * Object vertically flip function
          */
-        jQuery('#obj_flip_vertical').on('click', function (e) {
+        jQuery('#obj_flip_vertical').on('click', function(e) {
             var canvas = this.canvas;
             var obj = this.canvas.getActiveObject();
             if (!obj) {
@@ -4040,7 +4017,7 @@ ProductDesigner.prototype = {
         /**
          * Object Align center function
          */
-        jQuery('#obj_align_center').on('click', function (e) {
+        jQuery('#obj_align_center').on('click', function(e) {
             var canvas = this.canvas;
             var obj = this.canvas.getActiveObject();
             if (!obj) {
@@ -4055,21 +4032,21 @@ ProductDesigner.prototype = {
         /**
          * Object events undo function
          */
-        jQuery('#undo').on('click', function (e) {
+        jQuery('#undo').on('click', function(e) {
             //e.stop();
             History.prototype.undo();
         }.bind(this));
         /**
          * Object events redo function
          */
-        jQuery('#redo').on('click', function (e) {
+        jQuery('#redo').on('click', function(e) {
             //e.stop();
             History.prototype.redo();
         }.bind(this));
         /**
          * Object events front object to front function
          */
-        jQuery('#obj_bring_front').on('click', function (e) {
+        jQuery('#obj_bring_front').on('click', function(e) {
             var canvas = this.canvas;
             var obj = this.canvas.getActiveObject();
             if (!obj) {
@@ -4083,7 +4060,7 @@ ProductDesigner.prototype = {
         /**
          * Object events front object to back function
          */
-        jQuery('#obj_bring_back').on('click', function (e) {
+        jQuery('#obj_bring_back').on('click', function(e) {
             var canvas = this.canvas;
             var obj = this.canvas.getActiveObject();
             if (!obj) {
@@ -4094,7 +4071,7 @@ ProductDesigner.prototype = {
             cmd.exec();
             History.prototype.push(cmd);
         }.bind(this));
-        jQuery('#obj_delete').on('click', function (e) {
+        jQuery('#obj_delete').on('click', function(e) {
             var canvas = this.canvas;
             canvas.isDrawingMode = false;
             this.productDesigner = ProductDesigner.prototype;
@@ -4106,7 +4083,7 @@ ProductDesigner.prototype = {
                 History.prototype.push(cmd);
             }
         }.bind(this));
-        jQuery('#clearall').on('click', function (e) {
+        jQuery('#clearall').on('click', function(e) {
             for (var imageId in this.containerCanvases) {
                 var currentsideremove = imageId.split("&");
                 var canvas = this.containerCanvases[imageId];
@@ -4131,7 +4108,7 @@ ProductDesigner.prototype = {
                 jQuery('#clearall').removeClass('disabled');
             }
         }.bind(this));
-        jQuery('#obj_duplicate').on('click', function (e) {
+        jQuery('#obj_duplicate').on('click', function(e) {
             var canvas = this.canvas;
             canvas.isDrawingMode = false;
             this.productDesigner = ProductDesigner.prototype;
@@ -4148,13 +4125,11 @@ ProductDesigner.prototype = {
             }
         }.bind(this));
     },
-    observSelectTab: function () {
+    observSelectTab: function() {
         if (jQuery('#templates_tab')) {
-            jQuery('#templates_tab').on('click', function (e) {
-                if (jQuery('#template_categories') == null)
-                    var templaval = 0;
-                else
-                    var templaval = jQuery('#template_categories').val();
+            jQuery('#templates_tab').on('click', function(e) {
+                if (jQuery('#template_categories') == null) var templaval = 0;
+                else var templaval = jQuery('#template_categories').val();
                 if (jQuery(template_list).children().length == 0) {
                     var data = {};
                     data['template_category_id'] = templaval;
@@ -4163,10 +4138,10 @@ ProductDesigner.prototype = {
                 jQuery("#layers_manager").hide();
                 this.canvas.deactivateAll().renderAll();
                 jQuery('text_prop_container').addClass('disabled');
-                jQuery('.inner-tab-option').each(function (index, val) {
+                jQuery('.inner-tab-option').each(function(index, val) {
                     jQuery(val).css("display", "none");
                 });
-                jQuery('.desgin-detail').each(function (index, val) {
+                jQuery('.desgin-detail').each(function(index, val) {
                     jQuery(val).css("display", "none");
                     jQuery(val).removeClass('resp-tab-content-active');
                 });
@@ -4175,14 +4150,14 @@ ProductDesigner.prototype = {
             }.bind(this));
         }
         if (jQuery('#mydesigns_tab')) {
-            jQuery('#mydesigns_tab').on('click', function (e) {
+            jQuery('#mydesigns_tab').on('click', function(e) {
                 jQuery("#layers_manager").hide();
                 this.canvas.deactivateAll().renderAll();
                 jQuery('text_prop_container').addClass('disabled');
-                jQuery('.inner-tab-option').each(function (index, val) {
+                jQuery('.inner-tab-option').each(function(index, val) {
                     jQuery(val).css("display", "none");
                 });
-                jQuery('.desgin-detail').each(function (index, val) {
+                jQuery('.desgin-detail').each(function(index, val) {
                     jQuery(val).css("display", "none");
                     jQuery(val).removeClass('resp-tab-content-active');
                 });
@@ -4191,7 +4166,7 @@ ProductDesigner.prototype = {
             }.bind(this));
         }
         if (jQuery('#grouporder_tab')) {
-            jQuery('#grouporder_tab').on('click', function (e) {
+            jQuery('#grouporder_tab').on('click', function(e) {
                 jQuery("#layers_manager").hide();
                 this.canvas.deactivateAll().renderAll();
                 if (jQuery('isname').checked == false && jQuery('isnumber').checked == false) {
@@ -4199,10 +4174,10 @@ ProductDesigner.prototype = {
                     jQuery('group_font_properties').addClass('disabled');
                 }
                 jQuery('#text_prop_container').addClass('disabled');
-                jQuery('.inner-tab-option').each(function (index, val) {
+                jQuery('.inner-tab-option').each(function(index, val) {
                     jQuery(val).css("display", "none");
                 });
-                jQuery('.desgin-detail').each(function (index, val) {
+                jQuery('.desgin-detail').each(function(index, val) {
                     jQuery(val).css("display", "none");
                     jQuery(val).removeClass('resp-tab-content-active');
                 });
@@ -4212,28 +4187,27 @@ ProductDesigner.prototype = {
                 //jQuery('#grouporder_tab').css("backgroundColor", "white");
             }.bind(this));
         }
-        jQuery('#text_tab').on('click', function (e) {
+        jQuery('#text_tab').on('click', function(e) {
             jQuery("#layers_manager").hide();
             this.canvas.deactivateAll().renderAll();
             jQuery('#text_prop_container').addClass('disabled');
-            jQuery('.nav_tab').each(function (index, val) {
+            jQuery('.nav_tab').each(function(index, val) {
                 jQuery(val).removeClass('resp-tab-active');
                 jQuery(val).css("background-color", "");
             });
-            jQuery('.tab-detail').each(function (index, val) {
+            jQuery('.tab-detail').each(function(index, val) {
                 jQuery(val).removeClass('selected');
             });
-            jQuery('.desgin-detail').each(function (index, val) {
+            jQuery('.desgin-detail').each(function(index, val) {
                 jQuery(val).css("display", "none");
                 jQuery(val).removeClass('resp-tab-content-active');
             });
-            jQuery('.inner-tab-option').each(function (index, val) {
+            jQuery('.inner-tab-option').each(function(index, val) {
                 jQuery(val).css("display", "none");
             });
             if (jQuery("#add_text_btn")[0] != undefined) {
                 jQuery('#inner-tab-option-text').addClass('resp-tab-content-active');
-                if (jQuery('#choose_quotes_btn')[0] != undefined)
-                    jQuery('#choose_quotes_btn').parent().removeClass('selected');
+                if (jQuery('#choose_quotes_btn')[0] != undefined) jQuery('#choose_quotes_btn').parent().removeClass('selected');
                 jQuery('#add_text_btn').parent().addClass('selected');
                 jQuery('#add_text').css("display", "block");
                 jQuery('#text_tab').addClass('resp-tab-active');
@@ -4241,8 +4215,7 @@ ProductDesigner.prototype = {
                 jQuery('#inner-tab-option-text').css("display", "block");
             } else {
                 jQuery('#inner-tab-option-text').addClass('resp-tab-content-active');
-                if (jQuery('#choose_quotes_btn')[0] != undefined)
-                    jQuery('#choose_quotes_btn').parent().addClass('selected');
+                if (jQuery('#choose_quotes_btn')[0] != undefined) jQuery('#choose_quotes_btn').parent().addClass('selected');
                 jQuery('#choose_quotes').css("display", "block");
                 jQuery('#text_tab').addClass('resp-tab-active');
                 //jQuery('#text_tab').css("background-color", "white");
@@ -4250,7 +4223,7 @@ ProductDesigner.prototype = {
             }
         }.bind(this));
         if (jQuery('#product_tab')) {
-            jQuery('#product_tab').on('click', function (e) {
+            jQuery('#product_tab').on('click', function(e) {
                 //alert("Hi");
                 if (jQuery('#product_list').children().length == 0) {
                     if (jQuery('#product_categories')) {
@@ -4262,10 +4235,10 @@ ProductDesigner.prototype = {
                 jQuery("#layers_manager").hide();
                 this.canvas.deactivateAll().renderAll();
                 jQuery('#text_prop_container').addClass('disabled');
-                jQuery('.inner-tab-option').each(function (index, val) {
+                jQuery('.inner-tab-option').each(function(index, val) {
                     jQuery(val).css("display", "none");
                 });
-                jQuery('.desgin-detail').each(function (index, val) {
+                jQuery('.desgin-detail').each(function(index, val) {
                     jQuery(val).css("display", "none");
                     jQuery(val).removeClass('resp-tab-content-active');
                 });
@@ -4273,7 +4246,7 @@ ProductDesigner.prototype = {
                 jQuery('#add_products_content').css("display", "block");
             }.bind(this));
         }
-        jQuery('#clipart_tab').on('click', function (e) {
+        jQuery('#clipart_tab').on('click', function(e) {
             if (jQuery('#image_list')) {
                 if (jQuery('#image_list').children().length == 0) {
                     if (jQuery('#clipart_categories')) {
@@ -4303,18 +4276,18 @@ ProductDesigner.prototype = {
             jQuery("#layers_manager").hide();
             this.canvas.deactivateAll().renderAll();
             jQuery('#text_prop_container').addClass('disabled');
-            jQuery('.nav_tab').each(function (index, val) {
+            jQuery('.nav_tab').each(function(index, val) {
                 jQuery(val).removeClass('resp-tab-active');
                 jQuery(val).css("background-color", "");
             });
-            jQuery('.tab-detail').each(function (index, val) {
+            jQuery('.tab-detail').each(function(index, val) {
                 jQuery(val).removeClass('selected');
             });
-            jQuery('.desgin-detail').each(function (index, val) {
+            jQuery('.desgin-detail').each(function(index, val) {
                 jQuery(val).css("display", "none");
                 jQuery(val).removeClass('resp-tab-content-active');
             });
-            jQuery('.inner-tab-option').each(function (index, val) {
+            jQuery('.inner-tab-option').each(function(index, val) {
                 jQuery(val).css("display", "none");
             });
             if (jQuery('#add_upload_image_btn')[0] != undefined) {
@@ -4335,10 +4308,10 @@ ProductDesigner.prototype = {
             }
         }.bind(this));
     },
-    toggleImageSelectedClass: function (obj, method) {
+    toggleImageSelectedClass: function(obj, method) {
         if (obj && obj.type == 'image') {
             if (method == 'add') {
-                jQuery('.clipart-image').each(function (index, val) {
+                jQuery('.clipart-image').each(function(index, val) {
                     if (!jQuery(val).hasClass('selected')) {
                         if (jQuery(val).attr('data-orig-url') == obj._element.src) {
                             jQuery(val).addClass('selected');
@@ -4346,7 +4319,7 @@ ProductDesigner.prototype = {
                     }
                 });
             } else if (method == 'remove') {
-                jQuery('.clipart-image').each(function (index, val) {
+                jQuery('.clipart-image').each(function(index, val) {
                     if (jQuery(val).hasClass('selected')) {
                         if (jQuery(val).attr('data-orig-url') == obj._element.src) {
                             jQuery(val).removeClass('selected');
@@ -4356,8 +4329,8 @@ ProductDesigner.prototype = {
             }
         }
     },
-    observeContinueButton: function () {
-        jQuery('#continue_btn').on('click', function (e) {
+    observeContinueButton: function() {
+        jQuery('#continue_btn').on('click', function(e) {
             if (!this.canvasesHasDesigns()) {
                 alert('Please design product');
                 return;
@@ -4369,7 +4342,7 @@ ProductDesigner.prototype = {
                 } else {
                     ProductDesigner.prototype.reloadPrintingPrice();
                 }
-                require(['jquery', 'Magento_Ui/js/modal/modal'], function ($, modal) {
+                require(['jquery', 'Magento_Ui/js/modal/modal'], function($, modal) {
                     var options = {
                         type: 'popup',
                         responsive: true,
@@ -4385,9 +4358,7 @@ ProductDesigner.prototype = {
             }
         }.bind(this));
     },
-    reloadTierPrice: function (color_id) {
-
-
+    reloadTierPrice: function(color_id) {
         jQuery('#pd_loading_img').show();
         jQuery.ajax({
             url: ProductDesigner.prototype.tierPriceUrl,
@@ -4396,22 +4367,17 @@ ProductDesigner.prototype = {
                 color_id: color_id,
                 product_id: ProductDesigner.prototype.data.productId
             },
-            success: function (data, textStatus, jqXHR) {
-
-                require(['jquery'], function ($) {
-
+            success: function(data, textStatus, jqXHR) {
+                require(['jquery'], function($) {
                     var response = JSON.parse(data);
-
                     jQuery("#customOptionFormProdSettings").html(response["price"]);
                     jQuery('#pd_loading_img').hide();
-
-
                 });
             }
         });
     },
-    observAddToCart: function () {
-        jQuery("#cart-add").on("click", function () {
+    observAddToCart: function() {
+        jQuery("#cart-add").on("click", function() {
             if (!ProductDesigner.prototype.canvasesHasDesigns()) {
                 alert('Please design product');
                 return;
@@ -4420,7 +4386,7 @@ ProductDesigner.prototype = {
                     if (ProductDesigner.prototype.data.printing_method_avail != '0') {
                         var flag1 = false;
                         var qty = 0;
-                        jQuery('.size-qty').each(function (val, index) {
+                        jQuery('.size-qty').each(function(val, index) {
                             if (index.value > 0) {
                                 qty = parseInt(qty) + parseInt(index.value);
                             }
@@ -4448,7 +4414,7 @@ ProductDesigner.prototype = {
                     } else {
                         var flag1 = false;
                         var qty = 0;
-                        jQuery('.size-qty').each(function (val, index) {
+                        jQuery('.size-qty').each(function(val, index) {
                             if (index.value > 0) {
                                 qty = parseInt(qty) + parseInt(index.value);
                             }
@@ -4500,17 +4466,14 @@ ProductDesigner.prototype = {
                     }
                 }
                 if (ProductDesigner.prototype.multiper != 0 && ProductDesigner.prototype.multiper != "") {
-                    setTimeout(function () {
+                    setTimeout(function() {
                         jQuery("#cart-error-msg").html('');
                     }, 5000);
                     if (parseInt(jQuery("#qty").val()) % ProductDesigner.prototype.multiper != 0) {
                         jQuery("#cart-error-msg").html("Please enter multiple of " + ProductDesigner.prototype.multiper);
                         return false;
                     }
-                    
-                    
                 }
-
                 jQuery('#pd_loading_img').show();
                 jQuery('#pd_loading_img').css("z-index", 9999);
                 jQuery('.progress-bar-wrapper.add-to-cart').show();
@@ -4527,22 +4490,21 @@ ProductDesigner.prototype = {
                         jQuery('.progress-bar-wrapper.add-to-cart').hide();
                     }
                 }
-
                 ProductDesigner.prototype.saveDesign(ProductDesigner.prototype.continueUrl, ProductDesigner.prototype.continueFunction);
             }
         });
     },
-    observeZoomButton: function () {
-        jQuery('#zoom_in').on('click', function (e) {
+    observeZoomButton: function() {
+        jQuery('#zoom_in').on('click', function(e) {
             var img = this.data.product.images[this.currentProductColor][this.currentProduct];
             this.resizeCanvas(img, this.currentImageId, 'in');
         }.bind(this));
-        jQuery('#zoom_out').on('click', function (e) {
+        jQuery('#zoom_out').on('click', function(e) {
             var img = this.data.product.images[this.currentProductColor][this.currentProduct];
             this.resizeCanvas(img, this.currentImageId, 'out');
         }.bind(this));
     },
-    resizeCanvas: function (product, id, type) {
+    resizeCanvas: function(product, id, type) {
         if (id) {
             product = this.data.product.images[this.currentProductColor][id];
         } else if (product == null) {
@@ -4634,7 +4596,7 @@ ProductDesigner.prototype = {
                     canvas.setHeight(canvas_height * (1 / ProductDesigner.prototype.scaleFactor));
                     canvas.setWidth(canvas_width * (1 / ProductDesigner.prototype.scaleFactor));
                     if (product.masking_image_path != undefined) {
-                        fabric.loadSVGFromURL(product.masking_image_path, function (objects, options) {
+                        fabric.loadSVGFromURL(product.masking_image_path, function(objects, options) {
                             var cmd = new ObjectMaskingHistory(canvas, objects, options, product.masking_image_path, null);
                             cmd.exec();
                             History.prototype.push(cmd);
@@ -4716,7 +4678,7 @@ ProductDesigner.prototype = {
             canvas.setHeight(canvas_height * (1 / ProductDesigner.prototype.scaleFactor));
             canvas.setWidth(canvas_width * (1 / ProductDesigner.prototype.scaleFactor));
             if (product.masking_image_path != undefined) {
-                fabric.loadSVGFromURL(product.masking_image_path, function (objects, options) {
+                fabric.loadSVGFromURL(product.masking_image_path, function(objects, options) {
                     var cmd = new ObjectMaskingHistory(canvas, objects, options, product.masking_image_path, null);
                     cmd.exec();
                     History.prototype.push(cmd);
@@ -4791,13 +4753,13 @@ ProductDesigner.prototype = {
         this.observeWindowResize();
         //$('product_designer_main_content').style.visibility= "visible";
     },
-    observeWindowResize: function () {
+    observeWindowResize: function() {
         var a;
-        jQuery(window).resize(function () {
+        jQuery(window).resize(function() {
             product = ProductDesigner.prototype.data.product.images[ProductDesigner.prototype.currentProductColor][ProductDesigner.prototype.currentProduct];
             if (ProductDesigner.windowWidth != window.innerWidth) {
                 clearTimeout(a);
-                a = setTimeout(function () {
+                a = setTimeout(function() {
                     ProductDesigner.prototype.resizeCanvas(product);
                 }, 1000);
             }
@@ -4805,15 +4767,15 @@ ProductDesigner.prototype = {
             ProductDesigner.prototype.windowHeight = window.innerHeight;
         });
     },
-    observePreviewButton: function () {
-        jQuery('#preview_btn').on('click', function (e) {
+    observePreviewButton: function() {
+        jQuery('#preview_btn').on('click', function(e) {
             //e.stop();
             this.createPreviewWindow();
             //this.previewWindow.showCenter(true);
             // this._toggleControlsButtons();
         }.bind(this));
     },
-    createPreviewWindow: function () {
+    createPreviewWindow: function() {
         var flag = 0;
         if (!this.previewWindow) {
             if (!ProductDesigner.prototype.canvasesHasDesigns()) {
@@ -4865,9 +4827,9 @@ ProductDesigner.prototype = {
                     data: {
                         data: data
                     },
-                    success: function (data, textStatus, jqXHR) {
+                    success: function(data, textStatus, jqXHR) {
                         jQuery('#pd_loading_img').hide();
-                        require(['jquery', 'Magento_Ui/js/modal/alert'], function ($, alert) {
+                        require(['jquery', 'Magento_Ui/js/modal/alert'], function($, alert) {
                             alert({
                                 modalClass: 'productdesigner-preview',
                                 title: "Design Preview",
@@ -4875,7 +4837,7 @@ ProductDesigner.prototype = {
                                 width: '100px',
                                 content: JSON.parse(data),
                                 actions: {
-                                    always: function () {
+                                    always: function() {
                                         //console.log("modal closed");
                                     }
                                 }
@@ -4889,7 +4851,7 @@ ProductDesigner.prototype = {
             }
         }
     },
-    createImagePreview: function () {
+    createImagePreview: function() {
         if (this.data.product.images[this.currentProductColor][this.currentProduct].url == undefined) {
             return;
         }
@@ -4902,7 +4864,7 @@ ProductDesigner.prototype = {
         // canvas.style.border = '1px dashed';
         jQuery('#product-zoom-container').append(canvas);
         var zoomCanvas = new fabric.Canvas(canvas[0]);
-        fabric.Image.fromURL(bgimgUrl, function (backgroundobj) {
+        fabric.Image.fromURL(bgimgUrl, function(backgroundobj) {
             backgroundobj.lockMovementX = true;
             backgroundobj.lockMovementY = true;
             var group = new fabric.Group([], {
@@ -4922,7 +4884,7 @@ ProductDesigner.prototype = {
                     var canvas = this.containerCanvases[index];
                     canvas.deactivateAll();
                     canvas.renderAll();
-                    fabric.Image.fromURL(canvas.toDataURL(), function (obj) {
+                    fabric.Image.fromURL(canvas.toDataURL(), function(obj) {
                         var desigImage = this.prepareImageForPreview(obj, index, this.currentProduct);
                         this.currCanvasGroup.add(obj);
                         group.padding = this.imageSize.width > this.imageSize.height ? this.imageSize.width : this.imageSize.height;
@@ -4936,11 +4898,10 @@ ProductDesigner.prototype = {
                         "id": index1[1]
                     })
                 }
-            }
-            ;
+            };
         }.bind(this));
     },
-    createPreviewImage: function () {
+    createPreviewImage: function() {
         //        if (ProductDesigner.prototype.data.product.images[this.currentProductColor][this.currentProduct].url == undefined) {
         //            return;
         var bgimgUrl = this.data.product.images[ProductDesigner.prototype.currentProductColor][ProductDesigner.prototype.currentProduct].url;
@@ -4952,7 +4913,7 @@ ProductDesigner.prototype = {
         // canvas.style.border = '1px dashed';
         jQuery('#product-zoom-container').append(canvas);
         var zoomCanvas = new fabric.Canvas(canvas[0]);
-        fabric.Image.fromURL(bgimgUrl, function (backgroundobj) {
+        fabric.Image.fromURL(bgimgUrl, function(backgroundobj) {
             backgroundobj.lockMovementX = true;
             backgroundobj.lockMovementY = true;
             var group = new fabric.Group([], {
@@ -4972,7 +4933,7 @@ ProductDesigner.prototype = {
                     var canvas = ProductDesigner.prototype.containerCanvases[index];
                     canvas.deactivateAll();
                     canvas.renderAll();
-                    fabric.Image.fromURL(canvas.toDataURL(), function (obj) {
+                    fabric.Image.fromURL(canvas.toDataURL(), function(obj) {
                         var desigImage = ProductDesigner.prototype.prepareImageForPreview(obj, index, ProductDesigner.prototype.currentProduct);
                         this.currCanvasGroup.add(obj);
                         group.padding = ProductDesigner.prototype.imageSize.width > ProductDesigner.prototype.imageSize.height ? ProductDesigner.prototype.imageSize.width : ProductDesigner.prototype.imageSize.height;
@@ -4986,11 +4947,10 @@ ProductDesigner.prototype = {
                         "id": index1[1]
                     })
                 }
-            }
-            ;
+            };
         }.bind(this));
     },
-    prepareImageForPreview: function (obj) {
+    prepareImageForPreview: function(obj) {
         var index = obj.designId;
         var currentProduct = obj.currentProduct;
         var index1 = index.split("&");
@@ -5038,9 +4998,9 @@ ProductDesigner.prototype = {
         });
         return obj;
     },
-    observeSaveDesignButton: function () {
+    observeSaveDesignButton: function() {
         if (jQuery('#save_design_btn')) {
-            jQuery('#save_design_btn').on('click', function (e) {
+            jQuery('#save_design_btn').on('click', function(e) {
                 if (!this.canvasesHasDesigns()) {
                     alert('Please design product');
                     return;
@@ -5053,25 +5013,25 @@ ProductDesigner.prototype = {
             }.bind(this));
         }
     },
-    observeRegisterBtn: function () {
+    observeRegisterBtn: function() {
         if (jQuery('#customer-register-btn')) {
-            jQuery('#customer-register-btn').on('click', function (e) {
+            jQuery('#customer-register-btn').on('click', function(e) {
                 this.createRegistrationWindow();
             }.bind(this));
         }
     },
-    observRegisterSubmitBtn: function () {
+    observRegisterSubmitBtn: function() {
         if (jQuery('#customer-register-submit-btn')) {
-            jQuery('#customer-register-submit-btn').on('click', function (e) {
+            jQuery('#customer-register-submit-btn').on('click', function(e) {
                 var type = 'register';
                 this.loginAndSaveDesign(this.registerUrl, 'form-validate', type);
                 return;
             }.bind(this));
         }
     },
-    createRegistrationWindow: function () {
+    createRegistrationWindow: function() {
         jQuery('#customer-login-container').modal('closeModal');
-        require(['jquery', 'Magento_Ui/js/modal/modal'], function ($, modal) {
+        require(['jquery', 'Magento_Ui/js/modal/modal'], function($, modal) {
             var options = {
                 type: 'popup',
                 responsive: true,
@@ -5085,8 +5045,8 @@ ProductDesigner.prototype = {
             jQuery('#customer-register-container').modal('openModal');
         });
     },
-    createLoginPreviewWindow: function () {
-        require(['jquery', 'Magento_Ui/js/modal/modal'], function ($, modal) {
+    createLoginPreviewWindow: function() {
+        require(['jquery', 'Magento_Ui/js/modal/modal'], function($, modal) {
             var options = {
                 type: 'popup',
                 responsive: true,
@@ -5099,9 +5059,9 @@ ProductDesigner.prototype = {
             $('#customer-login-container').modal('openModal');
         });
     },
-    observeLoginBtn: function () {
+    observeLoginBtn: function() {
         if (jQuery('#customer-login-btn')) {
-            jQuery('#customer-login-btn').on('click', function (e) {
+            jQuery('#customer-login-btn').on('click', function(e) {
                 if (jQuery('#customer-login-btn').valid()) {
                     var type = 'login';
                     this.loginAndSaveDesign(this.loginUrl, 'login-form-pd', type);
@@ -5110,19 +5070,18 @@ ProductDesigner.prototype = {
             }.bind(this));
         }
     },
-    observeGetStoredDesignButton: function () {
+    observeGetStoredDesignButton: function() {
         if (this.isCustomerLogin == '0') {
             if (jQuery('#get_stored_designs')) {
-                jQuery('#get_stored_designs').live('click', function (e) {
+                jQuery('#get_stored_designs').live('click', function(e) {
                     if (this.isCustomerLogin == '0') {
                         this.createLoginPreviewWindow();
-                    } else if (this.isCustomerLogin == '1') {
-                    }
+                    } else if (this.isCustomerLogin == '1') {}
                 }.bind(this));
             }
         }
     },
-    loginAndSaveDesign: function (url, formId, type) {
+    loginAndSaveDesign: function(url, formId, type) {
         var form_login = jQuery('#' + formId);
         if (jQuery('#' + formId).valid()) {
             jQuery('#pd_loading_img').css("z-index", "999");
@@ -5150,7 +5109,7 @@ ProductDesigner.prototype = {
                 url: url,
                 method: 'post',
                 data: login_data,
-                success: function (data, textStatus, jqXHR) {
+                success: function(data, textStatus, jqXHR) {
                     var response = JSON.parse(data);
                     if (response.status == 'success') {
                         ProductDesigner.prototype.isCustomerLogin = '1';
@@ -5159,13 +5118,12 @@ ProductDesigner.prototype = {
                             jQuery.ajax({
                                 url: ProductDesigner.prototype.getmydesign,
                                 method: 'post',
-                                success: function (data, textStatus, jqXHR) {
+                                success: function(data, textStatus, jqXHR) {
                                     jQuery('#pd_loading_img').hide();
                                     var response = JSON.parse(data);
                                     ProductDesigner.prototype.designIdSave = response.design_id;
                                     if (response.designs) {
-                                        if (jQuery('#mydesigns_images_container') != undefined)
-                                            jQuery('#mydesigns_images_container').html(response.designs);
+                                        if (jQuery('#mydesigns_images_container') != undefined) jQuery('#mydesigns_images_container').html(response.designs);
                                         jQuery('#customer-login-container').modal('closeModal');
                                     }
                                 }
@@ -5177,13 +5135,12 @@ ProductDesigner.prototype = {
                                 data: {
                                     data: imagesData
                                 },
-                                success: function (data, textStatus, jqXHR) {
+                                success: function(data, textStatus, jqXHR) {
                                     jQuery('#pd_loading_img').hide();
                                     var responsesave = JSON.parse(data);
                                     ProductDesigner.prototype.designIdSave = responsesave.design_id;
                                     if (responsesave.designs) {
-                                        if (jQuery('#mydesigns_images_container') != undefined)
-                                            jQuery('#mydesigns_images_container').html(responsesave.designs);
+                                        if (jQuery('#mydesigns_images_container') != undefined) jQuery('#mydesigns_images_container').html(responsesave.designs);
                                     }
                                     jQuery('#customer-register-btn').addClass('disabled');
                                     jQuery('#customer-register-btn').attr('disabled', 'disabled');
@@ -5200,7 +5157,7 @@ ProductDesigner.prototype = {
                                     ProductDesigner.prototype._observeControlButtons();
                                     alert('Design was saved successfully.');
                                     // Windows.closeAll();
-                                    setTimeout(function () {
+                                    setTimeout(function() {
                                         ProductDesigner.prototype.fbUrl = responsesave.fbshare;
                                         ProductDesigner.prototype.twUrl = responsesave.twshare;
                                         ProductDesigner.prototype.gUrl = responsesave.gshare;
@@ -5217,7 +5174,7 @@ ProductDesigner.prototype = {
                                             } else if (ProductDesigner.prototype.clickedSocialButton == 'pin_share') {
                                                 window.open(responsesave.pinshare);
                                             } else if (ProductDesigner.prototype.clickedSocialButton == 'email_share') {
-                                                require(['jquery', 'Magento_Ui/js/modal/modal'], function ($, modal) {
+                                                require(['jquery', 'Magento_Ui/js/modal/modal'], function($, modal) {
                                                     var options = {
                                                         type: 'popup',
                                                         responsive: true,
@@ -5253,10 +5210,9 @@ ProductDesigner.prototype = {
             });
         }
     },
-    reloadPrintingPrice: function (isclicked) {
+    reloadPrintingPrice: function(isclicked) {
         var params = getUrlParams();
-        if (!this.isadmin)
-            var imagesPrice = 0.0;
+        if (!this.isadmin) var imagesPrice = 0.0;
         var textsPrice = 0.0;
         var customImagesPrice = 0.0;
         var fixedPrice = 0.0;
@@ -5551,7 +5507,7 @@ ProductDesigner.prototype = {
             var selected_qty = Array();
         }
         var newdesignerprice = 0;
-        jQuery('.size-qty').each(function (index, val) {
+        jQuery('.size-qty').each(function(index, val) {
             var selected_qty_details = {};
             if (val.value > 0) {
                 qty = parseInt(qty) + parseInt(val.value);
@@ -5562,8 +5518,7 @@ ProductDesigner.prototype = {
             }
         });
         side_count = jQuery.unique(side_count);
-        if (qty == 0)
-            qty = 1;
+        if (qty == 0) qty = 1;
         price *= qty;
         var final_qty = qty;
         var array = [];
@@ -5596,8 +5551,8 @@ ProductDesigner.prototype = {
                     if (document.querySelector('input[name="options[' + custoptionid + '][]"]:checked') != null) {
                         var selectedradioval = document.querySelector('input[name="options[' + custoptionid + '][]"]:checked').value;
                         var selected = new Array();
-                        jQuery(document).ready(function () {
-                            jQuery('input[name="options[' + custoptionid + '][]"]:checked').each(function () {
+                        jQuery(document).ready(function() {
+                            jQuery('input[name="options[' + custoptionid + '][]"]:checked').each(function() {
                                 selected.push(jQuery(this).val());
                             });
                         });
@@ -5773,76 +5728,64 @@ ProductDesigner.prototype = {
                                     if (area_by_side[str[1]] == side_count[j]) {
                                         for (var current_side in ProductDesigner.prototype.data.image_side) {
                                             if (side_count[j] == ProductDesigner.prototype.data.image_side[current_side]) {
-                                                var prod_side = str[1] + '_' + str[0].toLowerCase();
-                                                ;
+                                                var prod_side = str[1] + '_' + str[0].toLowerCase();;
                                             }
                                         }
                                         for (var id in tier_price_details) {
-                                            if (tier_price_details[prod_side] != "")
-                                                added_products_price.push(tier_price_details[prod_side].product_id_by_color_price);
+                                            if (tier_price_details[prod_side] != "") added_products_price.push(tier_price_details[prod_side].product_id_by_color_price);
                                         }
                                     }
                                 }
                                 var added_color_type_product_name = jQuery.unique(added_color_type_products_name);
-                                if (added_color_type_product_name.length > 0)
-                                    price_html = price_html + '<span>' + added_color_type_product_name + ' :' + prev_qty + ' X ' + priceOptions.formatPrice(min_size_tier_price) + ' = ' + priceOptions.formatPrice(parseFloat(min_size_tier_price) * prev_qty) + '</span>';
+                                if (added_color_type_product_name.length > 0) price_html = price_html + '<span>' + added_color_type_product_name + ' :' + prev_qty + ' X ' + priceOptions.formatPrice(min_size_tier_price) + ' = ' + priceOptions.formatPrice(parseFloat(min_size_tier_price) * prev_qty) + '</span>';
                             }
                             if (str[1] == 'medium') {
                                 for (var j = 0; j < side_count.length; j++) {
                                     if (area_by_side[str[1]] == side_count[j]) {
                                         for (var current_side in ProductDesigner.prototype.data.image_side) {
                                             if (side_count[j] == ProductDesigner.prototype.data.image_side[current_side]) {
-                                                var prod_side = str[1] + '_' + str[0].toLowerCase();
-                                                ;
+                                                var prod_side = str[1] + '_' + str[0].toLowerCase();;
                                             }
                                         }
                                         for (var id in tier_price_details) {
-                                            if (tier_price_details[prod_side] != "")
-                                                added_products_price.push(tier_price_details[prod_side].product_id_by_color_price);
+                                            if (tier_price_details[prod_side] != "") added_products_price.push(tier_price_details[prod_side].product_id_by_color_price);
                                         }
                                     }
                                 }
                                 var added_color_type_product_name = jQuery.unique(added_color_type_products_name);
-                                if (added_color_type_product_name.length > 0)
-                                    price_html = price_html + '<span>' + added_color_type_product_name + ' :' + prev_qty + ' X ' + OptionsPrice.formatPrice(min_size_tier_price) + ' = ' + OptionsPrice.formatPrice(parseFloat(min_size_tier_price) * prev_qty) + '</span>';
+                                if (added_color_type_product_name.length > 0) price_html = price_html + '<span>' + added_color_type_product_name + ' :' + prev_qty + ' X ' + OptionsPrice.formatPrice(min_size_tier_price) + ' = ' + OptionsPrice.formatPrice(parseFloat(min_size_tier_price) * prev_qty) + '</span>';
                             }
                             if (str[1] == 'large') {
                                 for (var j = 0; j < side_count.length; j++) {
                                     if (area_by_side[str[1]] == side_count[j]) {
                                         for (var current_side in ProductDesigner.prototype.data.image_side) {
                                             if (side_count[j] == ProductDesigner.prototype.data.image_side[current_side]) {
-                                                var prod_side = str[1] + '_' + str[0].toLowerCase();
-                                                ;
+                                                var prod_side = str[1] + '_' + str[0].toLowerCase();;
                                             }
                                         }
                                         for (var id in tier_price_details) {
-                                            if (tier_price_details[prod_side] != "")
-                                                added_products_price.push(tier_price_details[prod_side].product_id_by_color_price);
+                                            if (tier_price_details[prod_side] != "") added_products_price.push(tier_price_details[prod_side].product_id_by_color_price);
                                         }
                                     }
                                 }
                                 var added_color_type_product_name = jQuery.unique(added_color_type_products_name);
-                                if (added_color_type_product_name.length > 0)
-                                    price_html = price_html + '<span>' + added_color_type_product_name + ' :' + prev_qty + ' X ' + OptionsPrice.formatPrice(min_size_tier_price) + ' = ' + OptionsPrice.formatPrice(parseFloat(min_size_tier_price) * prev_qty) + '</span>';
+                                if (added_color_type_product_name.length > 0) price_html = price_html + '<span>' + added_color_type_product_name + ' :' + prev_qty + ' X ' + OptionsPrice.formatPrice(min_size_tier_price) + ' = ' + OptionsPrice.formatPrice(parseFloat(min_size_tier_price) * prev_qty) + '</span>';
                             }
                             if (str[1] == 'extralarge') {
                                 for (var j = 0; j < side_count.length; j++) {
                                     if (area_by_side[str[1]] == side_count[j]) {
                                         for (var current_side in ProductDesigner.prototype.data.image_side) {
                                             if (side_count[j] == ProductDesigner.prototype.data.image_side[current_side]) {
-                                                var prod_side = str[1] + '_' + str[0].toLowerCase();
-                                                ;
+                                                var prod_side = str[1] + '_' + str[0].toLowerCase();;
                                             }
                                         }
                                         for (var id in tier_price_details) {
-                                            if (tier_price_details[prod_side] != "")
-                                                added_products_price.push(tier_price_details[prod_side].product_id_by_color_price);
+                                            if (tier_price_details[prod_side] != "") added_products_price.push(tier_price_details[prod_side].product_id_by_color_price);
                                         }
                                     }
                                 }
                                 var added_color_type_product_name = jQuery.unique(added_color_type_products_name);
-                                if (added_color_type_product_name.length > 0)
-                                    price_html = price_html + '<span>' + added_color_type_product_name + ' :' + prev_qty + ' X ' + OptionsPrice.formatPrice(min_size_tier_price) + ' = ' + OptionsPrice.formatPrice(parseFloat(min_size_tier_price) * prev_qty) + '</span>';
+                                if (added_color_type_product_name.length > 0) price_html = price_html + '<span>' + added_color_type_product_name + ' :' + prev_qty + ' X ' + OptionsPrice.formatPrice(min_size_tier_price) + ' = ' + OptionsPrice.formatPrice(parseFloat(min_size_tier_price) * prev_qty) + '</span>';
                             }
                             //}
                         }
@@ -5970,8 +5913,8 @@ ProductDesigner.prototype = {
                     if (document.querySelector('input[name="options[' + custoptionid + '][]"]:checked') != null) {
                         var selectedradioval = document.querySelector('input[name="options[' + custoptionid + '][]"]:checked').value;
                         var selected = new Array();
-                        jQuery(document).ready(function () {
-                            jQuery('input[name="options[' + custoptionid + '][]"]:checked').each(function () {
+                        jQuery(document).ready(function() {
+                            jQuery('input[name="options[' + custoptionid + '][]"]:checked').each(function() {
                                 selected.push(jQuery(this).val());
                             });
                         });
@@ -6138,7 +6081,7 @@ ProductDesigner.prototype = {
         }
         var formattedPrice = OptionsPrice.formatPrice(price);
     },
-    saveDesign: function (url, responseFunction) {
+    saveDesign: function(url, responseFunction) {
         if ((this.canvas == null) || this.canvas == 'undefined') {
             return;
         }
@@ -6150,13 +6093,13 @@ ProductDesigner.prototype = {
             data: {
                 data: params
             },
-            success: function (data, textStatus, jqXHR) {
+            success: function(data, textStatus, jqXHR) {
                 jQuery('#pd_loading_img').hide();
                 responseFunction(data);
             }
         });
     },
-    continueFunction: function (transport) {
+    continueFunction: function(transport) {
         var response = JSON.parse(transport);
         var login_data = {};
         login_data['productid'] = response.productid;
@@ -6220,10 +6163,9 @@ ProductDesigner.prototype = {
                     data: {
                         data: login_data
                     },
-                    success: function (data, textStatus, jqXHR) {
+                    success: function(data, textStatus, jqXHR) {
                         jQuery('#pd_loading_img').hide();
                         var response = JSON.parse(data);
-
                         if (response.status == 'success') {
                             //  jQuery('#add-to-cart').modal('closeModal');
                             window.onbeforeunload = null;
@@ -6240,14 +6182,13 @@ ProductDesigner.prototype = {
             console.log(response.message);
         }
     },
-    saveDesignFunction: function (transport) {
+    saveDesignFunction: function(transport) {
         var response = JSON.parse(transport);
         if (response.status == 'success') {
             ProductDesigner.prototype.designIdSave = response.design_id;
             // get customer designs
             if (response.designs) {
-                if (jQuery('#mydesigns_images_container') != undefined)
-                    jQuery('#mydesigns_images_container').html(response.designs);
+                if (jQuery('#mydesigns_images_container') != undefined) jQuery('#mydesigns_images_container').html(response.designs);
             }
             // get customer designs
             ProductDesigner.prototype.designChanged[ProductDesigner.prototype.currentProductColor] = false;
@@ -6264,29 +6205,29 @@ ProductDesigner.prototype = {
             console.log(response.message);
         }
     },
-    observeShareButtons: function () {
-        jQuery('#fb_share').on('click', function (e) {
+    observeShareButtons: function() {
+        jQuery('#fb_share').on('click', function(e) {
             ProductDesigner.prototype.clickedSocialButton = 'fb_share';
             this.observeSaveAndShareButton(jQuery('#fb_share'));
         }.bind(this));
-        jQuery('#tw_share').on('click', function (e) {
+        jQuery('#tw_share').on('click', function(e) {
             ProductDesigner.prototype.clickedSocialButton = 'tw_share';
             this.observeSaveAndShareButton(jQuery('#tw_share'));
         }.bind(this));
-        jQuery('#g_share').on('click', function (e) {
+        jQuery('#g_share').on('click', function(e) {
             ProductDesigner.prototype.clickedSocialButton = 'g_share';
             this.observeSaveAndShareButton(jQuery('#g_share'));
         }.bind(this));
-        jQuery('#pin_share').on('click', function (e) {
+        jQuery('#pin_share').on('click', function(e) {
             ProductDesigner.prototype.clickedSocialButton = 'pin_share';
             this.observeSaveAndShareButton(jQuery('#pin_share'));
         }.bind(this));
-        jQuery('#email_share').on('click', function (e) {
+        jQuery('#email_share').on('click', function(e) {
             ProductDesigner.prototype.clickedSocialButton = 'email_share';
             this.observeSaveAndShareButton(jQuery('#email_share'));
         }.bind(this));
     },
-    observeSaveAndShareButton: function (ele) {
+    observeSaveAndShareButton: function(ele) {
         if (!this.canvasesHasDesigns()) {
             alert('Please design product');
             return;
@@ -6294,8 +6235,7 @@ ProductDesigner.prototype = {
         if (this.isCustomerLogin == '0') {
             this.createLoginPreviewWindow();
         } else if (this.isCustomerLogin == '1') {
-            if (ProductDesigner.prototype.shareImage == 0)
-                this.saveDesignAndRedirect(this.saveDesignUrl, ele);
+            if (ProductDesigner.prototype.shareImage == 0) this.saveDesignAndRedirect(this.saveDesignUrl, ele);
             else {
                 if (ele[0].id == 'fb_share') {
                     //window.open(ProductDesigner.prototype.fbUrl);
@@ -6308,7 +6248,7 @@ ProductDesigner.prototype = {
                 } else if (ele[0].id == 'pin_share') {
                     window.open(ProductDesigner.prototype.piUrl);
                 } else if (ele[0].id == 'email_share') {
-                    require(['jquery', 'Magento_Ui/js/modal/modal'], function ($, modal) {
+                    require(['jquery', 'Magento_Ui/js/modal/modal'], function($, modal) {
                         var options = {
                             type: 'popup',
                             responsive: true,
@@ -6325,7 +6265,7 @@ ProductDesigner.prototype = {
             }
         }
     },
-    saveDesignAndRedirect: function (url, ele) {
+    saveDesignAndRedirect: function(url, ele) {
         if ((this.canvas == null) || this.canvas == 'undefined') {
             return;
         }
@@ -6337,7 +6277,7 @@ ProductDesigner.prototype = {
             data: {
                 data: params
             },
-            success: function (data, textStatus, jqXHR) {
+            success: function(data, textStatus, jqXHR) {
                 var response = JSON.parse(data);
                 jQuery('#pd_loading_img').hide();
                 if (response.status == 'success') {
@@ -6362,7 +6302,7 @@ ProductDesigner.prototype = {
                     } else if (ele[0].id == 'pin_share') {
                         window.open(response.pinshare);
                     } else if (ele[0].id == 'email_share') {
-                        require(['jquery', 'Magento_Ui/js/modal/modal'], function ($, modal) {
+                        require(['jquery', 'Magento_Ui/js/modal/modal'], function($, modal) {
                             var options = {
                                 type: 'popup',
                                 responsive: true,
@@ -6382,7 +6322,7 @@ ProductDesigner.prototype = {
             }
         });
     },
-    reStuctureImagesObject: function (img_obj) {
+    reStuctureImagesObject: function(img_obj) {
         this.newreStuctureImagesObject = [];
         var images_obj = img_obj[this.currentProductColor];
         for (var prop in images_obj) {
@@ -6396,9 +6336,9 @@ ProductDesigner.prototype = {
         }
         return this.newreStuctureImagesObject;
     },
-    observeDownloadButton: function () {
+    observeDownloadButton: function() {
         if (jQuery('#download_btn')[0].getAttribute('download') == null) {
-            jQuery('#download_btn').on('click', function (e) {
+            jQuery('#download_btn').on('click', function(e) {
                 var element = e.target || e.srcElement;
                 //e.stop();
                 if (!this.canvasesHasDesigns()) {
@@ -6409,8 +6349,8 @@ ProductDesigner.prototype = {
             }.bind(this));
         }
     },
-    observeMailShareButton: function () {
-        jQuery('#save_receipen_mail').on('click', function (e) {
+    observeMailShareButton: function() {
+        jQuery('#save_receipen_mail').on('click', function(e) {
             jQuery('#pd_loading_img').show();
             var friendMail = jQuery('#receipent_email').val();
             var data = {};
@@ -6423,7 +6363,7 @@ ProductDesigner.prototype = {
                 data: {
                     data: data
                 },
-                success: function (data, textStatus, jqXHR) {
+                success: function(data, textStatus, jqXHR) {
                     var response = JSON.parse(data);
                     if (response.status == 'success') {
                         jQuery('#email-share-window').modal('closeModal');
@@ -6434,7 +6374,7 @@ ProductDesigner.prototype = {
             });
         }.bind(this));
     },
-    downloadFunction: function (url, element) {
+    downloadFunction: function(url, element) {
         if ((this.canvas == null) || this.canvas == 'undefined') {
             return;
         }
@@ -6446,7 +6386,7 @@ ProductDesigner.prototype = {
             data: {
                 data: params
             },
-            success: function (data, textStatus, jqXHR) {
+            success: function(data, textStatus, jqXHR) {
                 var response = JSON.parse(data);
                 var download_url = response['url'];
                 //window.open(download_url);
@@ -6457,7 +6397,7 @@ ProductDesigner.prototype = {
             }
         });
     },
-    canvasesHasDesigns: function () {
+    canvasesHasDesigns: function() {
         var count = 0;
         //var colorImages = this.data.product.images[this.currentProductColor];
         var colorImages = this.reStuctureImagesObject(this.data.product.images);
@@ -6472,14 +6412,14 @@ ProductDesigner.prototype = {
         return count > 0 ? true : false;
         //return 1;
     },
-    canvasHasDesignes: function (id) {
+    canvasHasDesignes: function(id) {
         var canvas = ProductDesigner.prototype.containerCanvases[id];
         if (canvas && canvas != 'undefined') {
             return canvas.getObjects().length;
         }
         return false;
     },
-    prepareImagesForSave: function () {
+    prepareImagesForSave: function() {
         if (this.zoomCount > 0) {
             while (this.zoomCount != 0) {
                 var img = this.data.product.images[this.currentProductColor][this.currentProduct];
@@ -6681,10 +6621,8 @@ ProductDesigner.prototype = {
                     image = image.substr(image.indexOf(',') + 1).toString();
                     images[imageId] = image;
                     var parentImage = imageId.split("&")[0];
-                    if (this.ImageMultipleArray['@' + this.data.product.images[this.currentProductColor][parentImage].image_id])
-                        parentImageId[imageId] = this.data.product.images[this.currentProductColor][parentImage].dim[0].image_id;
-                    else
-                        parentImageId[imageId] = this.data.product.images[this.currentProductColor][parentImage].dim.image_id;
+                    if (this.ImageMultipleArray['@' + this.data.product.images[this.currentProductColor][parentImage].image_id]) parentImageId[imageId] = this.data.product.images[this.currentProductColor][parentImage].dim[0].image_id;
+                    else parentImageId[imageId] = this.data.product.images[this.currentProductColor][parentImage].dim.image_id;
                     large_images[imageId] = large_image;
                     var contextTop = canvas.contextTop;
                     if (contextTop && contextTop != undefined) {
@@ -6724,15 +6662,15 @@ ProductDesigner.prototype = {
         }
         return data;
     },
-    fixSVGText: function (str) {
+    fixSVGText: function(str) {
         // parse our string as a DOM object and get the SVGElement
         var svg = new DOMParser().parseFromString(str, "image/svg+xml").documentElement;
         // get all <tspan> elements
         var tspans = svg.querySelectorAll('tspan');
         for (var i = 0; i < tspans.length; i++) {
             var ts = tspans[i],
-                    parent = ts.parentNode,
-                    gParent = parent.parentNode;
+                parent = ts.parentNode,
+                gParent = parent.parentNode;
             var j = 0;
             // create a new SVGTextElement to replace our tspan
             var replace = document.createElementNS('http://www.w3.org/2000/svg', 'text');
@@ -6761,7 +6699,7 @@ ProductDesigner.prototype = {
         // return a string version of our cleaned svg
         return new XMLSerializer().serializeToString(svg);
     },
-    clickMaskingImage: function () {
+    clickMaskingImage: function() {
         for (prop in this.data.product.images[this.currentProductColor]) {
             if (this.data.product.images[this.currentProductColor][prop].dim.length == undefined) {
                 for (maskingcanvas in this.containerCanvases) {
@@ -6769,8 +6707,8 @@ ProductDesigner.prototype = {
                     if (this.data.product.images[this.currentProductColor][prop].designArea_id == id[1]) {
                         if (this.data.product.images[this.currentProductColor][prop].masking_image_path != undefined) {
                             var url = this.data.product.images[this.currentProductColor][prop].masking_image_path;
-                            fabric.loadSVGFromURL(url, (function (objData) {
-                                return function (objects, options) {
+                            fabric.loadSVGFromURL(url, (function(objData) {
+                                return function(objects, options) {
                                     var canvas = objData.Canvas;
                                     var url = objData.Url;
                                     var cmd = new ObjectMaskingHistory(canvas, objects, options, url, null);
@@ -6791,8 +6729,8 @@ ProductDesigner.prototype = {
                             if (this.data.product.images[this.currentProductColor][prop].dim[dims].design_area_id == id[1]) {
                                 if (this.data.product.images[this.currentProductColor][prop].dim[dims].masking_image_path != undefined) {
                                     var url = this.data.product.images[this.currentProductColor][prop].dim[dims].masking_image_path;
-                                    fabric.loadSVGFromURL(url, (function (objData) {
-                                        return function (objects, options) {
+                                    fabric.loadSVGFromURL(url, (function(objData) {
+                                        return function(objects, options) {
                                             var canvas = objData.Canvas;
                                             var url = objData.Url;
                                             var cmd = new ObjectMaskingHistory(canvas, objects, options, url, null);
@@ -6810,10 +6748,10 @@ ProductDesigner.prototype = {
             }
         }
     },
-    observeProductColorChange: function () {
+    observeProductColorChange: function() {
         if (jQuery('#product-colors')) {
-            jQuery('#product-colors .color-img').click(function (e, elem) {
-                jQuery('.product-side-img').each(function (index, val) {
+            jQuery('#product-colors .color-img').click(function(e, elem) {
+                jQuery('.product-side-img').each(function(index, val) {
                     jQuery('.product-side-img')[index].click();
                 }.bind(this));
                 var color = e.currentTarget.getAttribute('data-color_id');
@@ -6838,9 +6776,8 @@ ProductDesigner.prototype = {
                     jQuery('#zoom_in').parent().removeAttr('disabled');
                     jQuery('#zoom_in').parent().removeClass('disabled');
                     //this.reloadPrice();
-                    jQuery('.product-side-img').each(function (index, val) {
-                        if (index != 0)
-                            jQuery('.product-side-img')[index].click();
+                    jQuery('.product-side-img').each(function(index, val) {
+                        if (index != 0) jQuery('.product-side-img')[index].click();
                     }.bind(this));
                     if (jQuery('#product-sides')[0].children[1].children[0] != undefined) {
                         jQuery('#product-sides')[0].children[1].children[0].children[0].click();
@@ -6850,7 +6787,7 @@ ProductDesigner.prototype = {
             }.bind(this));
         }
     },
-    changeProductColor: function (color, last_object) {
+    changeProductColor: function(color, last_object) {
         var old_canvas = last_object;
         ProductDesigner.prototype.containerCanvases[ProductDesigner.prototype.currentDesignArea] = ProductDesigner.prototype.canvas;
         var lenght1 = parseInt(ProductDesigner.prototype.product_container.childElementCount);
@@ -6872,7 +6809,7 @@ ProductDesigner.prototype = {
         this.reloadPrintingPrice();
         this._observeControlButtons();
     },
-    updateProductImages: function (product) {
+    updateProductImages: function(product) {
         if (!jQuery(this.opt.product_side_id)) {
             return;
         }
@@ -6887,11 +6824,9 @@ ProductDesigner.prototype = {
             if (images.hasOwnProperty(id)) {
                 var flag = 1;
                 for (var j = 0; j < image.length; j++) {
-                    if (images[id].image_side == image[j])
-                        flag = 0;
+                    if (images[id].image_side == image[j]) flag = 0;
                 }
-                if (flag == 0) {
-                } else {
+                if (flag == 0) {} else {
                     imageTemplateData['url'] = images[id].url;
                     imageTemplateData['data-image_id'] = id;
                     a = a + "<li><img width='50' height='50' class='product-side-img' src='" + imageTemplateData['url'] + "' data-image_id='" + imageTemplateData['data-image_id'] + "'></li>";
@@ -6902,11 +6837,11 @@ ProductDesigner.prototype = {
         jQuery(productsList).html(a);
         jQuery('.product-side-img').addClass('selected');
     },
-    observeProductSideImageChange: function () {
-        jQuery('#product-sides').on("click", 'ul li .product-side-img', function (e, elem) {
+    observeProductSideImageChange: function() {
+        jQuery('#product-sides').on("click", 'ul li .product-side-img', function(e, elem) {
             var old_canvas = ProductDesigner.prototype.ImageSideObject;
             this.changeProductImage(e.currentTarget.getAttribute('data-image_id'), old_canvas);
-            jQuery('.product-side-img').each(function (index, val) {
+            jQuery('.product-side-img').each(function(index, val) {
                 jQuery(jQuery(val).parent()[0]).removeClass('selected');
             });
             jQuery(jQuery(this).parent()[0]).addClass('selected');
@@ -6920,17 +6855,17 @@ ProductDesigner.prototype = {
             jQuery('zoom_in').parent().removeClass('disabled');
         }.bind(this));
     },
-    observeCloseTab: function () {
-        jQuery('#close_tabs').on('click', function (e) {
+    observeCloseTab: function() {
+        jQuery('#close_tabs').on('click', function(e) {
             jQuery('#resp-tabs-container').hide();
             jQuery('#res-overlay').hide();
-            jQuery('.resp-tab-item').each(function (index, val) {
+            jQuery('.resp-tab-item').each(function(index, val) {
                 jQuery(val).removeClass('resp-tab-active');
             });
             jQuery('#rs-left-panel').removeClass('left-panel-active');
         }.bind(this));
     },
-    changeProductImage: function (id, old_canvas) {
+    changeProductImage: function(id, old_canvas) {
         var img = this.data.product.images[this.currentProductColor][id];
         ProductDesigner.prototype.currentImageSide = img.image_side;
         /*change for multiple*/
@@ -6957,7 +6892,7 @@ ProductDesigner.prototype = {
             this._observeControlButtons();
         }
     },
-    _cloneCanvas: function (old_canvas) {
+    _cloneCanvas: function(old_canvas) {
         this.productDesigner = ProductDesigner.prototype;
         for (prop in old_canvas) {
             var prop2 = prop.split("_");
@@ -6982,10 +6917,9 @@ ProductDesigner.prototype = {
                     }
                     if ((old_canvas[prop].type == 'text')) {
                         var flag = false;
-                        if (old_canvas[prop].tab == 'grouporder')
-                            old_canvas[prop].set({
-                                atmydesignadd: true,
-                            });
+                        if (old_canvas[prop].tab == 'grouporder') old_canvas[prop].set({
+                            atmydesignadd: true,
+                        });
                     }
                 }
                 var cmd = new InsertCanvasObject(this.productDesigner, old_canvas[prop], false);
@@ -7002,7 +6936,7 @@ ProductDesigner.prototype = {
         this._observeNavButtons('disabled');
         ProductDesigner.prototype.setzIndexes();
     },
-    _observeNavButtons: function (className) {
+    _observeNavButtons: function(className) {
         var navButtons = this.data.nav;
         if (this.designChanged.hasOwnProperty(this.currentProductColor) && this.designChanged[this.currentProductColor] === true) {
             jQuery('#' + navButtons.saveDesign).removeClass(className);
@@ -7027,8 +6961,8 @@ ProductDesigner.prototype = {
             }
         }
     },
-    observeHistory: function () {
-        jQuery(document).on('changeHistoryEvent', function (e) {
+    observeHistory: function() {
+        jQuery(document).on('changeHistoryEvent', function(e) {
             if (History.prototype.undoStack.length > 0 && this.canvasesHasDesigns()) {
                 this.designChanged[this.currentProductColor] = true;
                 this.observeGoOut();
@@ -7052,16 +6986,14 @@ ProductDesigner.prototype = {
             }
         }.bind(this));
     },
-    observeSides: function () {
-        jQuery('#left_side').on('click', function (e) {
+    observeSides: function() {
+        jQuery('#left_side').on('click', function(e) {
             var canvas = this.canvas;
             for (var i = 0; i < canvas.getObjects().length; i++) {
                 var object = canvas.getObjects()[i];
                 var left;
-                if (isNaN(this.data.side.left) || this.data.side.left == '')
-                    left = object.left;
-                else
-                    left = object.left - parseFloat(this.data.side.left);
+                if (isNaN(this.data.side.left) || this.data.side.left == '') left = object.left;
+                else left = object.left - parseFloat(this.data.side.left);
                 var cmd = new UpdateCommand(canvas, object, {
                     left: left
                 });
@@ -7071,15 +7003,13 @@ ProductDesigner.prototype = {
             }
             canvas.renderAll();
         }.bind(this));
-        jQuery('#right_side').on('click', function (e) {
+        jQuery('#right_side').on('click', function(e) {
             var canvas = this.canvas;
             for (var i = 0; i < canvas.getObjects().length; i++) {
                 var object = canvas.getObjects()[i];
                 var left;
-                if (isNaN(this.data.side.right) || this.data.side.right == '')
-                    left = object.left;
-                else
-                    left = object.left + parseFloat(this.data.side.right);
+                if (isNaN(this.data.side.right) || this.data.side.right == '') left = object.left;
+                else left = object.left + parseFloat(this.data.side.right);
                 var cmd = new UpdateCommand(canvas, object, {
                     left: left
                 });
@@ -7089,15 +7019,13 @@ ProductDesigner.prototype = {
             }
             canvas.renderAll();
         }.bind(this));
-        jQuery('#top_side').on('click', function (e) {
+        jQuery('#top_side').on('click', function(e) {
             var canvas = this.canvas;
             for (var i = 0; i < canvas.getObjects().length; i++) {
                 var object = canvas.getObjects()[i];
                 var top;
-                if (isNaN(this.data.side.top) || this.data.side.top == '')
-                    top = object.top;
-                else
-                    top = object.top - parseFloat(this.data.side.top);
+                if (isNaN(this.data.side.top) || this.data.side.top == '') top = object.top;
+                else top = object.top - parseFloat(this.data.side.top);
                 var cmd = new UpdateCommand(canvas, object, {
                     top: top
                 });
@@ -7107,15 +7035,13 @@ ProductDesigner.prototype = {
             }
             canvas.renderAll();
         }.bind(this));
-        jQuery('#bottom_side').on('click', function (e) {
+        jQuery('#bottom_side').on('click', function(e) {
             var canvas = this.canvas;
             for (var i = 0; i < canvas.getObjects().length; i++) {
                 var object = canvas.getObjects()[i];
                 var top;
-                if (isNaN(this.data.side.bottom) || this.data.side.bottom == '')
-                    top = object.top;
-                else
-                    top = object.top + parseFloat(this.data.side.bottom);
+                if (isNaN(this.data.side.bottom) || this.data.side.bottom == '') top = object.top;
+                else top = object.top + parseFloat(this.data.side.bottom);
                 var cmd = new UpdateCommand(canvas, object, {
                     top: top
                 });
@@ -7126,21 +7052,20 @@ ProductDesigner.prototype = {
             canvas.renderAll();
         }.bind(this));
     },
-    observeGoOut: function () {
+    observeGoOut: function() {
         if (window.onbeforeunload == null) {
-            window.onbeforeunload = function () {
+            window.onbeforeunload = function() {
                 return 'The current design will be lost. Are you sure that you want to leave this page?';
             }
         }
     },
-    observQtyChange: function () {
-        jQuery('.size-qty').each(function (index, val) {
-            jQuery(val).on('keyup', function (e, ele) {
+    observQtyChange: function() {
+        jQuery('.size-qty').each(function(index, val) {
+            jQuery(val).on('keyup', function(e, ele) {
                 var totalQty = 0;
                 var totalPrice = 0;
-                jQuery('.size-qty').each(function (index, val) {
+                jQuery('.size-qty').each(function(index, val) {
                     var qty = parseInt(jQuery(val).val());
-
                     totalQty = parseInt(totalQty) + qty;
                     var price = parseInt(jQuery(val).attr('data-price'));
                     totalPrice = totalPrice + (price * qty);
@@ -7151,7 +7076,7 @@ ProductDesigner.prototype = {
             }.bind(this));
         }.bind(this));
     },
-    _observeControlButtons: function () {
+    _observeControlButtons: function() {
         var controlButtons = this.data.controls;
         var method = this.canvas.getActiveObject() ? 'removeClass' : 'addClass';
         for (var key in controlButtons) {
@@ -7170,7 +7095,7 @@ ProductDesigner.prototype = {
         }
     },
 };
-var RemoveCanvasObjectClone = function (designerWindow, obj, design_area_id) {
+var RemoveCanvasObjectClone = function(designerWindow, obj, design_area_id) {
     if ((obj.designarea_id == undefined) || (obj.designarea_id == "null")) {
         var canvas = designerWindow.canvas;
     } else {
@@ -7181,7 +7106,7 @@ var RemoveCanvasObjectClone = function (designerWindow, obj, design_area_id) {
         }
     }
     return {
-        exec: function () {
+        exec: function() {
             /*if(obj && obj != null)
              {
              designerWindow.layersManager.removeOutsideMark(obj.get('obj_id'));
@@ -7203,7 +7128,7 @@ var RemoveCanvasObjectClone = function (designerWindow, obj, design_area_id) {
              */
             //delete designerWindow.ImageSideObject[ProductDesigner.prototype.currentImageSide+'_'+obj.get('obj_id')+'_'+ProductDesigner.prototype.currentDesignArea];
         },
-        unexec: function () {
+        unexec: function() {
             ProductDesigner.prototype.canvas.add(obj);
             //Add layer From Object
             var layer_ul = jQuery("#layers_ul");
@@ -7280,7 +7205,7 @@ var RemoveCanvasObjectClone = function (designerWindow, obj, design_area_id) {
         }
     }
 };
-var InsertCanvasObject = function (designerWindow, obj, alignByCenter, name, new2, new1, ext, change_side) {
+var InsertCanvasObject = function(designerWindow, obj, alignByCenter, name, new2, new1, ext, change_side) {
     if ((obj.mydesign == true)) {
         obj.set({
             top: obj.top,
@@ -7348,7 +7273,7 @@ var InsertCanvasObject = function (designerWindow, obj, alignByCenter, name, new
     obj.selectedColor = designerWindow.currentProductColor;
     // obj.set('image_side', designerWindow.currentImageSide);
     return {
-        exec: function () {
+        exec: function() {
             if (obj.group_type != undefined) {
                 if (obj.group_type == 'name') {
                     ProductDesigner.prototype.nameAdd = true;
@@ -7403,15 +7328,13 @@ var InsertCanvasObject = function (designerWindow, obj, alignByCenter, name, new
             obj.hasControls = false;
             obj.hasBorders = false;
             ProductDesigner.prototype.canvas.setActiveObject(obj);
-
             if (obj.type == 'text' && (obj.mydesign == true || obj.isclone == true)) {
-                if(obj.textarea == 'one'){
+                if (obj.textarea == 'one') {
                     jQuery('#add_text_area').val(obj.text);
-                } else if(obj.textarea == 'two'){
+                } else if (obj.textarea == 'two') {
                     jQuery('#add_text_area_2').val(obj.text);
                 }
             }
-
             if (obj.objFilters != undefined) {
                 var filterss = obj.objFilters;
                 for (var i = 0; i < filterss.length; i++) {
@@ -7521,10 +7444,8 @@ var InsertCanvasObject = function (designerWindow, obj, alignByCenter, name, new
             } else {
                 var layer_img = document.createElement('img');
                 if (obj.type == 'image') {
-                    if (obj.getElement() != null)
-                        layer_img.setAttribute('src', obj.getElement().src);
-                    else
-                        layer_img.setAttribute('src', obj.src);
+                    if (obj.getElement() != null) layer_img.setAttribute('src', obj.getElement().src);
+                    else layer_img.setAttribute('src', obj.src);
                 } else {
                     layer_img.setAttribute('src', obj.src);
                 }
@@ -7537,10 +7458,8 @@ var InsertCanvasObject = function (designerWindow, obj, alignByCenter, name, new
             }
             layer_li.appendChild(layer_span_layer);
             var layer_span_action = document.createElement('span');
-            if (obj.hasControls)
-                layer_span_action.setAttribute('class', 'sprite ico-lock');
-            else
-                layer_span_action.setAttribute('class', 'sprite ico-locked');
+            if (obj.hasControls) layer_span_action.setAttribute('class', 'sprite ico-lock');
+            else layer_span_action.setAttribute('class', 'sprite ico-locked');
             layer_span_action.setAttribute('id', 'lock');
             layer_span_action.setAttribute('layer-obj', obj.get('obj_id'));
             layer_span_action.setAttribute('design-area-id', ProductDesigner.prototype.currentDesignAreaId);
@@ -7577,12 +7496,12 @@ var InsertCanvasObject = function (designerWindow, obj, alignByCenter, name, new
                 } else {
                     //obj.center();
                 }
-            }
-            ;
-            i/*f (ext == 'svg') {
-                obj.scaleToWidth(canvas.width - 40);
-                obj.center();
-            }*/
+            };
+            i
+            /*f (ext == 'svg') {
+                            obj.scaleToWidth(canvas.width - 40);
+                            obj.center();
+                        }*/
             canvas.setActiveObject(obj);
             obj.setCoords();
             ProductDesigner.prototype.canvas.renderAll();
@@ -7593,7 +7512,7 @@ var InsertCanvasObject = function (designerWindow, obj, alignByCenter, name, new
             ProductDesigner.objScaleX = obj.scaleX;
             ProductDesigner.objScaleY = obj.scaleY;
         },
-        unexec: function () {
+        unexec: function() {
             if (obj.group_type != undefined) {
                 if (obj.group_type == 'name') {
                     ProductDesigner.prototype.nameAdd = false;
@@ -7623,12 +7542,12 @@ var InsertCanvasObject = function (designerWindow, obj, alignByCenter, name, new
         }
     };
 };
-var TextDesigner = function () {};
+var TextDesigner = function() {};
 TextDesigner.prototype = {
     text_limit_data: null,
-    initialize: function (textSize, textFamily, text_limit_data) {
+    initialize: function(textSize, textFamily, text_limit_data) {
         //if (!ProductDesigner.isAdmin) {
-        require(['jquery', 'jquery/ui'], function ($) {
+        require(['jquery', 'jquery/ui'], function($) {
             jQuery('#font_selection').prop('value', textFamily).selectric('refresh');
         });
         //}
@@ -7663,36 +7582,36 @@ TextDesigner.prototype = {
             textShadowBlur: 0
         };
         this.fieldsMap = {
-            text: jQuery('#add_text_area'),
-            text2: jQuery('#add_text_area_2'),
-            fontFamily: jQuery('#font_selection'),
-            fontSize: jQuery('#font_size_selection'),
-            strokeWidth: jQuery('#stroke_width'),
-            textShadowOffsetX: jQuery('#shadow_x_range'),
-            textShadowOffsetY: jQuery('#shadow_y_range'),
-            textShadowBlur: jQuery('#shadow_blur')
-        },
-                this.buttonsMap = {
-                    fontWeight: jQuery('#add_btn_bold'),
-                    fontStyle: jQuery('#add_btn_italic'),
-                    textDecoration: jQuery('#add_btn_underline')
-                },
-                this.alignment = {
-                    textAlignLeft: jQuery('#btn_left_align'),
-                    textAlignRight: jQuery('#btn_right_align'),
-                    textAlignCenter: jQuery('#btn_center_align')
-                },
-                this.textColorMap = {
-                    fill: jQuery('#text_color'),
-                    textBackgroundColor: jQuery('#text_bg_color'),
-                    GroupTextColor: jQuery('#group_text_color')
-                }
+                text: jQuery('#add_text_area'),
+                text2: jQuery('#add_text_area_2'),
+                fontFamily: jQuery('#font_selection'),
+                fontSize: jQuery('#font_size_selection'),
+                strokeWidth: jQuery('#stroke_width'),
+                textShadowOffsetX: jQuery('#shadow_x_range'),
+                textShadowOffsetY: jQuery('#shadow_y_range'),
+                textShadowBlur: jQuery('#shadow_blur')
+            },
+            this.buttonsMap = {
+                fontWeight: jQuery('#add_btn_bold'),
+                fontStyle: jQuery('#add_btn_italic'),
+                textDecoration: jQuery('#add_btn_underline')
+            },
+            this.alignment = {
+                textAlignLeft: jQuery('#btn_left_align'),
+                textAlignRight: jQuery('#btn_right_align'),
+                textAlignCenter: jQuery('#btn_center_align')
+            },
+            this.textColorMap = {
+                fill: jQuery('#text_color'),
+                textBackgroundColor: jQuery('#text_bg_color'),
+                GroupTextColor: jQuery('#group_text_color')
+            }
         this.observeTextTabShow();
         this.applyFontFamily();
     },
-    getGroupTextColorContent: function () {
+    getGroupTextColorContent: function() {
         if (jQuery('#group_text_color')) {
-            jQuery('#group_text_color').on('click', function (e) {
+            jQuery('#group_text_color').on('click', function(e) {
                 /*$('text-shadowcolor-container').style.display = 'none';
                  $('text-bgcolor-container').style.display = 'none';
                  $('text-color-container').style.display = 'none';*/
@@ -7703,8 +7622,8 @@ TextDesigner.prototype = {
             });
         }
     },
-    observerGroupTextColorChange: function () {
-        jQuery('#grouptext-color-container').on('click', '.grouptext-color-img', function (event) {
+    observerGroupTextColorChange: function() {
+        jQuery('#grouptext-color-container').on('click', '.grouptext-color-img', function(event) {
             var self = this;
             var ele = event.target;
             var color = event.target.getAttribute('data-color_id');
@@ -7725,8 +7644,8 @@ TextDesigner.prototype = {
             }
         });
     },
-    getTextStrokeColorContent: function () {
-        jQuery('#text_stroke_color').on('click', function (e) {
+    getTextStrokeColorContent: function() {
+        jQuery('#text_stroke_color').on('click', function(e) {
             jQuery('#text-color-container').hide();
             jQuery('#text-bgcolor-container').hide();
             jQuery('#text-shadowcolor-container').hide();
@@ -7735,8 +7654,8 @@ TextDesigner.prototype = {
             jQuery('#text-strokecolor-container').toggle();
         });
     },
-    observerTextStrokeColorChange: function () {
-        jQuery('#text-strokecolor-container').on('click', '.text-strokecolor-img', function (event) {
+    observerTextStrokeColorChange: function() {
+        jQuery('#text-strokecolor-container').on('click', '.text-strokecolor-img', function(event) {
             var self = this;
             var ele = event.target;
             var color = event.target.getAttribute('data-color_id');
@@ -7751,8 +7670,8 @@ TextDesigner.prototype = {
             jQuery('#text-strokecolor-container').hide();
         });
     },
-    getTextColorContent: function () {
-        jQuery('#text_color').on('click', function (e) {
+    getTextColorContent: function() {
+        jQuery('#text_color').on('click', function(e) {
             /*$('text-strokecolor-container').hide();
              $('text-shadowcolor-container').style.display = 'none';
              $('text-bgcolor-container').style.display = 'none';*/
@@ -7762,8 +7681,8 @@ TextDesigner.prototype = {
             jQuery('#text-color-container').toggle();
         });
     },
-    observerTextColorChange: function () {
-        jQuery('#text-color-container').on('click', '.text-color-img', function (event) {
+    observerTextColorChange: function() {
+        jQuery('#text-color-container').on('click', '.text-color-img', function(event) {
             var self = this;
             var ele = event.target;
             var color = event.target.getAttribute('data-color_id');
@@ -7776,8 +7695,8 @@ TextDesigner.prototype = {
             jQuery('#text-color-container').hide();
         });
     },
-    getTextBgColorContent: function () {
-        jQuery('#text_bg_color').on('click', function (e) {
+    getTextBgColorContent: function() {
+        jQuery('#text_bg_color').on('click', function(e) {
             /*$('text-strokecolor-container').hide();
              $('text-shadowcolor-container').style.display = 'none';
              $('text-color-container').style.display = 'none';*/
@@ -7787,8 +7706,8 @@ TextDesigner.prototype = {
             jQuery('#text-bgcolor-container').toggle();
         });
     },
-    observerTextBgColorChange: function () {
-        jQuery('#text-bgcolor-container').on('click', '.text-bgcolor-img', function (event) {
+    observerTextBgColorChange: function() {
+        jQuery('#text-bgcolor-container').on('click', '.text-bgcolor-img', function(event) {
             var self = this;
             var ele = event.target;
             var color = event.target.getAttribute('data-color_id');
@@ -7801,8 +7720,8 @@ TextDesigner.prototype = {
             jQuery('#text-bgcolor-container').hide();
         });
     },
-    getTextShadowColorContent: function () {
-        jQuery('#text_shadow_color').on('click', function (e) {
+    getTextShadowColorContent: function() {
+        jQuery('#text_shadow_color').on('click', function(e) {
             /*$('text-color-container').hide();
              $('text-bgcolor-container').hide();
              $('text-bgcolor-container').style.display = 'none';
@@ -7814,8 +7733,8 @@ TextDesigner.prototype = {
             jQuery('#text-shadowcolor-container').toggle();
         });
     },
-    observerTextShadowColorChange: function () {
-        jQuery('#text-shadowcolor-container').on('click', '.text-shadowcolor-img', function (event) {
+    observerTextShadowColorChange: function() {
+        jQuery('#text-shadowcolor-container').on('click', '.text-shadowcolor-img', function(event) {
             var self = this;
             var ele = event.target;
             var color = event.target.getAttribute('data-color_id');
@@ -7830,24 +7749,24 @@ TextDesigner.prototype = {
             jQuery('#text-shadowcolor-container').hide();
         });
     },
-    observeTextTabShow: function () {
-        jQuery(document).on('textTabShow', function (e) {
+    observeTextTabShow: function() {
+        jQuery(document).on('textTabShow', function(e) {
             var textObj = e.originalEvent.obj || null;
             this._setInputValues(textObj);
         }.bind(this));
     },
-    applyFontFamily: function () {
-        jQuery('.font_option').each(function (index, val) {
+    applyFontFamily: function() {
+        jQuery('.font_option').each(function(index, val) {
             jQuery(val).css('font-family', 'jQuery(val).val()');
         });
     },
-    observeTextFontChange: function () {
-        jQuery('.font_selection').on('selectric-init', function (element) {
-            jQuery('.text_styles .custom-fonts').each(function (index, val) {
+    observeTextFontChange: function() {
+        jQuery('.font_selection').on('selectric-init', function(element) {
+            jQuery('.text_styles .custom-fonts').each(function(index, val) {
                 val.style.fontFamily = val.innerHTML;
             });
         });
-        jQuery('.font_selection').on('selectric-change', function (element) {
+        jQuery('.font_selection').on('selectric-change', function(element) {
             this.productDesigner = ProductDesigner.prototype;
             var canvas = this.productDesigner.canvas;
             var obj = canvas.getActiveObject();
@@ -7860,22 +7779,20 @@ TextDesigner.prototype = {
                         fontFamily: jQuery('#group_font_selection').val()
                     });
                 } else {
-                    if (obj.text_type == 'quote')
-                        var cmd = new UpdateCommand(canvas, obj, {
-                            fontFamily: jQuery('#font_selection').val()
-                        }, "center");
-                    else
-                        var cmd = new UpdateCommand(canvas, obj, {
-                            fontFamily: jQuery('#font_selection').val()
-                        });
+                    if (obj.text_type == 'quote') var cmd = new UpdateCommand(canvas, obj, {
+                        fontFamily: jQuery('#font_selection').val()
+                    }, "center");
+                    else var cmd = new UpdateCommand(canvas, obj, {
+                        fontFamily: jQuery('#font_selection').val()
+                    });
                 }
                 cmd.exec();
                 History.prototype.push(cmd);
             }
         }.bind(this));
     },
-    observeTextAngleChange: function () {
-        jQuery('#text_arc').on('change input', function () {
+    observeTextAngleChange: function() {
+        jQuery('#text_arc').on('change input', function() {
             this.productDesigner = ProductDesigner.prototype;
             var canvas = this.productDesigner.canvas;
             var obj = canvas.getActiveObject();
@@ -7899,8 +7816,8 @@ TextDesigner.prototype = {
             }
         }.bind(this));
     },
-    observeTextSpaceChange: function () {
-        jQuery('#text_spacing').on('change input', function () {
+    observeTextSpaceChange: function() {
+        jQuery('#text_spacing').on('change input', function() {
             this.productDesigner = ProductDesigner.prototype;
             var canvas = this.productDesigner.canvas;
             var obj = canvas.getActiveObject();
@@ -7924,7 +7841,7 @@ TextDesigner.prototype = {
             }
         }.bind(this));
     },
-    setTextColor: function (color) {
+    setTextColor: function(color) {
         this.productDesigner = ProductDesigner.prototype;
         var canvas = this.productDesigner.canvas;
         var obj = canvas.getActiveObject();
@@ -7937,7 +7854,7 @@ TextDesigner.prototype = {
             History.prototype.push(cmd);
         }
     },
-    setGroupTextColor: function (color) {
+    setGroupTextColor: function(color) {
         this.productDesigner = ProductDesigner.prototype;
         var canvas = this.productDesigner.canvas;
         var obj = canvas.getActiveObject();
@@ -7950,7 +7867,7 @@ TextDesigner.prototype = {
             History.prototype.push(cmd);
         }
     },
-    setTextBgColor: function (color) {
+    setTextBgColor: function(color) {
         this.productDesigner = ProductDesigner.prototype;
         var canvas = this.productDesigner.canvas;
         var obj = canvas.getActiveObject();
@@ -7965,7 +7882,7 @@ TextDesigner.prototype = {
             }
         }
     },
-    setTextStrokeColor: function (color) {
+    setTextStrokeColor: function(color) {
         this.productDesigner = ProductDesigner.prototype;
         var canvas = this.productDesigner.canvas;
         var obj = canvas.getActiveObject();
@@ -7981,7 +7898,7 @@ TextDesigner.prototype = {
             }
         }
     },
-    setTextShadowColor: function (color) {
+    setTextShadowColor: function(color) {
         this.productDesigner = ProductDesigner.prototype;
         var canvas = this.productDesigner.canvas;
         var obj = canvas.getActiveObject();
@@ -7999,13 +7916,13 @@ TextDesigner.prototype = {
             History.prototype.push(cmd);
         }
     },
-    observeTextAdd: function () {
-        jQuery("#add_text_area").keypress(function (event) {
+    observeTextAdd: function() {
+        jQuery("#add_text_area").keypress(function(event) {
             if (event.which == 13) {
                 event.preventDefault(); //Add this line to your code
             }
         });
-        jQuery('#add_text_area').on('click', function (e) {
+        jQuery('#add_text_area').on('click', function(e) {
             this.productDesigner = ProductDesigner.prototype;
             var canvas = this.productDesigner.canvas;
             var allObj = canvas.getObjects();
@@ -8019,7 +7936,7 @@ TextDesigner.prototype = {
                 }
             }
         });
-        jQuery('#add_text_area').on('keyup', function (e) {
+        jQuery('#add_text_area').on('keyup', function(e) {
             this.productDesigner = ProductDesigner.prototype;
             var canvas = this.productDesigner.canvas;
             var allObj = canvas.getObjects();
@@ -8031,8 +7948,7 @@ TextDesigner.prototype = {
                 History.prototype.push(cmd);
                 return;
             }
-            if(jQuery('#add_text_area').val())
-            {
+            if (jQuery('#add_text_area').val()) {
                 if (e.which == 13 || e.which == 46) {
                     if (jQuery('#add_text_area')[0].selectionEnd == jQuery('#add_text_area').val().length) {
                         return;
@@ -8125,13 +8041,25 @@ TextDesigner.prototype = {
                         for (var i = 0; i < allObj.length; i++) {
                             if (allObj[i].textarea != "undefined") {
                                 if (allObj[i].textarea == 'two') {
-                                    var cmd = new UpdateCommand(canvas, allObj[i], { top: 18 });
+                                    if (isMobile.any()) {
+                                        var cmd = new UpdateCommand(canvas, allObj[i], {
+                                            top: 5
+                                        });
+                                    } else {
+                                        var cmd = new UpdateCommand(canvas, allObj[i], {
+                                            top: 18
+                                        });
+                                    }
                                     cmd.exec();
                                     allObj[i].setCoords();
                                 }
                             }
                         }
-                        var topPosition = 10;
+                        if (isMobile.any()) {
+                            var topPosition = 2;
+                        } else {
+                            var topPosition = 10;
+                        }
                     } else {
                         var topPosition = canvas.height / 2;
                     }
@@ -8164,13 +8092,13 @@ TextDesigner.prototype = {
             }
         });
     },
-    observeText2Add: function () {
-        jQuery("#add_text_area_2").keypress(function (event) {
+    observeText2Add: function() {
+        jQuery("#add_text_area_2").keypress(function(event) {
             if (event.which == 13) {
                 event.preventDefault(); //Add this line to your code
             }
         });
-        jQuery('#add_text_area_2').on('click', function (e) {
+        jQuery('#add_text_area_2').on('click', function(e) {
             this.productDesigner = ProductDesigner.prototype;
             var canvas = this.productDesigner.canvas;
             var allObj = canvas.getObjects();
@@ -8184,7 +8112,7 @@ TextDesigner.prototype = {
                 }
             }
         });
-        jQuery('#add_text_area_2').on('keyup', function (e) {
+        jQuery('#add_text_area_2').on('keyup', function(e) {
             this.productDesigner = ProductDesigner.prototype;
             var canvas = this.productDesigner.canvas;
             var allObj = canvas.getObjects();
@@ -8194,7 +8122,6 @@ TextDesigner.prototype = {
                 cmd.exec();
                 jQuery('#text_prop_container').addClass('disabled');
                 History.prototype.push(cmd);
-
                 for (var i = 0; i < allObj.length; i++) {
                     if (allObj[i].textarea != "undefined") {
                         if (allObj[i].textarea == 'one') {
@@ -8202,11 +8129,9 @@ TextDesigner.prototype = {
                         }
                     }
                 }
-
                 return;
             }
-            if(jQuery('#add_text_area_2').val())
-            {
+            if (jQuery('#add_text_area_2').val()) {
                 if (e.which == 13 || e.which == 46) {
                     if (jQuery('#add_text_area_2')[0].selectionEnd == jQuery('#add_text_area_2').val().length) {
                         return;
@@ -8299,15 +8224,28 @@ TextDesigner.prototype = {
                         for (var i = 0; i < allObj.length; i++) {
                             if (allObj[i].textarea != "undefined") {
                                 if (allObj[i].textarea == 'one') {
-                                    var cmd = new UpdateCommand(canvas, allObj[i], { top: 10 });
+                                    if (isMobile.any()) {
+                                        var cmd = new UpdateCommand(canvas, allObj[i], {
+                                            top: 0
+                                        });
+                                    } else {
+                                        var cmd = new UpdateCommand(canvas, allObj[i], {
+                                            top: 10
+                                        });
+                                    }
                                     cmd.exec();
                                     allObj[i].setCoords();
                                 }
                             }
                         }
                     }
-                    var topPosition = 18;
-                    var leftPosition = 10;
+                    if (isMobile.any()) {
+                        var topPosition = 5;
+                        var leftPosition = 10;
+                    } else {
+                        var topPosition = 18;
+                        var leftPosition = 10;
+                    }
                     for (var i = 0; i < allObj.length; i++) {
                         if (allObj[i] && (allObj[i].type == 'image' || allObj[i].type == 'path' || allObj[i].type == 'path-group')) {
                             leftPosition = 35;
@@ -8332,8 +8270,8 @@ TextDesigner.prototype = {
             }
         });
     },
-    observeTextSizeChange: function () {
-        jQuery('#font_size_selection').on('change input', function () {
+    observeTextSizeChange: function() {
+        jQuery('#font_size_selection').on('change input', function() {
             this.productDesigner = ProductDesigner.prototype;
             var canvas = this.productDesigner.canvas;
             var obj = canvas.getActiveObject();
@@ -8346,9 +8284,9 @@ TextDesigner.prototype = {
             }
         }.bind(this));
     },
-    observeTextStyleChange: function () {
+    observeTextStyleChange: function() {
         this.productDesigner = ProductDesigner.prototype;
-        jQuery('#add_btn_bold').on('click', function (e) {
+        jQuery('#add_btn_bold').on('click', function(e) {
             var canvas = this.productDesigner.canvas;
             var obj = this.productDesigner.canvas.getActiveObject();
             if (obj && (obj.type == 'text' || obj.type == 'group')) {
@@ -8368,7 +8306,7 @@ TextDesigner.prototype = {
                 }
             }
         }.bind(this));
-        jQuery('#add_btn_italic').on('click', function (e) {
+        jQuery('#add_btn_italic').on('click', function(e) {
             var canvas = this.productDesigner.canvas;
             var obj = this.productDesigner.canvas.getActiveObject();
             if (obj && (obj.type == 'text' || obj.type == 'group')) {
@@ -8388,7 +8326,7 @@ TextDesigner.prototype = {
                 }
             }
         }.bind(this));
-        jQuery('#add_btn_underline').on('click', function (e) {
+        jQuery('#add_btn_underline').on('click', function(e) {
             var canvas = this.productDesigner.canvas;
             var obj = this.productDesigner.canvas.getActiveObject();
             if (obj && (obj.type == 'text' || obj.type == 'group')) {
@@ -8408,7 +8346,7 @@ TextDesigner.prototype = {
                 }
             }
         }.bind(this));
-        jQuery('#add_btn_shadow').on('click', function (e) {
+        jQuery('#add_btn_shadow').on('click', function(e) {
             var canvas = this.productDesigner.canvas;
             var elem = e.target || e.srcElement;
             var obj = this.productDesigner.canvas.getActiveObject();
@@ -8435,7 +8373,7 @@ TextDesigner.prototype = {
                 History.prototype.push(cmd);
             }
         }.bind(this));
-        jQuery('#reset_shadow').on('click', function (e) {
+        jQuery('#reset_shadow').on('click', function(e) {
             var canvas = this.productDesigner.canvas;
             var obj = this.productDesigner.canvas.getActiveObject();
             //$('add_btn_shadow_config').style.display = 'none';
@@ -8449,12 +8387,12 @@ TextDesigner.prototype = {
                 });
                 cmd.exec();
                 History.prototype.push(cmd);
-                jQuery('.btn_font_effect').each(function (index, val) {
+                jQuery('.btn_font_effect').each(function(index, val) {
                     jQuery(index.id).removeClass('active');
                 });
             }
         }.bind(this));
-        jQuery('#opacity').on('change input', function () {
+        jQuery('#opacity').on('change input', function() {
             var canvas = this.productDesigner.canvas;
             var obj = this.productDesigner.canvas.getActiveObject();
             if (obj && (obj.type == 'text' || obj.type == 'group')) {
@@ -8468,7 +8406,7 @@ TextDesigner.prototype = {
                 History.prototype.push(cmd);
             }
         }.bind(this));
-        jQuery('#btn_left_align').on('click', function (e) {
+        jQuery('#btn_left_align').on('click', function(e) {
             var canvas = this.productDesigner.canvas;
             var obj = this.productDesigner.canvas.getActiveObject();
             if (obj && (obj.type == 'text' || obj.type == 'custom_text')) {
@@ -8486,7 +8424,7 @@ TextDesigner.prototype = {
                 }
             }
         }.bind(this));
-        jQuery('#btn_right_align').on('click', function (e) {
+        jQuery('#btn_right_align').on('click', function(e) {
             var canvas = this.productDesigner.canvas;
             var obj = this.productDesigner.canvas.getActiveObject();
             if (obj && (obj.type == 'text' || obj.type == 'custom_text')) {
@@ -8504,7 +8442,7 @@ TextDesigner.prototype = {
                 }
             }
         }.bind(this));
-        jQuery('#btn_center_align').on('click', function (e) {
+        jQuery('#btn_center_align').on('click', function(e) {
             var canvas = this.productDesigner.canvas;
             var obj = this.productDesigner.canvas.getActiveObject();
             if (obj && (obj.type == 'text' || obj.type == 'custom_text')) {
@@ -8522,7 +8460,7 @@ TextDesigner.prototype = {
                 }
             }
         }.bind(this));
-        jQuery('#add_btn_shadow_config #shadow_x_range, #shadow_y_range, #shadow_blur').change(function (e, ele) {
+        jQuery('#add_btn_shadow_config #shadow_x_range, #shadow_y_range, #shadow_blur').change(function(e, ele) {
             var canvas = this.productDesigner.canvas;
             var obj = this.productDesigner.canvas.getActiveObject();
             if (obj && (obj.type == 'text' || obj.type == 'group')) {
@@ -8541,7 +8479,7 @@ TextDesigner.prototype = {
                 History.prototype.push(cmd);
             }
         }.bind(this));
-        jQuery('#reset_stroke').on('click', function (e) {
+        jQuery('#reset_stroke').on('click', function(e) {
             var canvas = this.productDesigner.canvas;
             var obj = this.productDesigner.canvas.getActiveObject();
             jQuery("#text_stroke_color span").css('border-color', "black");
@@ -8552,12 +8490,12 @@ TextDesigner.prototype = {
                 });
                 cmd.exec();
                 History.prototype.push(cmd);
-                jQuery('#btn_font_effect').each(function (index, val) {
+                jQuery('#btn_font_effect').each(function(index, val) {
                     jQuery(index.id).removeClass('active');
                 });
             }
         }.bind(this));
-        jQuery('#stroke_width').on('change input', function () {
+        jQuery('#stroke_width').on('change input', function() {
             var canvas = this.productDesigner.canvas;
             var obj = this.productDesigner.canvas.getActiveObject();
             if (obj && (obj.type == 'text' || obj.type == 'group')) {
@@ -8579,7 +8517,7 @@ TextDesigner.prototype = {
                 History.prototype.push(cmd);
             }
         }.bind(this));
-        jQuery('#add_btn_stroke').on('click', function (e) {
+        jQuery('#add_btn_stroke').on('click', function(e) {
             var canvas = this.productDesigner.canvas;
             var elem = e.target || e.srcElement;
             var obj = this.productDesigner.canvas.getActiveObject();
@@ -8606,7 +8544,7 @@ TextDesigner.prototype = {
                 }
             }
         }.bind(this));
-        jQuery('#add_btn_arc').on('click', function (e) {
+        jQuery('#add_btn_arc').on('click', function(e) {
             var canvas = this.productDesigner.canvas;
             var elem = e.target || e.srcElement;
             var obj = this.productDesigner.canvas.getActiveObject();
@@ -8628,7 +8566,7 @@ TextDesigner.prototype = {
                  }*/
             }
         }.bind(this));
-        jQuery('#text_bg_null').on('click', function (e) {
+        jQuery('#text_bg_null').on('click', function(e) {
             var canvas = this.productDesigner.canvas;
             var obj = this.productDesigner.canvas.getActiveObject();
             if (obj && (obj.type == 'text' || obj.type == 'group')) {
@@ -8647,17 +8585,17 @@ TextDesigner.prototype = {
             }
         }.bind(this));
     },
-    toggleTextEffectPopup: function (elem) {
-        jQuery('.tab-detail').each(function (index, val) {
+    toggleTextEffectPopup: function(elem) {
+        jQuery('.tab-detail').each(function(index, val) {
             jQuery(val).removeClass('selected');
         });
         jQuery(elem).parent().addClass('selected');
-        jQuery('.text_effect_popup').each(function (index, val) {
+        jQuery('.text_effect_popup').each(function(index, val) {
             jQuery('#' + val.id).css('display', 'none');
         });
         jQuery('#' + elem.id + '_config').css('display', 'block');
     },
-    updateButtonClass: function (obj, config) {
+    updateButtonClass: function(obj, config) {
         if (obj && (obj.type == 'text' || obj.type == 'group')) {
             for (var property in this.buttonsMap) {
                 if (this.buttonsMap.hasOwnProperty(property) && this.buttonsMap[property]) {
@@ -8675,7 +8613,7 @@ TextDesigner.prototype = {
             }
         }
     },
-    updateAlignment: function (obj, config) {
+    updateAlignment: function(obj, config) {
         if (obj && obj.type == 'text') {
             for (var property in this.alignment) {
                 if (this.alignment.hasOwnProperty(property) && this.alignment[property]) {
@@ -8693,7 +8631,7 @@ TextDesigner.prototype = {
             }
         }
     },
-    updateTextColor: function (obj, config) {
+    updateTextColor: function(obj, config) {
         if (obj && (obj.type == 'text' || obj.type == 'group')) {
             for (var property in this.textColorMap) {
                 if (this.textColorMap.hasOwnProperty(property) && this.textColorMap[property]) {
@@ -8713,7 +8651,7 @@ TextDesigner.prototype = {
             }
         }
     },
-    updateLabels: function (obj, params) {
+    updateLabels: function(obj, params) {
         var font_size = obj.fontSize ? obj.fontSize : jQuery('#font_size_selection').val();
         jQuery('#size_label').html(" (" + font_size + ")");
         jQuery('#font_size_selection').val(font_size);
@@ -8793,7 +8731,7 @@ TextDesigner.prototype = {
             jQuery('#text_spacing').val(spacing);
         }
     },
-    _setInputValues: function (textObj) {
+    _setInputValues: function(textObj) {
         var newText = '';
         var typeObj = textObj != null ? textObj.type : '';
         var finalObj = textObj;
@@ -8834,8 +8772,7 @@ TextDesigner.prototype = {
                             jQuery(field).val(textObj ? textObj.shadow.blur : this.defaultTextOpt[property]);
                         }
                     } else {
-                        if(property != 'text' && property != 'text2')
-                        {
+                        if (property != 'text' && property != 'text2') {
                             jQuery(field).val(textObj ? textObj[property] : this.defaultTextOpt[property]);
                         }
                     }
@@ -8925,23 +8862,23 @@ TextDesigner.prototype = {
         }
     },
 };
-var LayersManager = function () {
-    jQuery(document).on('ObjSelect', function (e) {
+var LayersManager = function() {
+    jQuery(document).on('ObjSelect', function(e) {
         var obj = e.originalEvent.obj;
         self.active = obj.get('obj_id');
         if ((obj.type == 'image') || (obj.type == 'path-group') || (obj.type == 'path')) {
-            jQuery('.nav_tab').each(function (index, val) {
+            jQuery('.nav_tab').each(function(index, val) {
                 jQuery(val).removeClass('resp-tab-active');
                 jQuery(val).css('background-color', '');
             });
-            jQuery('.tab-detail').each(function (index, val) {
+            jQuery('.tab-detail').each(function(index, val) {
                 jQuery(val).removeClass('selected');
             });
-            jQuery('.desgin-detail').each(function (index, val) {
+            jQuery('.desgin-detail').each(function(index, val) {
                 jQuery(val).css('display', 'none');
                 jQuery(val).removeClass('resp-tab-content-active');
             });
-            jQuery('.inner-tab-option').each(function (index, val) {
+            jQuery('.inner-tab-option').each(function(index, val) {
                 jQuery(val).css('display', 'none');
             });
             jQuery('#inner-tab-option-clipart').addClass('resp-tab-content-active');
@@ -8956,39 +8893,39 @@ var LayersManager = function () {
         /* for arc */
         //else if ((obj.type == 'text' || obj.type == 'group')) {
         else if (obj.type == 'text' || obj.type == 'group') {
-            jQuery('.nav_tab').each(function (index, val) {
+            jQuery('.nav_tab').each(function(index, val) {
                 jQuery(val).removeClass('resp-tab-active');
                 jQuery(val).css('background-color', '');
             });
             if (!obj.arcOn) {
-                jQuery('.tab-detail').each(function (index, val) {
+                jQuery('.tab-detail').each(function(index, val) {
                     jQuery(val).removeClass('selected');
                 });
-                jQuery('.text_effect_popup').each(function (index, val) {
+                jQuery('.text_effect_popup').each(function(index, val) {
                     jQuery('#' + val.id).css('display', 'none');
                 });
                 jQuery('#add_btn_shadow').parent().addClass('selected');
                 //jQuery('#add_btn_shadow_config').css("display", "block");
-                jQuery('.desgin-detail').each(function (index, val) {
+                jQuery('.desgin-detail').each(function(index, val) {
                     jQuery(val).css('display', 'none');
                     jQuery(val).removeClass('resp-tab-content-active');
                 });
             } else {
-                jQuery('.desgin-detail').each(function (index, val) {
+                jQuery('.desgin-detail').each(function(index, val) {
                     jQuery(val).css('display', 'none');
                     jQuery(val).removeClass('resp-tab-content-active');
                 });
             }
-            jQuery('.inner-tab-option').each(function (index, val) {
+            jQuery('.inner-tab-option').each(function(index, val) {
                 jQuery(val).css('display', 'none');
             });
             if ((obj.type == 'text' || obj.type == 'group')) {
                 if (obj.tab == 'grouporder') {
                     jQuery('#text_prop_container').addClass('disabled');
-                    jQuery('.inner-tab-option').each(function (index, val) {
+                    jQuery('.inner-tab-option').each(function(index, val) {
                         jQuery(val).css('display', 'none');
                     });
-                    jQuery('.desgin-detail').each(function (index, val) {
+                    jQuery('.desgin-detail').each(function(index, val) {
                         jQuery(val).css('display', 'none');
                         jQuery(val).removeClass('resp-tab-content-active');
                     });
@@ -9019,17 +8956,17 @@ LayersManager.prototype = {
     active: null,
     layers: {},
     outside: {},
-    initialize: function () {
+    initialize: function() {
         this.observLayerOnSelect();
         this.observLayerButton();
     },
-    observLayerButton: function () {
-        jQuery('#btn_layers').on('click', function (e) {
+    observLayerButton: function() {
+        jQuery('#btn_layers').on('click', function(e) {
             jQuery('#layers_manager').toggle();
         });
     },
-    observLayerOnSelect: function () {
-        jQuery('#layers_manager').click(function (e, elm) {
+    observLayerOnSelect: function() {
+        jQuery('#layers_manager').click(function(e, elm) {
             var layerElement = e.target || e.srcElement;
             var action = decodeURIComponent(layerElement.getAttribute('id'));
             var layer_obj_id = decodeURIComponent(layerElement.getAttribute('layer-obj'));
@@ -9051,7 +8988,7 @@ LayersManager.prototype = {
             }
         }.bind(this));
     },
-    LockLayer: function (obj_id, layerElement, design_area_id) {
+    LockLayer: function(obj_id, layerElement, design_area_id) {
         this.productDesigner = ProductDesigner.prototype;
         var layer_obj = {};
         for (var index in ProductDesigner.prototype.ImageSideObject) {
@@ -9072,7 +9009,7 @@ LayersManager.prototype = {
             History.prototype.push(cmd);
         }
     },
-    removeLayer: function (obj_id, design_area_id) {
+    removeLayer: function(obj_id, design_area_id) {
         this.productDesigner = ProductDesigner.prototype;
         var layer_obj = {};
         for (var index in ProductDesigner.prototype.ImageSideObject) {
@@ -9085,7 +9022,7 @@ LayersManager.prototype = {
         cmd.exec();
         History.prototype.push(cmd);
     },
-    loadInFront: function (obj_id, design_area_id) {
+    loadInFront: function(obj_id, design_area_id) {
         this.productDesigner = ProductDesigner.prototype;
         var layer_obj = {};
         for (var index in ProductDesigner.prototype.ImageSideObject) {
@@ -9098,7 +9035,7 @@ LayersManager.prototype = {
         cmd.exec();
         History.prototype.push(cmd);
     },
-    loadInBack: function (obj_id, design_area_id) {
+    loadInBack: function(obj_id, design_area_id) {
         this.productDesigner = ProductDesigner.prototype;
         var layer_obj_back = {};
         for (var index in ProductDesigner.prototype.ImageSideObject) {
@@ -9111,7 +9048,7 @@ LayersManager.prototype = {
         cmd.exec();
         History.prototype.push(cmd);
     },
-    add: function (obj, image_id, object_id) {
+    add: function(obj, image_id, object_id) {
         if (obj.designarea_id != undefined) {
             obj.set({
                 image_id: image_id ? image_id : ProductDesigner.prototype.currentProduct,
@@ -9135,7 +9072,7 @@ LayersManager.prototype = {
         LayersManager.prototype.active = obj.get('obj_id');
         LayersManager.prototype.layers[LayersManager.prototype.active] = obj;
     },
-    setLayer: function (obj_id, design_area_id) {
+    setLayer: function(obj_id, design_area_id) {
         this.productDesigner = ProductDesigner.prototype;
         if (design_area_id == null) {
             var canvas = this.productDesigner.canvas;
@@ -9148,7 +9085,7 @@ LayersManager.prototype = {
             }
         }
         var layer_obj = {};
-        canvas.getObjects().each(function (obj) {
+        canvas.getObjects().each(function(obj) {
             if (obj.obj_id == obj_id) {
                 layer_obj = obj;
             }
@@ -9158,12 +9095,11 @@ LayersManager.prototype = {
         this.active = layer_obj.get('obj_id');
         this.layers[this.active] = layer_obj;
     },
-    removeOutsideMark: function (id) {
-        if (!LayersManager.prototype.outside[id])
-            return;
+    removeOutsideMark: function(id) {
+        if (!LayersManager.prototype.outside[id]) return;
         LayersManager.prototype.outside[id] = false;
     },
-    removeOnlyLayer: function (obj) {
+    removeOnlyLayer: function(obj) {
         if (!obj) {
             return;
         }
@@ -9171,9 +9107,8 @@ LayersManager.prototype = {
         LayersManager.prototype.layers[id] = null;
     }
 };
-var RemoveCanvasObject = function (designerWindow, obj, design_area_id, change_side, canvas, groupFlag) {
-    if (!canvas)
-        var canvas = designerWindow.canvas;
+var RemoveCanvasObject = function(designerWindow, obj, design_area_id, change_side, canvas, groupFlag) {
+    if (!canvas) var canvas = designerWindow.canvas;
     if ((design_area_id == undefined) || (design_area_id == "null")) {
         var canvas = designerWindow.canvas;
     } else {
@@ -9185,7 +9120,7 @@ var RemoveCanvasObject = function (designerWindow, obj, design_area_id, change_s
         }
     }
     return {
-        exec: function () {
+        exec: function() {
             if (obj && obj != null) {
                 LayersManager.prototype.removeOutsideMark(obj.get('obj_id'));
                 LayersManager.prototype.removeOnlyLayer(obj);
@@ -9252,7 +9187,7 @@ var RemoveCanvasObject = function (designerWindow, obj, design_area_id, change_s
             //delete designerWindow.ImageSideObject[obj.image_side + '_' + obj.get('obj_id') + '_' + obj.designarea_id];
             //delete designerWindow.ImageSideObject[ProductDesigner.currentImageSide+'_'+obj.get('obj_id')+'_'+ProductDesigner.currentDesignArea];
         },
-        unexec: function () {
+        unexec: function() {
             if (obj.group_type != undefined) {
                 if (obj.group_type == 'name') {
                     ProductDesigner.prototype.nameAdd = true;
@@ -9337,12 +9272,12 @@ var RemoveCanvasObject = function (designerWindow, obj, design_area_id, change_s
         }
     }
 };
-var checkFunction = function (str) {
+var checkFunction = function(str) {
     str += '';
     var first_char = str.charAt(0).toUpperCase();
     return first_char + str.substr(1);
 };
-var UpdateCommand = function (canvas, obj, params, alignByCenter) {
+var UpdateCommand = function(canvas, obj, params, alignByCenter) {
     var prop = {};
     var self = this;
     for (var k in params) {
@@ -9350,7 +9285,7 @@ var UpdateCommand = function (canvas, obj, params, alignByCenter) {
             prop[k] = obj[k];
         }
     }
-    var update = function (obj, config) {
+    var update = function(obj, config) {
         for (var k in config) {
             if (!params.hasOwnProperty(k)) {
                 continue;
@@ -9365,7 +9300,7 @@ var UpdateCommand = function (canvas, obj, params, alignByCenter) {
     return {
         type: 'update',
         prop: params,
-        exec: function () {
+        exec: function() {
             /* for arc text */
             if (obj.type == 'group') {
                 for (var i = 0; i < obj.getObjects().length; i++) {
@@ -9394,12 +9329,11 @@ var UpdateCommand = function (canvas, obj, params, alignByCenter) {
                         } else {
                             //obj.center();
                         }
-                    }
-                    ;
+                    };
                 }
             }
         },
-        unexec: function () {
+        unexec: function() {
             /* for arc text */
             var allObj = canvas.getObjects();
             for (var i = 0; i < allObj.length; i++) {
@@ -9428,20 +9362,20 @@ var UpdateCommand = function (canvas, obj, params, alignByCenter) {
         }
     };
 };
-var AlignToCenter = function (canvas, obj) {
+var AlignToCenter = function(canvas, obj) {
     // save original state
     var prop = {
         left: obj.left,
         top: obj.top
     };
     return {
-        exec: function () {
+        exec: function() {
             obj.center();
             obj.setCoords();
             //canvas.setActiveObject(obj);
             canvas.renderAll();
         },
-        unexec: function () {
+        unexec: function() {
             obj.setLeft(prop.left);
             obj.setTop(prop.top);
             obj.setCoords();
@@ -9450,39 +9384,37 @@ var AlignToCenter = function (canvas, obj) {
         }
     };
 };
-var History = function () {};
+var History = function() {};
 History.prototype = {
     undoStack: new Array(),
     redoStack: new Array(),
-    push: function (cmd) {
+    push: function(cmd) {
         History.prototype.undoStack.push(cmd);
         this.historyChangeEvent();
     },
-    undo: function () {
+    undo: function() {
         var cmd = History.prototype.undoStack.pop();
-        if (!cmd)
-            return;
+        if (!cmd) return;
         cmd.unexec();
         History.prototype.redoStack.push(cmd);
         this.historyChangeEvent();
     },
-    redo: function () {
+    redo: function() {
         var cmd = History.prototype.redoStack.pop();
-        if (!cmd)
-            return;
+        if (!cmd) return;
         cmd.exec();
         History.prototype.undoStack.push(cmd);
         this.historyChangeEvent();
     },
-    clear: function () {
+    clear: function() {
         History.prototype.undoStack = new Array();
         History.prototype.redoStack = new Array();
     },
-    last: function () {
+    last: function() {
         var stack = History.prototype.undoStack;
         return stack[stack.length - 1];
     },
-    historyChangeEvent: function () {
+    historyChangeEvent: function() {
         var event = document.createEvent('Event');
         event.history = this;
         event.initEvent('changeHistoryEvent', true, true);
@@ -9518,8 +9450,7 @@ function getUrlParams() {
 
 function isEmpty(obj) {
     for (var prop in obj) {
-        if (obj.hasOwnProperty(prop))
-            return false;
+        if (obj.hasOwnProperty(prop)) return false;
     }
     return true;
 }
@@ -9540,7 +9471,7 @@ function facebook_share(product_id, design_id) {
         },
         url: ProductDesigner.prototype.facebookUrl,
         crossDomain: true,
-        success: function (data) {
+        success: function(data) {
             var response = JSON.parse(data);
             jQuery('#pd_loading_img').hide();
             var image_logo = response.p_logo;
@@ -9550,9 +9481,8 @@ function facebook_share(product_id, design_id) {
                 method: 'feed',
                 name: product_name,
                 picture: image_logo,
-            }, function (response2) {
-                if (response2 && response2.post_id) {
-                }
+            }, function(response2) {
+                if (response2 && response2.post_id) {}
             });
         }
     });
@@ -9561,8 +9491,7 @@ function facebook_share(product_id, design_id) {
 function distinctVal(arr) {
     var newArray = [];
     for (var i = 0, j = arr.length; i < j; i++) {
-        if (newArray.indexOf(arr[i]) == -1)
-            newArray.push(arr[i]);
+        if (newArray.indexOf(arr[i]) == -1) newArray.push(arr[i]);
     }
     return newArray;
 }
@@ -9583,7 +9512,7 @@ function google_share(product_id, design_id) {
         },
         url: ProductDesigner.prototype.facebookUrl,
         crossDomain: true,
-        success: function (data) {
+        success: function(data) {
             var response = JSON.parse(data);
             jQuery('#pd_loading_img').hide();
             var image_logo = response.p_logo;
@@ -9608,7 +9537,7 @@ function displayRecordsClipart(lim, off) {
         url: Clipartdesigner.prototype.filterImageUrl,
         data: data,
         // cache: false,
-        success: function (data, textStatus, jqXHR) {
+        success: function(data, textStatus, jqXHR) {
             var response = JSON.parse(data);
             var currentlength = jQuery("#image_list").children().length;
             if (response.status == 'success') {
@@ -9627,15 +9556,14 @@ function displayRecordsClipart(lim, off) {
         }
     });
 }
-
 var isMobile = {
-    Android: function () {
+    Android: function() {
         return navigator.userAgent.match(/Android/i);
     },
-    BlackBerry: function () {
+    BlackBerry: function() {
         return navigator.userAgent.match(/BlackBerry/i);
     },
-    iOS: function () {
+    iOS: function() {
         if (Math.abs(window.orientation) === 90) {
             // Landscape
         } else {
@@ -9643,13 +9571,13 @@ var isMobile = {
             return navigator.userAgent.match(/iPhone|iPad|iPod/i);
         }
     },
-    Opera: function () {
+    Opera: function() {
         return navigator.userAgent.match(/Opera Mini/i);
     },
-    Windows: function () {
+    Windows: function() {
         return navigator.userAgent.match(/IEMobile/i);
     },
-    any: function () {
+    any: function() {
         return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
     }
 };
