@@ -17,10 +17,10 @@ class downloadLayerImage extends \Magento\Backend\App\Action {
 
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $order_increment_id = $objectManager->create('Magento\Sales\Model\Order')->load($order_id)->getIncrementId();
-        $store = $objectManager->get('Magento\Store\Model\StoreManagerInterface');
-        $mediaurl = $store->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);     
-        $path = $this->getLayerImageData($design_id, $image_key);
 
+        $path = $this->getLayerImageData($design_id, $image_key);
+        $mediaUrl = $objectManager->get('Magento\Store\Model\StoreManagerInterface')->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+        $path = $mediaUrl.$path;
         $imgtype = getimagesize($path);
 
         $image_name = basename($path);
