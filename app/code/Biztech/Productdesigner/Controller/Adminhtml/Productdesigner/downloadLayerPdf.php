@@ -20,7 +20,10 @@ class downloadLayerPdf extends \Magento\Backend\App\Action {
         $order_increment_id = $objectManager->create('Magento\Sales\Model\Order')->load($order_id)->getIncrementId();
         $path = $this->getLayerImageData($design_id, $image_key);
 
-        $imgtype = getimagesize($path);
+         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $mediaUrl = $objectManager->get('Magento\Store\Model\StoreManagerInterface')->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+        $imgtype = getimagesize($mediaUrl.$path);
+         $path = $mediaUrl.$path;
 
         if ($imgtype) {
             switch ($imgtype['mime']) {

@@ -33,8 +33,12 @@ class downloadLayerPdf extends \Magento\Backend\App\Action {
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $filesystem = $objectManager->get('Magento\Framework\Filesystem');
         $reader = $filesystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $mediaUrl = $objectManager->get('Magento\Store\Model\StoreManagerInterface')->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
         
-        $imgtype = getimagesize($path);
+        $imgtype = getimagesize($mediaUrl.$path);
+        $path = $mediaUrl.$path;
+        
         if ($imgtype) {
             
         } else {

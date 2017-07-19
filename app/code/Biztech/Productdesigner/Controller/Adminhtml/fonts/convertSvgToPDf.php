@@ -43,9 +43,14 @@ class convertSvgToPDf extends \Magento\Backend\App\Action {
         foreach ($LayerImagesData as $key => $_layerImage) {            
             $html = '';
             $layerPath = $_layerImage['url'];
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+            $mediaUrl = $objectManager->get('Magento\Store\Model\StoreManagerInterface')
+                                    ->getStore()
+                                    ->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+            $imgtype = getimagesize($mediaUrl.$layerPath);
+            $layerPath = $mediaUrl.$layerPath;
             
-
-            $imgtype = getimagesize($layerPath);
+            //$imgtype = getimagesize($layerPath);
             if (!$imgtype) {                
                 $filesystem = $objectManager->get('Magento\Framework\Filesystem');
                 $reader = $filesystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
@@ -231,8 +236,12 @@ class convertSvgToPDf extends \Magento\Backend\App\Action {
             $html = '';
             $layerPath = $_layerImage['url'];
 
-            $imgtype = getimagesize($layerPath);
-
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+            $mediaUrl = $objectManager->get('Magento\Store\Model\StoreManagerInterface')
+                                    ->getStore()
+                                    ->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+            $imgtype = getimagesize($mediaUrl.$layerPath);
+            $layerPath = $mediaUrl.$layerPath;
             if ($imgtype) {
                 switch ($imgtype['mime']) {
                     case 'image/jpeg':

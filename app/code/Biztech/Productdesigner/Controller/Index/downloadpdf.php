@@ -14,6 +14,7 @@ class downloadpdf extends \Magento\Framework\App\Action\Action
     const ResizeHeight     = 'productdesigner/general/imageheight';
     const ResizeWidthBand  = 'productdesigner/general/imagewidthband';
     const ResizeHeightBand = 'productdesigner/general/imageheightband';
+    protected $result_new;
 
     /**
      * Index action
@@ -320,7 +321,8 @@ class downloadpdf extends \Magento\Framework\App\Action\Action
                 foreach ($dimensions as $d) {
                     $x1 = json_decode($d['selection_area'])->x1;
                     $y1 = json_decode($d['selection_area'])->y1;
-                    imagecopy($dest, $srcNew[$d['design_area_id']], $x1, $y1, 0, 0, imagesx($srcNew[$d['design_area_id']]), imagesy($srcNew[$d['design_area_id']]));
+                    if (isset($srcNew[$d['design_area_id']]))
+                        imagecopy($dest, $srcNew[$d['design_area_id']], $x1, $y1, 0, 0, imagesx($srcNew[$d['design_area_id']]), imagesy($srcNew[$d['design_area_id']]));
                 }
 
                 imagesavealpha($dest, true);
@@ -363,9 +365,9 @@ class downloadpdf extends \Magento\Framework\App\Action\Action
                 $objectManager          = \Magento\Framework\App\ObjectManager::getInstance();
                 $obj_product            = $objectManager->create('Biztech\Productdesigner\Model\Mysql4\Selectionarea\Collection')->addFieldToFilter('image_id', str_replace('@', '', $parent_images_id_final));
                 $dimensions             = $obj_product->getData();
-                echo "<pre>";
-                print_r($dimensions);
-                exit;
+
+          
+              
                 //$dimensions = Mage::getModel('productdesigner/selectionarea')->getCollection()->addFieldToFilter('image_id',str_replace('@','',$parent_images_id_final))->getData();
                 // add water mark start
 
@@ -451,7 +453,8 @@ class downloadpdf extends \Magento\Framework\App\Action\Action
                 foreach ($dimensions as $d) {
                     $x1 = json_decode($d['selection_area'])->x1;
                     $y1 = json_decode($d['selection_area'])->y1;
-                    imagecopy($dest, $srcNew[$d['design_area_id']], $x1, $y1, 0, 0, imagesx($srcNew[$d['design_area_id']]), imagesy($srcNew[$d['design_area_id']]));
+                    if (isset($srcNew[$d['design_area_id']]))
+                        imagecopy($dest, $srcNew[$d['design_area_id']], $x1, $y1, 0, 0, imagesx($srcNew[$d['design_area_id']]), imagesy($srcNew[$d['design_area_id']]));
                 }
 
                 imagesavealpha($dest, true);
