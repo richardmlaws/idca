@@ -1057,7 +1057,7 @@ input,button,select,textarea{-webkit-box-shadow:none!important;box-shadow:none!i
   .productdesigner-view .pd-container {width: 100% !important;} 
 } 
 @media screen and (min-width: 981px) {
-	.productdesigner-view .layers_manager::before {border-left-color: transparent !important;}
+  .productdesigner-view .layers_manager::before {border-left-color: transparent !important;}
 }
 
 .page-products .list-design-button {padding: 10px !important;}
@@ -1094,10 +1094,11 @@ input,button,select,textarea{-webkit-box-shadow:none!important;box-shadow:none!i
 
 .productdesigner-index-band .left-all-other {width: 72%;float: left;padding-right: 15px}
 .productdesigner-index-band .right-form-addtocart {width: 28%;float: right;padding-left: 15px;}
-.productdesigner-index-band .right-form-addtocart #customOptionFormProdSettings {padding: 15px;border: 1px solid #c5c5c5;padding-top: 10px;}
+.productdesigner-index-band .right-form-addtocart #customOptionFormProdSettings {padding: 15px;border: 1px solid #c5c5c5;padding-top: 10px;position: relative;}
 .productdesigner-index-band .right-form-addtocart #customOptionFormProdSettings .size-qty {width: 50px;float: left;text-align: center;margin-bottom: 10px;}
-.productdesigner-index-band .right-form-addtocart #customOptionFormProdSettings #cart-add {margin: 0;clear: both;display: block;}
+.productdesigner-index-band .right-form-addtocart #customOptionFormProdSettings #cart-add {margin: 0;clear: both;display: inline-block;width: 80%;margin-left: 10px;}
 .productdesigner-index-band .right-form-addtocart #customOptionFormProdSettings h3  {margin: 0;margin-bottom: 5px;}
+.productdesigner-index-band .right-form-addtocart #customOptionFormProdSettings div.mage-error {display: inline-block;width: 100%;margin-top: -20px;text-align: left;position: absolute;left: 75px;}
 
 .productdesigner-index-band .right-form-addtocart .product-pricing {display:block;padding:4px 8px;background:#FBF4DE;border:1px solid #E2D4C7;margin:7px 0;clear: both;}
 .productdesigner-index-band .right-form-addtocart .product-pricing ul li {margin-bottom: 5px;}
@@ -1131,8 +1132,25 @@ input,button,select,textarea{-webkit-box-shadow:none!important;box-shadow:none!i
 .productdesigner-index-band .productdesigner-register .legend span {font-size: 15px;}
 .productdesigner-index-band #customOptionFormProdSettings .messages {clear:  both; display: block;}
 
+.productdesigner-index-band #customOptionFormProdSettings .subtotal-price {text-align: right;}
+.productdesigner-index-band #customOptionFormProdSettings .subtotal-price .withtax-price,
+.productdesigner-index-band #customOptionFormProdSettings .subtotal-price .withouttax-price {font-size: 12px;}
+.productdesigner-index-band #customOptionFormProdSettings .subtotal-price .withtax-price,
+.productdesigner-index-band #customOptionFormProdSettings .subtotal-price .withouttax-price,
+.productdesigner-index-band #customOptionFormProdSettings .subtotal-price .withtax-price div,
+.productdesigner-index-band #customOptionFormProdSettings .subtotal-price .withouttax-price div {display: inline-block;vertical-align: middle;}
+.productdesigner-index-band #customOptionFormProdSettings .subtotal-price .withtax-price .incl-tax-price {font-size: 16px;}
+.productdesigner-index-band #customOptionFormProdSettings .subtotal-price .withouttax-price .excl-tax-price {font-size: 22px;}
+
+.productdesigner-index-band #add_mydesigns_content {min-height: 260px;}
+.productdesigner-index-band #add_mydesigns_content .pd-button.login-store-img {width: 55%;}
+.productdesigner-index-band #add_mydesigns_content .note-message {background:#fdeda4;color: #223bb5;padding:10px 5px!important;border:none!important;font-family:'open_sanssemibold';font-weight:normal!important;text-align:center;}
+.productdesigner-index-band #add_mydesigns_content #mydesigns_images_container .product_list li {width: 16.35%;}
+
 @media screen and (min-width: 981px) and (max-width: 1300px) {  
     .productdesigner-view .pd-left-panel {width: 100% !important;}
+    .productdesigner-index-band .right-form-addtocart #customOptionFormProdSettings #cart-add {margin-left: 0;margin-top: 2px;width: 100%;}
+    .productdesigner-index-band .right-form-addtocart #customOptionFormProdSettings div.mage-error {position: static;margin-top: 0;}
 }
 @media screen and (max-width: 1024px) {
     .productdesigner-index-band .product-colors {margin-top: 5px;}
@@ -1144,6 +1162,7 @@ input,button,select,textarea{-webkit-box-shadow:none!important;box-shadow:none!i
     .productdesigner-index-band .right-form-addtocart #customOptionFormProdSettings .size-qty {margin-bottom: 10px;}
     .productdesigner-index-band .right-form-addtocart .product-pricing {display: block;}
     .productdesigner-view .share-save .social-icons .label {padding-left: 6px;}
+    .productdesigner-index-band .right-form-addtocart #customOptionFormProdSettings #cart-add {display: block;width: auto;margin-left: 0;}
 }
 @media screen and (max-width: 980px) {
     .productdesigner-index-band .textbox-container {width: 100%;background-color: transparent;padding: 0;}
@@ -1153,20 +1172,22 @@ input,button,select,textarea{-webkit-box-shadow:none!important;box-shadow:none!i
     .productdesigner-index-band.boxed-layout .pd-left-panel {top: 0;padding-right: 0;width: 50% !important;}
 
     .productdesigner-index-band .resp-vtabs ul.resp-tabs-list {width: 20%;}
-    .productdesigner-index-band .resp-vtabs .resp-tabs-container {width: 78%;}
+    .productdesigner-index-band .resp-vtabs .resp-tabs-container {width: 78%;min-height: 450px !important;}
     .productdesigner-index-band .resp-vtabs li.resp-tab-active,
     .productdesigner-index-band .resp-vtabs .resp-tabs-list li {padding: 20px 5px 21px 5px;}
 
-    .productdesigner-index-band .right-form-addtocart {padding-top: 150px;}
+    .productdesigner-index-band .right-form-addtocart {padding-top: 230px;}
     .productdesigner-index-band .desgin-detail .clipart_container ul li {width: 100%;}
     .productdesigner-index-band .desgin-detail .clipart_container ul li #search_tag_field {width: 100%;margin-left: 0;}
 
     .productdesigner-index-band .desgin-detail.add-clipart-detail .product_list li {width: 29.4%;}
     .productdesigner-index-band.boxed-layout .pd-left-panel {z-index: 999;}
+    .productdesigner-index-band #add_mydesigns_content #mydesigns_images_container .product_list li {width: 20.9%;}
 }
 @media screen and (max-width: 767px) {
   .productdesigner-index-band.boxed-layout .pd-left-panel {width: 100% !important;}
   .productdesigner-index-band .desgin-detail .product_list .clipart-img-wrapper {display: inline-block;}
+
 }
 @media screen and (max-width: 502px) {
     .productdesigner-index-band .share-save {text-align: center;}
@@ -1174,6 +1195,7 @@ input,button,select,textarea{-webkit-box-shadow:none!important;box-shadow:none!i
     .productdesigner-index-band .share-save .social-icons {float: none;display: inline-block;vertical-align: top;}
     .productdesigner-index-band .share-save .block-btn-process {display:inline-block;vertical-align: top;}
     .productdesigner-index-band .desgin-detail.add-clipart-detail .product_list li {width: 46.2%;}
+    .productdesigner-index-band #add_mydesigns_content #mydesigns_images_container .product_list li {width: 46%;}
 }
 @media screen and (min-width: 981px) {
     .productdesigner-index-band .resp-tabs-container {display: block !important;} 

@@ -1,28 +1,51 @@
 <?php
 $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-$actionName = $this->getRequest()->getActionName();
-$flag = false;
+$actionName    = $this->getRequest()->getActionName();
+$flag          = false;
 if ($actionName == "getTierPrice") {
-    $color_id = $this->getRequest()->getParam("color_id");
+    $color_id   = $this->getRequest()->getParam("color_id");
     $product_id = $this->getRequest()->getParam("product_id");
-    $flag = true;
+    $flag       = true;
 } else {
     $product_id = $this->getRequest()->getParam('id');
 }
-$obj_product = $objectManager->create('Magento\Catalog\Model\Product');
-$product = $obj_product->load($product_id);
-$storeManager = $objectManager->get('Magento\Store\Model\StoreManagerInterface');
-$storeid = $storeManager->getStore()->getId();
-$tier_prices = [];
+$obj_product    = $objectManager->create('Magento\Catalog\Model\Product');
+$product        = $obj_product->load($product_id);
+$storeManager   = $objectManager->get('Magento\Store\Model\StoreManagerInterface');
+$currency_code  = $storeManager->getStore()->getCurrentCurrencyCode();
+$currency       = $objectManager->create('Magento\Directory\Model\CurrencyFactory')->create()->load($currency_code);
+$currencySymbol = $currency->getCurrencySymbol();
+$storeid        = $storeManager->getStore()->getId();
+$tier_prices    = [];
 $printingMethod = $product->getPrintingmethodattr();
 if (isset($printingMethod) && $printingMethod != '') {
     $printingMethods = explode(',', $printingMethod);
 
 }
-$stockItemRepository = $objectManager->create('Magento\CatalogInventory\Api\StockRegistryInterface');
-$productStock        = $stockItemRepository->getStockItem($product->getId());
+$stockItemRepository      = $objectManager->create('Magento\CatalogInventory\Api\StockRegistryInterface');
+$productStock             = $stockItemRepository->getStockItem($product->getId());
+$priceWithTax             = number_format((string) $product->getPriceInfo()->getPrice('final_price')->getAmount(), 2);
+$priceWithoutTax          = number_format((string) $product->getPriceInfo()->getPrice('final_price')->getAmount()->getBaseAmount(), 2);
+$priceHelper              = $objectManager->create('Magento\Framework\Pricing\Helper\Data'); // Instance of Pricing Helper
+$formattedPriceTax        = $priceHelper->currency($priceWithTax, true, false);
+$formattedPriceWithoutTax = $priceHelper->currency($priceWithoutTax, true, false);
+
 ?>
 
+<div class="subtotal-price">
+    <div class="subtotal-title"><?php echo __('Subtotal:') ?></div>
+    <div class="withtax-price">
+        <div class="incl-tax"><?php echo __('Incl. VAT') ?></div>
+        <div class="incl-tax-price" id="incl-tax-price"> <?php echo $formattedPriceTax; ?></div>
+
+    </div>
+    <div class="withouttax-price">
+        <div class="excl-tax"><?php echo __('Excl. VAT') ?></div>
+        <div class="excl-tax-price" id="excl-tax-price"><b><?php echo $formattedPriceWithoutTax ?></b></div>
+
+    </div>
+
+</div>
 
 <div class="printing-method-block" id="printing-method-block">
     <?php
@@ -80,7 +103,7 @@ $productStock        = $stockItemRepository->getStockItem($product->getId());
                                         endforeach;
                                         endif;
                                         ?>
-                                    <?php endif; ?>
+                                    <?php endif;?>
                                 </ul>
                                 <?php if ($product->getTypeId() == 'configurable'): ?>
                                     <?php
@@ -106,7 +129,7 @@ $productStock        = $stockItemRepository->getStockItem($product->getId());
                                                 endif;
                                             }
                                             ?>
-                                        <?php endif;   }?>
+                                        <?php endif;}?>
                                     </div>
                                     <?php
                                     if ($product->getTypeId() == 'configurable') {
@@ -126,12 +149,12 @@ $productStock        = $stockItemRepository->getStockItem($product->getId());
                                         ?>
                                         <?php if ($attr['attribute_code'] == "size") {
                                             ?>
-                                            <?php $attributeId = $attr['attribute_id']; ?>
+                                            <?php $attributeId = $attr['attribute_id'];?>
                                             <div class="chart-size" id="size-chart" >
                                                 <h3 id="quantity"><?php echo __('Quantity & Sizes'); ?></h3>
                                                 <h3 id="proper-size"><?php echo __("Find your size") ?></h3>
                                                 <ul id="size-chart-ul">
-                                                    <?php foreach ($sizes as $size) { ?>
+                                                    <?php foreach ($sizes as $size) {?>
                                                     <li data-size_id ="<?php echo $size['value_index'] ?>" id="group-order-size-qty" class="size size-<?php echo strtolower($size['store_label']); ?>"  name="<?php echo $size['value_index'] ?>">
                                                         <span class="size-label" ><?php echo $size['store_label']; ?></span>
                                                         <span class="value"><input type="text" class="input-text qty size-qty" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'"  title=""  maxlength="12" name="size-quantity"></span>
@@ -141,6 +164,7 @@ $productStock        = $stockItemRepository->getStockItem($product->getId());
                                                 }
                                                 ?>
                                             </ul>
+                                            <button type="submit" id="cart-add" class="action primary tocart pd-button"><span id="add-to-cart"><?php /* @escapeNotVerified */echo __('Add To Cart') ?></span><span id="total_cost"></span></button>
                                         </div>
                                         <?php
                                     }
@@ -149,17 +173,10 @@ $productStock        = $stockItemRepository->getStockItem($product->getId());
                                     endforeach;
                                     if (!isset($sizes)) {
                                         ?>
-
-                                        <h3 id="quantity"><?php echo __('Qty'); ?></h3>
-                                        <input type = "text" value="<?php echo $productStock->getMinSaleQty(); ?>" id = "qty" class = "size-qty" data-validate = "{'required-number':true,'validate-item-quantity':{'minAllowed':1}}">
-                                        <ul class = "messages">
-                                            <li id = "cart-error-msg" class = "error-msg" style = "color:red;font-size:large">
-                                            </li>
-                                        </ul>
                                         <?php
-                                        $default_color = $this->helper('Biztech\Productdesigner\Helper\Info')->getDefaultImage($product_id);
+                                        $default_color       = $this->helper('Biztech\Productdesigner\Helper\Info')->getDefaultImage($product_id);
                                         $productTypeInstance = $product->getTypeInstance();
-                                        $simpleCollection = $productTypeInstance->getUsedProductCollection($product)
+                                        $simpleCollection    = $productTypeInstance->getUsedProductCollection($product)
                                         ->addAttributeToSelect('*');
                                         if ($flag) {
                                             $simpleCollection->addAttributeToFilter('color', $color_id);
@@ -169,9 +186,9 @@ $productStock        = $stockItemRepository->getStockItem($product->getId());
                                         foreach ($simpleCollection as $simple) {
                                             $tier_prices = $simple->getTierPrice();
                                         }
-                                        $currencysymbol = $objectManager->get('Magento\Store\Model\StoreManagerInterface');
-                                        $code = $currencysymbol->getStore()->getCurrentCurrencyCode();
-                                        $_Symbol = $objectManager->create('Magento\Directory\Model\CurrencyFactory')->create()->load($code);
+                                        $currencysymbol  = $objectManager->get('Magento\Store\Model\StoreManagerInterface');
+                                        $code            = $currencysymbol->getStore()->getCurrentCurrencyCode();
+                                        $_Symbol         = $objectManager->create('Magento\Directory\Model\CurrencyFactory')->create()->load($code);
                                         $currency_symbol = $_Symbol->getCurrencySymbol();
                                         ?>
                                         <!-- tierPrice block  start -->
@@ -183,13 +200,13 @@ $productStock        = $stockItemRepository->getStockItem($product->getId());
                                                     <?php
                                                     $finalProductPrice = '';
                                                     $finalProductPrice = $product->getFinalPrice();
-                                                    $currency_symbol = $_Symbol->getCurrencySymbol();
+                                                    $currency_symbol   = $_Symbol->getCurrencySymbol();
                                                     foreach ($tier_prices as $tierPrice) {
-                                                        $qty = (int) $tierPrice['price_qty'];
-                                                        $tierPrice = (float) number_format($tierPrice['price'], 2);
-                                                        $getsave = ($tierPrice * 100) / $finalProductPrice;
+                                                        $qty            = (int) $tierPrice['price_qty'];
+                                                        $tierPrice      = (float) number_format($tierPrice['price'], 2);
+                                                        $getsave        = ($tierPrice * 100) / $finalProductPrice;
                                                         $getsaveIntPart = (int) ($getsave);
-                                                        $save = 100 - $getsaveIntPart;
+                                                        $save           = 100 - $getsaveIntPart;
                                                         ?>
                                                         <li>Buy <b> <?php echo $qty; ?> </b> for <b> <?php echo $currency_symbol . $tierPrice; ?></b> each and save <b> <?php echo $save; ?> %</b></li>
                                                         <?php
@@ -197,23 +214,33 @@ $productStock        = $stockItemRepository->getStockItem($product->getId());
                                                     ?>
                                                 </ul>
                                             </div>
-                                            <?php } ?>
+                                            <?php }?>
                                             <!-- tierPrice block  & -->
+
+                                            <h3 id="quantity"><?php echo __('Qty'); ?></h3>
+                                            <input type = "text" value="<?php echo $productStock->getMinSaleQty(); ?>" id = "qty" class = "size-qty" data-validate = "{'required-number':true,'validate-item-quantity':{'minAllowed':1}}">
+                                            <button type="submit" id="cart-add" class="action primary tocart pd-button"><span id="add-to-cart"><?php /* @escapeNotVerified */echo __('Add To Cart') ?></span><span id="total_cost"></span></button>
+                                            <ul class = "messages">
+                                                <li id = "cart-error-msg" class = "error-msg" style = "color:red;font-size:large">
+                                                </li>
+                                            </ul>
+
+
                                             <?php
                                         }
                                         ?>
     <?php /*<ul class="messages">
-        <li id="cart-error-msg" class="error-msg" style="color:red;font-size:large">
-        </li>
-    </ul> */ ?>
-    <?php
+    <li id="cart-error-msg" class="error-msg" style="color:red;font-size:large">
+    </li>
+</ul> */?>
+<?php
 }
 ?>
 <div id = "custom-option">
     <?php
     $all_options = $product->getOptions();
     if ($all_options) {
-        $dropcnt = 0;
+        $dropcnt  = 0;
         $newcount = 2;
         foreach ($all_options as $option) {
             $optionType = $option->getType();
@@ -226,7 +253,7 @@ $productStock        = $stockItemRepository->getStockItem($product->getId());
                         </label>
                     </div>
                     <div>
-                        <select multiple id="custom-multiple-select" class="multiselect admin__control-multiselect <?php if ($option->getIsRequire() == 1) { ?> required <?php } ?> product-custom-option" name="<?php echo $option->getOptionId(); ?>" aria-required="true">
+                        <select multiple id="custom-multiple-select" class="multiselect admin__control-multiselect <?php if ($option->getIsRequire() == 1) {?> required <?php }?> product-custom-option" name="<?php echo $option->getOptionId(); ?>" aria-required="true">
                             <?php
                             foreach ($option->getValues() as $value):
                                 if ($value->getPriceType() == 'fixed') {
@@ -239,7 +266,7 @@ $productStock        = $stockItemRepository->getStockItem($product->getId());
                                 <option value="<?php echo $value->getOptionTypeId(); ?>">
                                     <?php echo $value->getDefaultTitle() . ' + ' . $price; ?>
                                 </option>
-                            <?php endforeach; ?>
+                            <?php endforeach;?>
                         </select>
                     </div>
                 </div>
@@ -250,7 +277,7 @@ $productStock        = $stockItemRepository->getStockItem($product->getId());
                 ?>
                 <div class="drop_down"><div id="drop_down_title"><label for="<?php echo $option->getDefaultTitle(); ?>" class="captionSmall" name="option-custom"><?php echo $option->getDefaultTitle(); ?></label></div>
                 <div class="optionDiv">
-                    <select name="<?php echo $option->getOptionId(); ?>" id="select_option" class="<?php if ($option->getIsRequire() == 1) { ?> required <?php } ?> product-custom-option admin__control-select"  title="Choose your option" aria-required="true">
+                    <select name="<?php echo $option->getOptionId(); ?>" id="select_option" class="<?php if ($option->getIsRequire() == 1) {?> required <?php }?> product-custom-option admin__control-select"  title="Choose your option" aria-required="true">
                         <option value="">--- Please Select ---</option>
                         <?php
                         foreach ($option->getValues() as $value):
@@ -264,7 +291,7 @@ $productStock        = $stockItemRepository->getStockItem($product->getId());
                             <option value="<?php echo $value->getOptionTypeId(); ?>">
                                 <?php echo $value->getDefaultTitle() . ' + ' . $price; ?>
                             </option>
-                        <?php endforeach; ?>
+                        <?php endforeach;?>
                     </select>
                 </div>
             </div>
@@ -275,7 +302,7 @@ $productStock        = $stockItemRepository->getStockItem($product->getId());
             ?>
             <div class="checkbox">
                 <ul class="options-list" id="options-checkbox" name="option-custom">
-                    <label class="<?php if ($option->getIsRequire() == 1) { ?> required <?php } ?>"><?php echo $option->getDefaultTitle(); ?></label>
+                    <label class="<?php if ($option->getIsRequire() == 1) {?> required <?php }?>"><?php echo $option->getDefaultTitle(); ?></label>
                     <?php
                     foreach ($option->getValues() as $value):
                         if ($value->getPriceType() == 'fixed') {
@@ -287,11 +314,11 @@ $productStock        = $stockItemRepository->getStockItem($product->getId());
                         ?>
                         <li>
                             <div class="field choice admin__field admin__field-option">
-                                <input type="checkbox" value="<?php echo $value->getOptionTypeId(); ?>" id="options_<?php echo $newcount; ?>" name="<?php echo $option->getOptionId(); ?>"  class="checkbox admin__control-checkbox <?php if ($option->getIsRequire() == 1) { ?> required <?php } ?> product-custom-option">
+                                <input type="checkbox" value="<?php echo $value->getOptionTypeId(); ?>" id="options_<?php echo $newcount; ?>" name="<?php echo $option->getOptionId(); ?>"  class="checkbox admin__control-checkbox <?php if ($option->getIsRequire() == 1) {?> required <?php }?> product-custom-option">
                                 <span class="label"><label for="options_<?php echo $option->getOptionId(); ?>_<?php echo $newcount; ?>"><?php echo $value->getDefaultTitle() . '+ ' . $price; ?></label></span>
                             </div>
                         </li>
-                    <?php endforeach; ?>
+                    <?php endforeach;?>
                 </ul>
             </div>
             <?php
@@ -301,7 +328,7 @@ $productStock        = $stockItemRepository->getStockItem($product->getId());
             ?>
             <div class="input-box">
                 <ul class="options-list" id="options-list" name="option-custom">
-                    <label class="<?php if ($option->getIsRequire() == 1) { ?> required <?php } ?>"><?php echo $option->getDefaultTitle(); ?></label>
+                    <label class="<?php if ($option->getIsRequire() == 1) {?> required <?php }?>"><?php echo $option->getDefaultTitle(); ?></label>
                     <?php
                     foreach ($option->getValues() as $value):
                         if ($value->getPriceType() == 'fixed') {
@@ -313,7 +340,7 @@ $productStock        = $stockItemRepository->getStockItem($product->getId());
                         ?>
                         <li>
                             <div class="field admin__field-option">
-                                <input type="radio" value="<?php echo $value->getOptionTypeId() ?>" id="options_<?php echo $option->getOptionId(); ?>" name="<?php echo $option->getOptionId(); ?>"  class="radio admin__control-radio  <?php if ($option->getIsRequire() == 1) { ?> required <?php } ?> product-custom-option" aria-required="true">
+                                <input type="radio" value="<?php echo $value->getOptionTypeId() ?>" id="options_<?php echo $option->getOptionId(); ?>" name="<?php echo $option->getOptionId(); ?>"  class="radio admin__control-radio  <?php if ($option->getIsRequire() == 1) {?> required <?php }?> product-custom-option" aria-required="true">
                                 <span class="label"><label for="options_<?php echo $option->getOptionId(); ?>"><?php echo $value->getDefaultTitle() . '+ ' . $price; ?></label></span>
                             </div>
                         </li>
@@ -334,7 +361,7 @@ $productStock        = $stockItemRepository->getStockItem($product->getId());
                 ?>
                 <div class="input-box">
                     <label class="required"><?php echo $option->getDefaultTitle() . '+ ' . $price; ?></label>
-                    <input type="text" value="" name="<?php echo $option->getOptionId(); ?>" class="input-text required-entry product-custom-option " id="options_<?php echo $option->getOptionId(); ?>_text" <?php if ($option->getIsRequire() == 1) { ?>data-validate="{required:true}"<?php } ?>>
+                    <input type="text" value="" name="<?php echo $option->getOptionId(); ?>" class="input-text required-entry product-custom-option " id="options_<?php echo $option->getOptionId(); ?>_text" <?php if ($option->getIsRequire() == 1) {?>data-validate="{required:true}"<?php }?>>
                 </div>
                 <?php
             }
@@ -347,11 +374,11 @@ $productStock        = $stockItemRepository->getStockItem($product->getId());
                             <?php if ($option->getType() == \Magento\Catalog\Model\Product\Option::OPTION_TYPE_DATE_TIME || $option->getType() == \Magento\Catalog\Model\Product\Option::OPTION_TYPE_DATE):
                             ?>
                             <?php echo $block->getDateHtml() ?>
-                        <?php endif; ?>
+                        <?php endif;?>
                         <?php if ($option->getType() == \Magento\Catalog\Model\Product\Option::OPTION_TYPE_DATE_TIME || $option->getType() == \Magento\Catalog\Model\Product\Option::OPTION_TYPE_TIME):
                         ?>
                         <span class="time-picker"><?php echo $block->getTimeHtml() ?></span>
-                    <?php endif; ?>
+                    <?php endif;?>
                     <?php if ($option->getIsRequire()): ?>
                         <input type="hidden"
                         name="validate_datetime_<?php /* @escapeNotVerified */echo $option->getOptionId() ?>"
@@ -364,7 +391,7 @@ $productStock        = $stockItemRepository->getStockItem($product->getId());
                         class="validate-datetime-<?php /* @escapeNotVerified */echo $option->getOptionId() ?>"
                         value=""
                         data-validate="{'validate-optional-datetime':<?php /* @escapeNotVerified */echo $option->getOptionId() ?>}"/>
-                    <?php endif; ?>
+                    <?php endif;?>
                     <script type="text/x-magento-init">
                         {
                             "#customOptionFormProdSettings": {
@@ -387,17 +414,10 @@ $productStock        = $stockItemRepository->getStockItem($product->getId());
 <?php
 if ($product->getTypeId() != 'configurable') {
     ?>
-
-    <h3 id="quantity"><?php echo __('Qty'); ?></h3>
-    <input type="text" value="<?php echo $productStock->getMinSaleQty(); ?>" id="qty" class="size-qty" data-validate="{'required-number':true,'validate-item-quantity':{'minAllowed':1}}">
-    <ul class="messages">
-        <li id="cart-error-msg" class="error-msg" style="color:red;font-size:large">
-        </li>
-    </ul>
     <?php
-    $currencysymbol = $objectManager->get('Magento\Store\Model\StoreManagerInterface');
-    $code = $currencysymbol->getStore()->getCurrentCurrencyCode();
-    $_Symbol = $objectManager->create('Magento\Directory\Model\CurrencyFactory')->create()->load($code);
+    $currencysymbol  = $objectManager->get('Magento\Store\Model\StoreManagerInterface');
+    $code            = $currencysymbol->getStore()->getCurrentCurrencyCode();
+    $_Symbol         = $objectManager->create('Magento\Directory\Model\CurrencyFactory')->create()->load($code);
     $currency_symbol = $_Symbol->getCurrencySymbol();
     ?>
     <!-- tierPrice block  start -->
@@ -409,13 +429,13 @@ if ($product->getTypeId() != 'configurable') {
                 <?php
                 $finalProductPrice = '';
                 $finalProductPrice = $product->getFinalPrice();
-                $tier_prices = $product->getTierPrice();
+                $tier_prices       = $product->getTierPrice();
                 foreach ($tier_prices as $tierPrice) {
-                    $qty = (int) $tierPrice['price_qty'];
-                    $tierPrice = (float) number_format($tierPrice['price'], 2);
-                    $getsave = ($tierPrice * 100) / $finalProductPrice;
+                    $qty            = (int) $tierPrice['price_qty'];
+                    $tierPrice      = (float) number_format($tierPrice['price'], 2);
+                    $getsave        = ($tierPrice * 100) / $finalProductPrice;
                     $getsaveIntPart = (int) ($getsave);
-                    $save = 100 - $getsaveIntPart;
+                    $save           = 100 - $getsaveIntPart;
                     ?>
                     <li>Buy <b> <?php echo $qty; ?> </b> for <b> <?php echo $currency_symbol . $tierPrice; ?></b> each and save <b> <?php echo $save; ?> %</b></li>
                     <?php
@@ -423,7 +443,18 @@ if ($product->getTypeId() != 'configurable') {
                 ?>
             </ul>
         </div>
-        <?php } ?>
+        <?php }?>
+
+        <h3 id="quantity"><?php echo __('Qty'); ?></h3>
+        <input type="text" value="<?php echo $productStock->getMinSaleQty(); ?>" id="qty" class="size-qty" data-validate="{'required-number':true,'validate-item-quantity':{'minAllowed':1}}">
+        <button type="submit" id="cart-add" class="action primary tocart pd-button"><span id="add-to-cart"><?php /* @escapeNotVerified */echo __('Add To Cart') ?></span><span id="total_cost"></span></button>
+
+        <ul class="messages">
+            <li id="cart-error-msg" class="error-msg" style="color:red;font-size:large">
+            </li>
+        </ul>
+
+
         <?php
     }
     ?>
@@ -433,7 +464,7 @@ if ($product->getTypeId() != 'configurable') {
     <input type="hidden" id="total_qty" name="total_qty" value="">
     <input type="hidden" id="isNameNumberOnly" name="isNameNumberOnly" value="">
     <input type="hidden" id="design_id_old" name="design_id_old" value="">
-    <button type="submit" id="cart-add" class="action primary tocart pd-button"><span id="add-to-cart"><?php /* @escapeNotVerified */echo __('Add To Cart') . " - "; ?></span><span id="total_cost"></span></button>
+
     <div class="progress-bar-wrapper">
         <div class="bar-div">
             <span id="display1" class="display-count"></span>
@@ -441,15 +472,15 @@ if ($product->getTypeId() != 'configurable') {
         </div>
     </div>
 
-    <?php $jsonHelper = $objectManager->create('Magento\Framework\Json\Helper\Data'); ?>
-    <?php if ($flag) { ?>
+    <?php $jsonHelper = $objectManager->create('Magento\Framework\Json\Helper\Data');?>
+    <?php if ($flag) {?>
     <script type="text/javascript">
         require(['jquery', 'jquery/ui'], function ($) {
             var tierPrice = '<?php echo $jsonHelper->jsonEncode($tier_prices) ?>';
             TierPriceClass.initialize(tierPrice);
         });
     </script>
-    <?php } else { ?>
+    <?php } else {?>
     <script type="text/javascript">
         require(['jquery', 'jquery/ui'], function ($) {
             TierPriceClass = new TierPriceClass();
@@ -457,4 +488,6 @@ if ($product->getTypeId() != 'configurable') {
             TierPriceClass.initialize(tierPrice);
         });
     </script>
-    <?php } ?>
+    <?php }?>
+
+

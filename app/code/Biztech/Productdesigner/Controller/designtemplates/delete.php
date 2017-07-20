@@ -30,6 +30,8 @@ class delete extends \Magento\Framework\App\Action\Action {
             $designTemplate = $objectManager->create('Biztech\Productdesigner\Model\Designs')->load($designId);
             $designTemplate->delete();
 
+             $obj_product = $objectManager->create('Magento\Catalog\Model\Product');
+             $product = $obj_product->load($designTemplate['product_id']);
             $result = array();
 
             //$session = Mage::getSingleton('customer/session');
@@ -39,7 +41,13 @@ class delete extends \Magento\Framework\App\Action\Action {
             $resultPage = $objectManager->create('Magento\Framework\View\LayoutInterface');
             $layout = $resultPage->createBlock('Biztech\Productdesigner\Block\Productdesigner');
 
+            if($product->getEnableWristband()){
+                $result["designs"] = $layout->setData(array("customer_id" => 1))->setTemplate('productdesigner/mydesigns/list_band.phtml')->toHtml();
+            } else {
+                
             $result["designs"] = $layout->setData(array("customer_id" => 1))->setTemplate('productdesigner/mydesigns/list.phtml')->toHtml();
+            }
+
             $result['status'] = 'success';
 //            $layout = $this->getLayout()->createBlock('productdesigner/productdesigner');
 //            $result["designs"] = $layout->setData(array("customer_id"=>$customer_id))->setTemplate('productdesigner/mydesigns/list.phtml')->toHtml();

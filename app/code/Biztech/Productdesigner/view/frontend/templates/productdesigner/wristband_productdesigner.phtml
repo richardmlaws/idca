@@ -64,8 +64,8 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
         </div>
     </div>
     <!--
-    <script src="<?php //echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS)."biztech/productdesigner/select.js"                                                                                        ?>"></script>
-    <script src="<?php //echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS)."biztech/productdesigner/easyResponsiveTabs.js"                                                                                        ?>"></script>-->
+    <script src="<?php //echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS)."biztech/productdesigner/select.js"                                                                                         ?>"></script>
+    <script src="<?php //echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS)."biztech/productdesigner/easyResponsiveTabs.js"                                                                                         ?>"></script>-->
 
     <?php
     if ($this->helper('Biztech\Productdesigner\Helper\Data')->isEnable()):
@@ -100,7 +100,7 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
         if ($product->getTypeId() == 'configurable') {
             $printingCollection = $objectManager->create('Biztech\Productdesigner\Model\Mysql4\Printingmethod\Collection')->addFieldToFilter('status', array('eq' => 1));
             //if (count($printingCollection) != 0) {
-             if($printingMethod != '') {
+            if ($printingMethod != '') {
                 $printing_method_avail = '1';
             } else {
                 $printing_method_avail = '0';
@@ -114,8 +114,8 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
             }
         } else {
             $simpleprintingCollection = $objectManager->create('Biztech\Productdesigner\Model\Mysql4\Simpleprintingmethod\Collection')->addFieldToFilter('status', array('eq' => 1));
-           // if (count($simpleprintingCollection) != 0) {
-             if($printingMethod != '') {
+            // if (count($simpleprintingCollection) != 0) {
+            if ($printingMethod != '') {
                 $printing_method_avail = '1';
             } else {
                 $printing_method_avail = '0';
@@ -195,7 +195,7 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
                                     </li>
                                 <?php endif; ?>
                                 <?php //if ($block->myDesign()):  ?>
-                                <li class="nav_tab" id="mydesigns_tab" <?php echo $band_enable ? 'style="display:none;"' : ''; ?>> 
+                                <li class="nav_tab" id="mydesigns_tab">
                                     <span class="sprite ico-designs"></span>
                                     <span class="label" id="add_mydesigns"><?php echo __('My Designs'); ?></span>
                                 </li>
@@ -612,12 +612,12 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
                                 <li id="obj_duplicate" class="disabled" title="<?php echo __('Duplicate'); ?>"><span class="sprite ico-copy"></span><span class="label">Copy</span></li>                        </ul>
                         </div>
 
-                      <?php /*  <div class="progress-bar-wrapper">
-                            <div class="bar-div">
-                                <span id="display2" class="display-count"></span>
-                                <span id="progress_message2" class="progress-message"></span>
-                            </div>
-                        </div>  */ ?>
+                        <?php /*  <div class="progress-bar-wrapper">
+                          <div class="bar-div">
+                          <span id="display2" class="display-count"></span>
+                          <span id="progress_message2" class="progress-message"></span>
+                          </div>
+                          </div> */ ?>
 
                     </div>        
                     <div class="pd-right-panel" <?php echo $band_enable ? 'style="display:none;"' : ''; ?>>
@@ -634,7 +634,7 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
                                     <textarea placeholder="Add your note here..." id="customer_comments"></textarea>
                                 </div>
                                 <?php //if($product->getTypeId() == 'configurable'):   ?>
-                                <!-- <button type="button" class="pd-button btn-cart" id="view-options" title="<?php echo __("View Options") ?>"><?php // echo $this->__("View Options")                                                                             ?><span class="sprite ico-small-arrow"></span></button> -->
+                                <!-- <button type="button" class="pd-button btn-cart" id="view-options" title="<?php echo __("View Options") ?>"><?php // echo $this->__("View Options")                                                                              ?><span class="sprite ico-small-arrow"></span></button> -->
                                 <?php //endif;  ?>
                             </div>
 
@@ -790,11 +790,11 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
             $designModel = $objectManager->create('Biztech\Productdesigner\Model\Mysql4\Designtemplates\Collection')->addFieldToFilter('designtemplates_id', $template_id)->getFirstItem();
             $images = str_replace("'", "\\'", $designModel->getLayerImages());
             ?>
-                            data.template_id = '<?php echo $template_id ?>';
-                            data.designs = '<?php echo $images ?>';
-                            data.selected_product_color = '<?php echo $designModel->getColorId() ?>';
+                                data.template_id = '<?php echo $template_id ?>';
+                                data.designs = '<?php echo $images ?>';
+                                data.selected_product_color = '<?php echo $designModel->getColorId() ?>';
 
-                            data.my_design_template_url = '<?php echo $this->getUrl("*/designtemplates/getMyDesigntemplate", array("_secure" => $this->getRequest()->isSecure())) ?>';
+                                data.my_design_template_url = '<?php echo $this->getUrl("*/designtemplates/getMyDesigntemplate", array("_secure" => $this->getRequest()->isSecure())) ?>';
         <?php }
         ?>
                         data.base_unit = "<?php echo $config->getValue('productdesigner/printingmethod/base_unit') ?>";
@@ -897,23 +897,23 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
 
         <?php if ($config->getValue('productdesigner/customimageuploadconfiguration/enableuploadcustomimage')): ?>
 
-                            var upload_limit_data = {};
-                            upload_limit_data.data = {
-                                "is_limit": '<?php echo $config->getValue('productdesigner/customimageuploadconfiguration/setcustomimageuploadlimit') ?>',
-                                "limit": '<?php echo $config->getValue('productdesigner/customimageuploadconfiguration/imagelimit') ?>',
-                                "limit_text": '<?php echo str_replace("\n", "", $config->getValue('productdesigner/customimageuploadconfiguration/errormessageimagelimit')) ?>',
-                            };
+                                var upload_limit_data = {};
+                                upload_limit_data.data = {
+                                    "is_limit": '<?php echo $config->getValue('productdesigner/customimageuploadconfiguration/setcustomimageuploadlimit') ?>',
+                                    "limit": '<?php echo $config->getValue('productdesigner/customimageuploadconfiguration/imagelimit') ?>',
+                                    "limit_text": '<?php echo str_replace("\n", "", $config->getValue('productdesigner/customimageuploadconfiguration/errormessageimagelimit')) ?>',
+                                };
 
-                            ImageUploader = new ImageUploader()
-                            ImageUploader.initialize(
-                                    '8388608',
-                                    '["image\/png","image\/jpg","image\/jpeg","image\/gif"]',
-                                    'png,jpg,jpeg,gif',
-                                    '<?php
+                                ImageUploader = new ImageUploader()
+                                ImageUploader.initialize(
+                                        '8388608',
+                                        '["image\/png","image\/jpg","image\/jpeg","image\/gif"]',
+                                        'png,jpg,jpeg,gif',
+                                        '<?php
             echo $this->getUrl('productdesigner/index/uploadImages', array('_secure' => $this->getRequest()->isSecure()))
             ?>',
-                                    upload_limit_data
-                                    );
+                                        upload_limit_data
+                                        );
         <?php endif; ?>
                     }
 
@@ -975,6 +975,28 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
                         Clipart.initialize(filter_url, clipart_limit_data);
                         Clipart.observeFields();
                     });
+
+                    <?php if ($block->myDesign()): ?>
+                    var my_design_url = '<?php
+            echo $this->getUrl("*/designtemplates/getMyDesign", array("_secure" => $this->getRequest()->isSecure()))
+            ?>';
+
+                    var delete_design_url = '<?php
+            echo $this->getUrl("*/designtemplates/delete", array("_secure" => $this->getRequest()->isSecure()))
+            ?>';
+
+                    var data = {};
+
+                    var product_data = '<?php echo $this->helper('Biztech\Productdesigner\Helper\Info')->getProductInfo($product_id); ?>';
+                    require(['jquery', 'jquery/ui'], function ($) {
+                        data.product = jQuery.parseJSON(product_data);
+                    });
+                    MyDesigns = new MyDesigns();
+                    require(['jquery', 'jquery/ui'], function ($) {
+                        MyDesigns.initialize(my_design_url, delete_design_url, data);
+                    });
+
+        <?php endif; ?>
 
 
                     setTimeout(function () {
@@ -1111,8 +1133,8 @@ $enable_color_picker = $config->getValue('productdesigner/colorpicker/colorpicke
                 </script>
             </div>
             <div class="right-form-addtocart">
-             <form name="customOptionFormProdSettings" id="customOptionFormProdSettings" data-mage-init='{"validation":{}}' onsubmit="return false" method="POST" >
-                <?php echo $this->getChildHtml("add_to_cart"); ?>
+                <form name="customOptionFormProdSettings" id="customOptionFormProdSettings" data-mage-init='{"validation":{}}' onsubmit="return false" method="POST" >
+                    <?php echo $this->getChildHtml("add_to_cart"); ?>
                 </form>
             </div>
         <?php endif; ?>

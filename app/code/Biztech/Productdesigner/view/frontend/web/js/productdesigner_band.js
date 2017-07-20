@@ -667,7 +667,7 @@ ProductDesigner.prototype = {
         }
         /*if (ProductDesigner.prototype.data.productType == 'simple') {
          this.observeGroupToolTipSimple();
-         }*/
+     }*/
         this.reloadPrice();
         this.reloadPrintingPrice();
         jQuery('#choose_masking').click();
@@ -858,7 +858,7 @@ ProductDesigner.prototype = {
          
          
          
-         }.bind(this));*/
+     }.bind(this));*/
     },
     observeObjectModified: function() {
         if ((this.canvas == null) || this.canvas == 'undefined') {
@@ -1300,7 +1300,7 @@ ProductDesigner.prototype = {
             /*$$('.clipart-color-img').each(function (index, val) {
              index.up().removeClassName('selected');
              });
-             ele.up().addClassName('selected');*/
+ele.up().addClassName('selected');*/
         });
     },
     getClipartColorBrushContent: function() {
@@ -3634,12 +3634,12 @@ ProductDesigner.prototype = {
                              if(fill_color_hex.toHex() != obj_used_colors[j]){
                              obj_used_colors.push(fill_color_hex.toHex());
                              }
-                             }*/
+                         }*/
                             obj_used_colors.push(fill_color_hex.toHex());
                         }
                         /*if((stroke_color != '') && (stroke_color != null) && (stroke_color instanceof Object == false)){
                          var stroke_color_hex = new RGBColor(stroke_color);                  obj_used_colors.push(stroke_color_hex.toHex());
-                         }*/
+                     }*/
                         var object = obj;
                     }
                     var obj_used_colors_obj = distinctVal(obj_used_colors);
@@ -3669,7 +3669,7 @@ ProductDesigner.prototype = {
                     /*if((stroke_color != '') && (stroke_color != null) && (stroke_color instanceof Object == false)){
                      var stroke_color_hex = new RGBColor(stroke_color);
                      obj_used_colors.push(stroke_color_hex.toHex());
-                     }*/
+                 }*/
                     var object = obj;
                     obj_used_colors_obj = jQuery.unique(obj_used_colors);
                     if (object && object != null) {
@@ -3763,7 +3763,7 @@ ProductDesigner.prototype = {
                          $('used_color_container').appendChild(spanEle);
                          
                          }
-                         }*/
+                     }*/
                     } else if (obj.type == 'path-group') {
                         for (var i = 0; i < obj.paths.length; i++) {
                             var fill_color = obj.paths[i].fill;
@@ -3794,7 +3794,7 @@ ProductDesigner.prototype = {
                              $('used_color_container').appendChild(spanEle);
                              
                              }
-                             }*/
+                         }*/
                         }
                     } else if (obj.type == 'path') {
                         var fill_color = obj.fill;
@@ -3826,7 +3826,7 @@ ProductDesigner.prototype = {
                          
                          }
                          
-                         }*/
+                     }*/
                     } else {}
                     ProductDesigner.prototype.reloadPrice();
                     ProductDesigner.prototype.reloadPrintingPrice();
@@ -3889,7 +3889,7 @@ ProductDesigner.prototype = {
                              $('used_color_container').appendChild(spanEle);
                              
                              }
-                             }*/
+                         }*/
                         }
                     } else if (obj.type == 'path') {
                         var fill_color = obj.fill;
@@ -3920,7 +3920,7 @@ ProductDesigner.prototype = {
                          $('used_color_container').appendChild(spanEle);
                          
                          }
-                         }*/
+                     }*/
                     } else if (obj.used_colors != undefined) {
                         for (var j = 0; j < obj.used_colors.length; j++) {
                             ProductDesigner.prototype.used_colors.push(obj.used_colors[j]);
@@ -3941,7 +3941,7 @@ ProductDesigner.prototype = {
                          $('used_color_container').appendChild(spanEle);
                          
                          }
-                         }*/
+                     }*/
                     }
                     ProductDesigner.prototype.reloadPrice();
                     ProductDesigner.prototype.reloadPrintingPrice();
@@ -3964,7 +3964,7 @@ ProductDesigner.prototype = {
          $('used_color_container').appendChild(spanEle);
          
          }
-         }*/
+     }*/
     },
     observeControls: function() {
         this.productDesigner = ProductDesigner.prototype;
@@ -5654,12 +5654,14 @@ ProductDesigner.prototype = {
                             tierpriceInclTax = OptionsPrice.priceInclTax;
                         }
                         var newdesignerprice = tierpriceInclTax + OptionsPrice.customPrices.fixed_price.price + OptionsPrice.customPrices.design_image_price.price + OptionsPrice.customPrices.design_text_price.price + OptionsPrice.customPrices.design_custom_image_price.price;
-                        jQuery('#total_cost').html(OptionsPrice.formatPrice(added_products_price * qty + newdesignerprice * qty + customtotalprice * qty));
+                        jQuery("#excl-tax-price").html(OptionsPrice.formatPrice(tierpriceInclTax * qty));
+                        jQuery("#incl-tax-price").html(OptionsPrice.formatPrice(OptionsPrice.priceExclTax * qty));
+                        // jQuery('#total_cost').html(OptionsPrice.formatPrice(added_products_price * qty + newdesignerprice * qty + customtotalprice * qty));
                     } else {
                         added_products_price = 0
                         jQuery('#item_count_value').innerHTML = qty;
                         jQuery('#item_cost_value').innerHTML = OptionsPrice.formatPrice(added_products_price);
-                        jQuery('#total_cost').innerHTML = OptionsPrice.formatPrice(0);
+                        // jQuery('#total_cost').innerHTML = OptionsPrice.formatPrice(0);
                     }
                 } else {
                     // By Color Quantity Range  calculation 
@@ -5696,12 +5698,12 @@ ProductDesigner.prototype = {
                                 tierpriceInclTax = OptionsPrice.priceInclTax;
                             }
                             var newdesignerprice = tierpriceInclTax + OptionsPrice.customPrices.fixed_price.price + OptionsPrice.customPrices.design_image_price.price + OptionsPrice.customPrices.design_text_price.price + OptionsPrice.customPrices.design_custom_image_price.price;
-                            jQuery('#total_cost').html(OptionsPrice.formatPrice(newdesignerprice * qty + customtotalprice * qty));
+                            //jQuery('#total_cost').html(OptionsPrice.formatPrice(newdesignerprice * qty + customtotalprice * qty));
                         } else {
                             added_products_price = 0
                             jQuery('#item_count_value').html(qty);
                             jQuery('#item_cost_value').html(OptionsPrice.formatPrice(added_products_price));
-                            jQuery('#total_cost').html(OptionsPrice.formatPrice(0));
+                            //jQuery('#total_cost').html(OptionsPrice.formatPrice(0));
                         }
                     } else { //By Color Quantity Range
                         this.emb_alert = 0;
@@ -5722,7 +5724,7 @@ ProductDesigner.prototype = {
                             var str = area_size[k].split("_");
                             var added_color_type_products_name = Array();
                             /*if (!ProductDesigner.isNameNumberOnly[str[0]])
-                             {*/
+                            {*/
                             if (str[1] == 'small') {
                                 for (var j = 0; j < side_count.length; j++) {
                                     if (area_by_side[str[1]] == side_count[j]) {
@@ -5829,11 +5831,11 @@ ProductDesigner.prototype = {
                             }
                             jQuery('#item_count_value').html(qty);
                             jQuery('#item_cost_value').html(OptionsPrice.formatPrice(sum1));
-                            jQuery('#total_cost').html(OptionsPrice.formatPrice(sum1 * qty + newdesignerprice * qty + customtotalprice * qty));
+                            //  jQuery('#total_cost').html(OptionsPrice.formatPrice(sum1 * qty + newdesignerprice * qty + customtotalprice * qty));
                         } else {
                             jQuery('#item_count_value').html(qty);
                             jQuery('#item_cost_value').html(OptionsPrice.formatPrice(added_products_price));
-                            jQuery('#total_cost').html(OptionsPrice.formatPrice(added_products_price * qty + newdesignerprice * qty + customtotalprice * qty));
+                            //  jQuery('#total_cost').html(OptionsPrice.formatPrice(added_products_price * qty + newdesignerprice * qty + customtotalprice * qty));
                         }
                         //Check if array length is more that 1 than addition of sum end
                         jQuery('#added_products').val(added_products.join());
@@ -5884,7 +5886,7 @@ ProductDesigner.prototype = {
                 added_products_price = parseFloat(printing_front_surcharge);
                 jQuery('#item_count_value').innerHTML = qty;
                 jQuery('#item_cost_value').innerHTML = OptionsPrice.formatPrice(added_products_price);
-                jQuery('#total_cost').html(OptionsPrice.formatPrice(added_products_price * qty + newdesignerprice * qty + customtotalprice * qty));
+                // jQuery('#total_cost').html(OptionsPrice.formatPrice(added_products_price * qty + newdesignerprice * qty + customtotalprice * qty));
             }
         } else {
             var price = 0;
@@ -5985,7 +5987,7 @@ ProductDesigner.prototype = {
                  if (tier_price_details[tierprice]['color_counter'] == used_colors_count) {
                  jQuery('#added_products_price').val(tier_price_details[tierprice]['fixed_product_price']);
                  }
-                 }*/
+             }*/
                 if (qty != 0) {
                     var added_products_price = 0
                     if (OptionsPrice != undefined) {
@@ -6011,7 +6013,7 @@ ProductDesigner.prototype = {
                     added_products_price = jQuery('#added_products_price').val();
                     jQuery('#item_count_value').html(qty);
                     jQuery('#item_cost_value').html(OptionsPrice.formatPrice(added_products_price));
-                    jQuery('#total_cost').html(OptionsPrice.formatPrice(added_products_price * qty + newdesignerprice * qty + customtotalprice * qty));
+                    // jQuery('#total_cost').html(OptionsPrice.formatPrice(added_products_price * qty + newdesignerprice * qty + customtotalprice * qty));
                     var tierflag = 0;
                     var tierqty = 1;
                     for (var key in ProductDesigner.prototype.tier) {
@@ -6025,13 +6027,15 @@ ProductDesigner.prototype = {
                         tierpriceInclTax = OptionsPrice.priceInclTax;
                     }
                     var newdesignerprice = tierpriceInclTax + OptionsPrice.customPrices.fixed_price.price + OptionsPrice.customPrices.design_image_price.price + OptionsPrice.customPrices.design_text_price.price + OptionsPrice.customPrices.design_custom_image_price.price;
-                    jQuery('#total_cost').html(OptionsPrice.formatPrice(added_products_price * qty + newdesignerprice * qty + customtotalprice * qty));
+                    jQuery("#excl-tax-price").html(OptionsPrice.formatPrice(tierpriceInclTax * qty));
+                    jQuery("#incl-tax-price").html(OptionsPrice.formatPrice(OptionsPrice.priceExclTax * qty));
+                    //jQuery('#total_cost').html(OptionsPrice.formatPrice(added_products_price * qty + newdesignerprice * qty + customtotalprice * qty));
                     jQuery('#item_count_value').innerHTML = qty;
                 } else {
                     added_products_price = 0
                     jQuery('#item_count_value').innerHTML = qty;
                     jQuery('#item_cost_value').innerHTML = OptionsPrice.formatPrice(added_products_price);
-                    jQuery('#total_cost').innerHTML = OptionsPrice.formatPrice(0);
+                    // jQuery('#total_cost').innerHTML = OptionsPrice.formatPrice(0);
                 }
             } else {
                 var added_products_price = 0
@@ -6071,7 +6075,7 @@ ProductDesigner.prototype = {
                 // added_products_price = parseFloat(printing_front_surcharge);
                 jQuery('#item_count_value').innerHTML = qty;
                 // jQuery('#item_cost_value').innerHTML = OptionsPrice.formatPrice(added_products_price);
-                jQuery('#total_cost').html(OptionsPrice.formatPrice(newdesignerprice * qty + customtotalprice * qty));
+                //jQuery('#total_cost').html(OptionsPrice.formatPrice(newdesignerprice * qty + customtotalprice * qty));
             }
         }
         if (final_qty != qty) {
@@ -6874,13 +6878,13 @@ ProductDesigner.prototype = {
          this.setDesignArea(img);
          this._cloneCanvas(old_canvas);
          this._observeControlButtons();
-         }*/
+     }*/
         if (img && this.currentProduct != img.image_id) {
             ProductDesigner.prototype.containerCanvases[ProductDesigner.prototype.currentDesignArea] = ProductDesigner.prototype.canvas;
             var lenght1 = parseInt(ProductDesigner.prototype.product_container.childNodes.length);
             for (var i = 0; i < lenght1; i++) {
                 /*ProductDesigner.prototype.product_container_layers[ProductDesigner.prototype.product_container.children[0].getAttribute('selection_area')] = ProductDesigner.prototype.product_container.children[0];
-                 ProductDesigner.prototype.product_container.children[0].remove();*/
+                ProductDesigner.prototype.product_container.children[0].remove();*/
                 /*ProductDesigner.prototype.product_container_layers[ProductDesigner.prototype.currentDesignArea] = jQuery(jQuery(ProductDesigner.prototype.product_container.firstElementChild)[0].remove())[0];*/
                 var newSide = ProductDesigner.prototype.product_container.firstElementChild;
                 ProductDesigner.prototype.product_container_layers[ProductDesigner.prototype.product_container.children[0].getAttribute('selection_area')] = newSide;
@@ -7111,7 +7115,7 @@ var RemoveCanvasObjectClone = function(designerWindow, obj, design_area_id) {
              {
              designerWindow.layersManager.removeOutsideMark(obj.get('obj_id'));
              designerWindow.layersManager.removeOnlyLayer(obj);
-             }*/
+         }*/
             for (var index in ProductDesigner.prototype.containerCanvases) {
                 var canvas = ProductDesigner.prototype.containerCanvases[index];
                 canvas.remove(obj);
@@ -7348,7 +7352,7 @@ var InsertCanvasObject = function(designerWindow, obj, alignByCenter, name, new2
                              index.up().addClassName('selected');
                              
                              }
-                             });*/
+                         });*/
                         } else {
                             // canvas.setActiveObject(obj);
                             //$(filterss[i].type).click();
@@ -7633,7 +7637,7 @@ TextDesigner.prototype = {
             /*$$('.grouptext-color-img').each(function (index, val) {
              index.up().removeClassName('selected');
              });
-             ele.up().addClassName('selected');*/
+        ele.up().addClassName('selected');*/
             jQuery('grouptext-color-container').hide();
             this.productDesigner = ProductDesigner.prototype;
             var canvas = ProductDesigner.prototype.canvas;
@@ -7666,7 +7670,7 @@ TextDesigner.prototype = {
             /*$$('.text-strokecolor-img').each(function (index, val) {
              index.up().removeClassName('selected');
              });
-             ele.up().addClassName('selected');*/
+    ele.up().addClassName('selected');*/
             jQuery('#text-strokecolor-container').hide();
         });
     },
@@ -7691,7 +7695,7 @@ TextDesigner.prototype = {
             /*jQuery('.text-color-img').each(function (val, index) {
              index.parent().removeClassName('selected'); 
              });
-             ele.parent().addClassName('selected');*/
+    ele.parent().addClassName('selected');*/
             jQuery('#text-color-container').hide();
         });
     },
@@ -7716,7 +7720,7 @@ TextDesigner.prototype = {
             /*$$('.text-bgcolor-img').each(function (index, val) {
              index.up().removeClassName('selected');
              });
-             ele.up().addClassName('selected');*/
+    ele.up().addClassName('selected');*/
             jQuery('#text-bgcolor-container').hide();
         });
     },
@@ -7745,7 +7749,7 @@ TextDesigner.prototype = {
             /*$$('.text-shadowcolor-img').each(function (index, val) {
              index.up().removeClassName('selected');
              });
-             ele.up().addClassName('selected');*/
+    ele.up().addClassName('selected');*/
             jQuery('#text-shadowcolor-container').hide();
         });
     },
@@ -8043,11 +8047,11 @@ TextDesigner.prototype = {
                                 if (allObj[i].textarea == 'two') {
                                     if (isMobile.any()) {
                                         var cmd = new UpdateCommand(canvas, allObj[i], {
-                                            top: 5
+                                            top: 4
                                         });
                                     } else {
                                         var cmd = new UpdateCommand(canvas, allObj[i], {
-                                            top: 18
+                                            top: 16
                                         });
                                     }
                                     cmd.exec();
@@ -8056,9 +8060,9 @@ TextDesigner.prototype = {
                             }
                         }
                         if (isMobile.any()) {
-                            var topPosition = 2;
+                            var topPosition = 1;
                         } else {
-                            var topPosition = 10;
+                            var topPosition = 8;
                         }
                     } else {
                         var topPosition = canvas.height / 2;
@@ -8073,7 +8077,8 @@ TextDesigner.prototype = {
                     textObject.set({
                         textarea: 'one',
                         left: leftPosition,
-                        top: topPosition
+                        top: topPosition,
+                        scaleY:0.4
                     });
                     var cmd = new InsertCanvasObject(this.productDesigner, textObject, true);
                     cmd.exec();
@@ -8226,11 +8231,11 @@ TextDesigner.prototype = {
                                 if (allObj[i].textarea == 'one') {
                                     if (isMobile.any()) {
                                         var cmd = new UpdateCommand(canvas, allObj[i], {
-                                            top: 0
+                                            top: -1
                                         });
                                     } else {
                                         var cmd = new UpdateCommand(canvas, allObj[i], {
-                                            top: 10
+                                            top: 8
                                         });
                                     }
                                     cmd.exec();
@@ -8254,7 +8259,8 @@ TextDesigner.prototype = {
                     textObject.set({
                         textarea: 'two',
                         left: leftPosition,
-                        top: topPosition
+                        top: topPosition,
+                        scaleY:0.4
                     });
                     var cmd = new InsertCanvasObject(this.productDesigner, textObject, true);
                     cmd.exec();
@@ -8277,7 +8283,8 @@ TextDesigner.prototype = {
             var obj = canvas.getActiveObject();
             if (obj && (obj.type == 'text' || obj.type == 'group')) {
                 var cmd = new UpdateCommand(canvas, obj, {
-                    fontSize: jQuery('#font_size_selection').val()
+                    fontSize: jQuery('#font_size_selection').val(),
+                    scaleY:0.4
                 });
                 cmd.exec();
                 History.prototype.push(cmd);
@@ -8563,7 +8570,7 @@ TextDesigner.prototype = {
                  {arc : currentArc});
                  cmd.exec();
                  this.productDesigner.history.push(cmd);
-                 }*/
+             }*/
             }
         }.bind(this));
         jQuery('#text_bg_null').on('click', function(e) {
@@ -8581,7 +8588,7 @@ TextDesigner.prototype = {
                 //new added
                 /*jQuery('.text-bgcolor-img').each(function (val, index) {
                  index.parent().removeClassName('selected');
-                 });*/
+             });*/
             }
         }.bind(this));
     },
@@ -9579,5 +9586,1070 @@ var isMobile = {
     },
     any: function() {
         return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+    }
+};
+var MyDesigns = function() {};
+MyDesigns.prototype = {
+    filter_design_url: null,
+    delete_design_url: null,
+    ImageSideObject: {},
+    initialize: function(filter_design_url, delete_design_url, filter_index_design_url, data1) {
+        this.filter_design_url = filter_design_url;
+        this.filter_index_design_url = filter_index_design_url;
+        this.delete_design_url = delete_design_url;
+        this.observeDesignSelect(data1);
+        this.observeDesignSelectScroll();
+        // var event = document.createEvent('Event');
+        //$$('.designer-panel')[0].style.display ='block';
+    },
+    observeDesignSelectScroll: function() {
+        var offset = 0;
+        var devicecheck = 0;
+        jQuery('#more_mydesigns').on('click', function() {
+            if (screen.width <= 699) {
+                devicecheck = 'mobile';
+            } else {
+                devicecheck = 'desktop';
+            }
+            if (ProductDesigner.prototype.designslimit <= ProductDesigner.prototype.designscount) {
+                //jQuery('#more_mydesigns').attr("disabled", "disabled");
+                jQuery('#more_mydesigns').attr("style", "display:none");
+                jQuery('#mydesigns_list_loader').attr("style", "display:block");
+                if (devicecheck == 'desktop') {
+                    ProductDesigner.prototype.designslimit = ProductDesigner.prototype.designslimit + 9;
+                } else {
+                    ProductDesigner.prototype.designslimit = ProductDesigner.prototype.designslimit + 6;
+                }
+                var limit = ProductDesigner.prototype.designslimit;
+                offset = limit + offset;
+                displayRecordsDesigns(limit, offset);
+            } else {
+                jQuery('#more_mydesigns').attr("style", "display:none");
+                jQuery('.no_more_designs').show();
+            }
+        });
+    },
+    observeDesignSelect: function(data1) {
+        jQuery("#mydesign_list .design").live("click", function(e) {
+            jQuery('#pd_loading_img').show();
+            //jQuery('#pd_loading_img').show();
+            // close brush control
+            this.productDesigner = ProductDesigner.prototype;
+            var canvas = this.productDesigner.canvas;
+            canvas.isDrawingMode = false;
+            // close brush control
+            var a = e.target || e.srcElement;
+            var data = {};
+            data["shapes_category_id"] = decodeURIComponent(a.getAttribute('design-id'));
+            jQuery.ajax({
+                url: this.filter_design_url,
+                method: 'post',
+                data: {
+                    data: data
+                },
+                success: function(data, textStatus, jqXHR) {
+                    var response = JSON.parse(data);
+                    ProductDesigner.prototype.zIndexes = {};
+                    if (response.design_id != null && response.design_id != '') {
+                        var p_color = response.selected_product_color;
+                        jQuery('.product-colors .color-img').each(function(index, val) {
+                            if (val.getAttribute('data-color_id') == p_color) {
+                                var color = val.getAttribute('data-color_id');
+                                if (ProductDesigner.prototype.currentProductColor != color) {
+                                    jQuery(val).addClass('selected');
+                                    //index.up().addClassName('selected');
+                                    ProductDesigner.product_default_color_id = val.getAttribute('data-color_id');
+                                    ProductDesigner.prototype.changeProductColor(color, canvas);
+                                    ProductDesigner.prototype._observeNavButtons('disabled');
+                                }
+                            }
+                        });
+                        jQuery('.product-side-img').each(function(index, val) {
+                            if (index != 0) jQuery('.product-side-img')[index].click();
+                            jQuery('#pd_loading_img').show();
+                        }.bind(this));
+                        jQuery('#product-sides')[0].children[1].children[0].children[0].click();
+                        jQuery('#pd_loading_img').show();
+                        var designs = JSON.parse(response.designs);
+                        var flag = 0;
+                        var total_objects = Object.keys(designs).length;
+                        var masking = JSON.parse(response.masking);
+                        if (response.product_id == ProductDesigner.prototype.data.productId) {
+                            var arcObjects = {};
+                            for (var i in designs) {
+                                var design_obj = designs[i];
+                                var img_url = design_obj.url;
+                                var tab = design_obj.tab;
+                                var product_id = design_obj.product_id;
+                                if (design_obj.wInnerWidth < 640 && design_obj.wInnerWidth != window.innerWidth) {
+                                    if (design_obj.wInnerWidth < 640 && design_obj.wInnerWidth >= 480) {
+                                        if (window.innerWidth >= 480) {
+                                            scaleFactor = 1.4;
+                                            var top = design_obj.top * scaleFactor;
+                                            var left = design_obj.left * scaleFactor;
+                                            var width = design_obj.width * scaleFactor;
+                                            var height = design_obj.height * scaleFactor;
+                                            design_obj.top = design_obj.top * scaleFactor;
+                                            design_obj.left = design_obj.left * scaleFactor;
+                                            design_obj.width = design_obj.width * scaleFactor;
+                                            design_obj.height = design_obj.height * scaleFactor;
+                                        } else {
+                                            if (window.innerWidth > 360) {
+                                                scaleFactor = 1.4;
+                                            } else if (window.innerWidth >= 320) {
+                                                scaleFactor = 1.8;
+                                            } else {
+                                                scaleFactor = 2.3;
+                                            }
+                                            var top = design_obj.top / scaleFactor;
+                                            var left = design_obj.left / scaleFactor;
+                                            var width = design_obj.width / scaleFactor;
+                                            var height = design_obj.height / scaleFactor;
+                                            design_obj.top = design_obj.top / scaleFactor;
+                                            design_obj.left = design_obj.left / scaleFactor;
+                                            design_obj.width = design_obj.width / scaleFactor;
+                                            design_obj.height = design_obj.height / scaleFactor;
+                                        }
+                                    }
+                                    if (design_obj.wInnerWidth < 480 && design_obj.wInnerWidth >= 360) {
+                                        if (window.innerWidth >= 360) {
+                                            scaleFactor = 1.8;
+                                            var top = design_obj.top * scaleFactor;
+                                            var left = design_obj.left * scaleFactor;
+                                            var width = design_obj.width * scaleFactor;
+                                            var height = design_obj.height * scaleFactor;
+                                            design_obj.top = design_obj.top * scaleFactor;
+                                            design_obj.left = design_obj.left * scaleFactor;
+                                            design_obj.width = design_obj.width * scaleFactor;
+                                            design_obj.height = design_obj.height * scaleFactor;
+                                        } else {
+                                            if (window.innerWidth >= 320) {
+                                                scaleFactor = 1.8;
+                                            } else {
+                                                scaleFactor = 2.3;
+                                            }
+                                            var top = design_obj.top / scaleFactor;
+                                            var left = design_obj.left / scaleFactor;
+                                            var width = design_obj.width / scaleFactor;
+                                            var height = design_obj.height / scaleFactor;
+                                            design_obj.top = design_obj.top / scaleFactor;
+                                            design_obj.left = design_obj.left / scaleFactor;
+                                            design_obj.width = design_obj.width / scaleFactor;
+                                            design_obj.height = design_obj.height / scaleFactor;
+                                        }
+                                    }
+                                    if (design_obj.wInnerWidth < 360 && design_obj.wInnerWidth >= 320) {
+                                        if (window.innerWidth >= 320) {
+                                            scaleFactor = 2.3;
+                                            var top = design_obj.top * scaleFactor;
+                                            var left = design_obj.left * scaleFactor;
+                                            var width = design_obj.width * scaleFactor;
+                                            var height = design_obj.height * scaleFactor;
+                                            design_obj.top = design_obj.top * scaleFactor;
+                                            design_obj.left = design_obj.left * scaleFactor;
+                                            design_obj.width = design_obj.width * scaleFactor;
+                                            design_obj.height = design_obj.height * scaleFactor;
+                                        } else {
+                                            scaleFactor = 2.3;
+                                            var top = design_obj.top / scaleFactor;
+                                            var left = design_obj.left / scaleFactor;
+                                            var width = design_obj.width / scaleFactor;
+                                            var height = design_obj.height / scaleFactor;
+                                            design_obj.top = design_obj.top / scaleFactor;
+                                            design_obj.left = design_obj.left / scaleFactor;
+                                            design_obj.width = design_obj.width / scaleFactor;
+                                            design_obj.height = design_obj.height / scaleFactor;
+                                        }
+                                    }
+                                    if (design_obj.wInnerWidth < 320) {
+                                        scaleFactor = 3.4;
+                                        var top = design_obj.top * scaleFactor;
+                                        var left = design_obj.left * scaleFactor;
+                                        var width = design_obj.width * scaleFactor;
+                                        var height = design_obj.height * scaleFactor;
+                                        design_obj.top = design_obj.top * scaleFactor;
+                                        design_obj.left = design_obj.left * scaleFactor;
+                                        design_obj.width = design_obj.width * scaleFactor;
+                                        design_obj.height = design_obj.height * scaleFactor;
+                                    }
+                                } else {
+                                    if (design_obj.wInnerWidth != window.innerWidth) {
+                                        if (window.innerWidth < 640 && window.innerWidth >= 480) {
+                                            scaleFactor = 1.4;
+                                            var top = design_obj.top / scaleFactor;
+                                            var left = design_obj.left / scaleFactor;
+                                            var width = design_obj.width / scaleFactor;
+                                            var height = design_obj.height / scaleFactor;
+                                            design_obj.top = design_obj.top / scaleFactor;
+                                            design_obj.left = design_obj.left / scaleFactor;
+                                            design_obj.width = design_obj.width / scaleFactor;
+                                            design_obj.height = design_obj.height / scaleFactor;
+                                        }
+                                        if (window.innerWidth < 480 && window.innerWidth >= 360) {
+                                            scaleFactor = 1.8;
+                                            var top = design_obj.top / scaleFactor;
+                                            var left = design_obj.left / scaleFactor;
+                                            var width = design_obj.width / scaleFactor;
+                                            var height = design_obj.height / scaleFactor;
+                                            design_obj.top = design_obj.top / scaleFactor;
+                                            design_obj.left = design_obj.left / scaleFactor;
+                                            design_obj.width = design_obj.width / scaleFactor;
+                                            design_obj.height = design_obj.height / scaleFactor;
+                                        }
+                                        if (window.innerWidth < 360 && window.innerWidth >= 320) {
+                                            scaleFactor = 2.3;
+                                            var top = design_obj.top / scaleFactor;
+                                            var left = design_obj.left / scaleFactor;
+                                            var width = design_obj.width / scaleFactor;
+                                            var height = design_obj.height / scaleFactor;
+                                            design_obj.top = design_obj.top / scaleFactor;
+                                            design_obj.left = design_obj.left / scaleFactor;
+                                            design_obj.width = design_obj.width / scaleFactor;
+                                            design_obj.height = design_obj.height / scaleFactor;
+                                        }
+                                        if (window.innerWidth < 320) {
+                                            scaleFactor = 3.4;
+                                            var top = design_obj.top / scaleFactor;
+                                            var left = design_obj.left / scaleFactor;
+                                            var width = design_obj.width / scaleFactor;
+                                            var height = design_obj.height / scaleFactor;
+                                            design_obj.top = design_obj.top / scaleFactor;
+                                            design_obj.left = design_obj.left / scaleFactor;
+                                            design_obj.width = design_obj.width / scaleFactor;
+                                            design_obj.height = design_obj.height / scaleFactor;
+                                        }
+                                    }
+                                }
+                                var top = design_obj.top;
+                                var left = design_obj.left;
+                                var type = design_obj.type;
+                                var price = design_obj.price;
+                                var image_id = design_obj.image_id;
+                                var image_id1 = '@' + design_obj.image_id;
+                                var object_id = i;
+                                var objFilters = design_obj.objFilters;
+                                var used_colors_old = design_obj.used_colors_old;
+                                var brush_path = design_obj.brush_path;
+                                var name = design_obj.name;
+                                var scalex = design_obj.scalex;
+                                var scaley = design_obj.scaley;
+                                var objWidth = design_obj.width;
+                                var objHeight = design_obj.height;
+                                var group_type = design_obj.group_type;
+                                var last_row_size = design_obj.last_row_size;
+                                if (type == 'text' || type == 'group') {
+                                    if (type == 'group') {
+                                        var arcText = '';
+                                        var arcObject = {};
+                                        arcObject.textObj = design_obj.textObj;
+                                        for (var i = 0; i < design_obj.textObj.objects.length; i++) {
+                                            var newObj = design_obj.textObj.objects[i];
+                                            if (newObj.type == 'text') {
+                                                arcText = arcText + design_obj.textObj.objects[i].text;
+                                                arcObject.textObj.fontFamily = design_obj.textObj.objects[0].fontFamily;
+                                                arcObject.textObj.fontWeight = design_obj.textObj.objects[0].fontWeight;
+                                                arcObject.textObj.fontStyle = design_obj.textObj.objects[0].fontStyle;
+                                                arcObject.textObj.textDecoration = design_obj.textObj.objects[0].textDecoration;
+                                                arcObject.textObj.fill = design_obj.textObj.objects[0].fill;
+                                                arcObject.textObj.textBackgroundColor = design_obj.textObj.objects[0].textBackgroundColor;
+                                                arcObject.textObj.textAlign = design_obj.textObj.objects[0].textAlign;
+                                                arcObject.textObj.stroke = design_obj.textObj.objects[0].stroke;
+                                                arcObject.textObj.strokeWidth = design_obj.textObj.objects[0].strokeWidth;
+                                                arcObject.textObj.shadow = design_obj.textObj.objects[0].shadow;
+                                                arcObject.textObj.shadow = design_obj.textObj.objects[0].shadow;
+                                            }
+                                        }
+                                        arcObject.textObj.type = 'text';
+                                        arcObject.textObj.tab = design_obj.tab ? design_obj.tab : "text";
+                                        arcObject.textObj.name = design_obj.name ? design_obj.name : '';
+                                        arcObject.textObj.designarea_id = design_obj.designarea_id;
+                                        arcObject.textObj.mydesign = true;
+                                        arcObject.textObj.image_side = design_obj.image_side;
+                                        arcObject.textObj.image_id = '@' + design_obj.image_id;
+                                        arcObject.textObj.arc = design_obj.arc;
+                                        arcObject.textObj.arcObjText = arcText;
+                                        arcObjects[i] = arcObject;
+                                    } else {
+                                        var text = design_obj.text;
+                                        design_obj.textObj.tab = design_obj.tab ? design_obj.tab : "text";
+                                        design_obj.textObj.name = design_obj.name ? design_obj.name : '';
+                                        design_obj.textObj.designarea_id = design_obj.designarea_id;
+                                        design_obj.textObj.mydesign = true;
+                                        design_obj.textObj.image_side = design_obj.image_side;
+                                        design_obj.textObj.image_id = '@' + design_obj.image_id;
+                                        var textObject = new fabric.Text(text, design_obj.textObj);
+                                        textObject.set({
+                                            group_type: group_type,
+                                            last_row_size: last_row_size,
+                                            textarea: design_obj.textarea
+                                        })
+                                        var cmd = new InsertCanvasObject(ProductDesigner.prototype, textObject);
+                                        ProductDesigner.prototype.zIndexes[textObject.obj_id] = design_obj.zIndex;
+                                        cmd.exec();
+                                        History.prototype.push(cmd);
+                                        jQuery('#pd_loading_img').show();
+                                        flag++;
+                                        if (total_objects == flag) {
+                                            jQuery('#pd_loading_img').show();
+                                            ProductDesigner.prototype.setzIndexes();
+                                            jQuery('#pd_loading_img').show();
+                                            setTimeout(function() {
+                                                jQuery('#pd_loading_img').show();
+                                                jQuery('.product-side-img').each(function(index, val) {
+                                                    if (index != 0) jQuery('.product-side-img')[index].click();
+                                                }.bind(this));
+                                                jQuery('#pd_loading_img').show();
+                                                if (jQuery('#product-sides')[0].children[1].children[1] != undefined) {
+                                                    jQuery('#product-sides')[0].children[1].children[0].children[0].click();
+                                                }
+                                                jQuery('#pd_loading_img').hide();
+                                                for (var key in LayersManager.prototype.layers) {
+                                                    var obj = LayersManager.prototype.layers[key];
+                                                    if (obj || obj != null) {
+                                                        if (obj.type == 'text') {
+                                                            ProductDesigner.prototype.canvas.setActiveObject(obj);
+                                                            jQuery('#btn_left_align').click();
+                                                            jQuery('#pd_loading_img').hide();
+                                                        }
+                                                    }
+                                                }
+                                            }, 4000);
+                                        }
+                                    }
+                                } else {
+                                    if (((design_obj.type == 'path-group') || (design_obj.type == 'path')) && (design_obj.name != 'brush')) {
+                                        var url = ProductDesigner.prototype.mediaUrl + design_obj.url;
+                                        var objData = design_obj;
+                                        var scalex = design_obj.scalex;
+                                        var scaley = design_obj.scaley;
+                                        var objTop = design_obj.top;
+                                        var objLeft = design_obj.left;
+                                        var objWidth = design_obj.width;
+                                        var objHeight = design_obj.height;
+                                        var angle = design_obj.angle;
+                                        var obj_id = design_obj.obj_id;
+                                        var image_id = design_obj.image_id;
+                                        var obj_side = design_obj.obj_side;
+                                        var used_colors = design_obj.used_colors;
+                                        var used_colors_old = design_obj.used_colors_old;
+                                        var textObject = designs[i];
+                                        fabric.loadSVGFromURL(url, (function(objData) {
+                                            return function(objects, options) {
+                                                var obj = fabric.util.groupSVGElements(objects, options);
+                                                obj.set({
+                                                    top: objData.top,
+                                                    left: objData.left,
+                                                    width: objData.width,
+                                                    height: objData.height,
+                                                    scaleX: objData.scaleX,
+                                                    scaleY: objData.scaleY,
+                                                    angle: objData.angle,
+                                                    tab: objData.tab,
+                                                    image_id: objData.image_id,
+                                                    obj_side: objData.obj_side,
+                                                    obj_id: 'id_' + Date.now(),
+                                                    image_side: objData.image_side,
+                                                    image_id1: objData.image_id1,
+                                                    resized_url: objData.url,
+                                                    designarea_id: objData.designarea_id,
+                                                    tab: objData.tab,
+                                                    mydesign: true,
+                                                    src: objData.src,
+                                                    isScaleObj: true,
+                                                    used_colors_old: objData.used_colors_old,
+                                                });
+                                                var cmd = new InsertCanvasObject(ProductDesigner.prototype, obj);
+                                                ProductDesigner.prototype.zIndexes[obj.obj_id] = objData.zIndex;
+                                                cmd.exec();
+                                                History.prototype.push(cmd);
+                                                jQuery('#pd_loading_img').show();
+                                                flag++;
+                                                if (total_objects == flag) {
+                                                    jQuery('#pd_loading_img').show();
+                                                    ProductDesigner.prototype.setzIndexes();
+                                                    jQuery('#pd_loading_img').show();
+                                                    setTimeout(function() {
+                                                        jQuery('#pd_loading_img').show();
+                                                        jQuery('.product-side-img').each(function(index, val) {
+                                                            if (index != 0) jQuery('.product-side-img')[index].click();
+                                                        }.bind(this));
+                                                        jQuery('#pd_loading_img').show();
+                                                        if (jQuery('#product-sides')[0].children[1].children[1] != undefined) {
+                                                            jQuery('#product-sides')[0].children[1].children[0].children[0].click();
+                                                        }
+                                                        jQuery('#pd_loading_img').hide();
+                                                        for (var key in LayersManager.prototype.layers) {
+                                                            var obj = LayersManager.prototype.layers[key];
+                                                            if (obj || obj != null) {
+                                                                if (obj.type == 'text') {
+                                                                    ProductDesigner.prototype.canvas.setActiveObject(obj);
+                                                                    jQuery('#btn_left_align').click();
+                                                                    jQuery('#pd_loading_img').hide();
+                                                                }
+                                                            }
+                                                        }
+                                                    }, 4000);
+                                                }
+                                            }
+                                        })({
+                                            top: objTop,
+                                            left: objLeft,
+                                            width: objWidth,
+                                            height: objHeight,
+                                            scaleX: scalex,
+                                            scaleY: scaley,
+                                            angle: design_obj.angle,
+                                            image_side: design_obj.image_side,
+                                            image_id1: image_id1,
+                                            zIndex: design_obj.zIndex,
+                                            resized_url: design_obj.url,
+                                            designarea_id: design_obj.designarea_id,
+                                            tab: design_obj.tab,
+                                            mydesign: true,
+                                            image_id: design_obj.image_id,
+                                            obj_side: design_obj.obj_side,
+                                            obj_id: 'id_' + Date.now(),
+                                            src: url,
+                                            isScaleObj: true,
+                                            used_colors_old: used_colors_old,
+                                        }));
+                                        //}
+                                    } else {
+                                        var url = ProductDesigner.prototype.mediaUrl + design_obj.url;
+                                        var objData = design_obj;
+                                        var scalex = design_obj.scalex;
+                                        var scaley = design_obj.scaley;
+                                        var objTop = design_obj.top;
+                                        var objLeft = design_obj.left;
+                                        var objWidth = design_obj.width;
+                                        var objHeight = design_obj.height;
+                                        var angle = design_obj.angle;
+                                        var obj_id = design_obj.obj_id;
+                                        var image_id = design_obj.image_id;
+                                        var obj_side = design_obj.obj_side;
+                                        var used_colors = design_obj.used_colors;
+                                        var used_colors_old = design_obj.used_colors_old;
+                                        var textObject = designs[i];
+                                        var url = ProductDesigner.prototype.mediaUrl + design_obj.url;
+                                        fabric.Image.fromURL(url, (function(objData) {
+                                            return function(obj) {
+                                                obj.set({
+                                                    top: objData.top,
+                                                    left: objData.left,
+                                                    width: objData.width,
+                                                    height: objData.height,
+                                                    scaleX: objData.scaleX,
+                                                    scaleY: objData.scaleY,
+                                                    mydesign: true,
+                                                    angle: objData.angle,
+                                                    tab: objData.tab,
+                                                    resized_url: design_obj.url,
+                                                    image_id: '@' + objData.image_id,
+                                                    designarea_id: objData.designarea_id,
+                                                    obj_side: objData.obj_side,
+                                                    image_side: objData.image_side,
+                                                    obj_id: 'id_' + Date.now(),
+                                                    src: objData.src,
+                                                    isScaleObj: true,
+                                                    used_colors_old: objData.used_colors_old,
+                                                    textObj: objData.textObj,
+                                                    objFilters: objData.objFilters
+                                                });
+                                                var cmd = new InsertCanvasObject(ProductDesigner.prototype, obj, false);
+                                                ProductDesigner.prototype.zIndexes[obj.obj_id] = objData.zIndex;
+                                                cmd.exec();
+                                                History.prototype.push(cmd);
+                                                jQuery('#pd_loading_img').show();
+                                                flag++;
+                                                if (total_objects == flag) {
+                                                    jQuery('#pd_loading_img').show();
+                                                    ProductDesigner.prototype.setzIndexes();
+                                                    jQuery('#pd_loading_img').show();
+                                                    setTimeout(function() {
+                                                        jQuery('#pd_loading_img').show();
+                                                        jQuery('.product-side-img').each(function(index, val) {
+                                                            if (index != 0) jQuery('.product-side-img')[index].click();
+                                                        }.bind(this));
+                                                        jQuery('#pd_loading_img').show();
+                                                        if (jQuery('#product-sides')[0].children[1].children[1] != undefined) {
+                                                            jQuery('#product-sides')[0].children[1].children[0].children[0].click();
+                                                        }
+                                                        jQuery('#pd_loading_img').hide();
+                                                        for (var key in LayersManager.prototype.layers) {
+                                                            var obj = LayersManager.prototype.layers[key];
+                                                            if (obj || obj != null) {
+                                                                if (obj.type == 'text') {
+                                                                    ProductDesigner.prototype.canvas.setActiveObject(obj);
+                                                                    jQuery('#btn_left_align').click();
+                                                                    jQuery('#pd_loading_img').hide();
+                                                                }
+                                                            }
+                                                        }
+                                                    }, 4000);
+                                                }
+                                            }
+                                        })({
+                                            top: objTop,
+                                            left: objLeft,
+                                            width: objWidth,
+                                            height: objHeight,
+                                            scaleX: scalex,
+                                            price: price,
+                                            scaleY: scaley,
+                                            angle: design_obj.angle,
+                                            resized_url: design_obj.url,
+                                            designarea_id: design_obj.designarea_id,
+                                            mydesign: true,
+                                            zIndex: design_obj.zIndex,
+                                            tab: design_obj.tab,
+                                            obj_side: design_obj.obj_side,
+                                            image_side: design_obj.image_side,
+                                            obj_id: 'id_' + Date.now(),
+                                            used_colors: design_obj.used_colors,
+                                            isScaleObj: true,
+                                            image_id: design_obj.image_id,
+                                            src: url,
+                                            textObj: design_obj.textObj,
+                                            objFilters: design_obj.objFilters
+                                        }));
+                                    }
+                                }
+                            }
+                            if (arcText != '' && arcText != undefined) {
+                                for (key in arcObjects) {
+                                    var textObject = new fabric.Text(arcObjects[key].textObj.arcObjText, arcObjects[key].textObj);
+                                    var cmd = new InsertCanvasObject(ProductDesigner.prototype, textObject);
+                                    cmd.exec();
+                                    History.prototype.push(cmd);
+                                    var currentArc = parseInt(jQuery('#text_arc').val());
+                                    //var canvas = ProductDesigner.prototype.canvas;
+                                    var canvas = ProductDesigner.prototype.containerCanvases[arcObjects[key].textObj.designarea_id];
+                                    var defaultArc = arcObjects[key].textObj.arc ? arcObjects[key].textObj.arc : 0;
+                                    cmd = new TextSpaceAngleChange(ProductDesigner.prototype, canvas, {
+                                        arc: defaultArc
+                                    }, {
+                                        arc: currentArc
+                                    });
+                                    cmd.exec();
+                                    History.prototype.push(cmd);
+                                    flag++;
+                                }
+                            }
+                            for (var i in masking) {
+                                var canvas = ProductDesigner.prototype.containerCanvases[i];
+                                var url = ProductDesigner.prototype.mediaUrl + masking[i].url;
+                                var DesignId = i;
+                                fabric.loadSVGFromURL(url, (function(objData) {
+                                    return function(objects, options) {
+                                        var canvas = objData.Canvas;
+                                        var url = objData.Url;
+                                        var DesignId = objData.design_id;
+                                        var cmd = new ObjectMaskingHistory(canvas, objects, options, url, DesignId);
+                                        cmd.exec();
+                                        History.prototype.push(cmd);
+                                    }
+                                })({
+                                    Canvas: canvas,
+                                    Url: url,
+                                    design_id: DesignId,
+                                }));
+                            }
+                        } else {
+                            var r = confirm('This design is not made for this product, Do You want to continue?');
+                            if (r == true) {
+                                var arcObjects = {};
+                                for (var i in designs) {
+                                    var design_obj = designs[i];
+                                    var img_url = design_obj.url;
+                                    var tab = design_obj.tab;
+                                    var product_id = design_obj.product_id;
+                                    if (design_obj.wInnerWidth < 640 && design_obj.wInnerWidth != window.innerWidth) {
+                                        if (design_obj.wInnerWidth < 640 && design_obj.wInnerWidth >= 480) {
+                                            if (window.innerWidth >= 480) {
+                                                scaleFactor = 1.4;
+                                                var top = design_obj.top * scaleFactor;
+                                                var left = design_obj.left * scaleFactor;
+                                                var width = design_obj.width * scaleFactor;
+                                                var height = design_obj.height * scaleFactor;
+                                                design_obj.top = design_obj.top * scaleFactor;
+                                                design_obj.left = design_obj.left * scaleFactor;
+                                                design_obj.width = design_obj.width * scaleFactor;
+                                                design_obj.height = design_obj.height * scaleFactor;
+                                            } else {
+                                                if (window.innerWidth > 360) {
+                                                    scaleFactor = 1.4;
+                                                } else if (window.innerWidth >= 320) {
+                                                    scaleFactor = 1.8;
+                                                } else {
+                                                    scaleFactor = 2.3;
+                                                }
+                                                var top = design_obj.top / scaleFactor;
+                                                var left = design_obj.left / scaleFactor;
+                                                var width = design_obj.width / scaleFactor;
+                                                var height = design_obj.height / scaleFactor;
+                                                design_obj.top = design_obj.top / scaleFactor;
+                                                design_obj.left = design_obj.left / scaleFactor;
+                                                design_obj.width = design_obj.width / scaleFactor;
+                                                design_obj.height = design_obj.height / scaleFactor;
+                                            }
+                                        }
+                                        if (design_obj.wInnerWidth < 480 && design_obj.wInnerWidth >= 360) {
+                                            if (window.innerWidth >= 360) {
+                                                scaleFactor = 1.8;
+                                                var top = design_obj.top * scaleFactor;
+                                                var left = design_obj.left * scaleFactor;
+                                                var width = design_obj.width * scaleFactor;
+                                                var height = design_obj.height * scaleFactor;
+                                                design_obj.top = design_obj.top * scaleFactor;
+                                                design_obj.left = design_obj.left * scaleFactor;
+                                                design_obj.width = design_obj.width * scaleFactor;
+                                                design_obj.height = design_obj.height * scaleFactor;
+                                            } else {
+                                                if (window.innerWidth >= 320) {
+                                                    scaleFactor = 1.8;
+                                                } else {
+                                                    scaleFactor = 2.3;
+                                                }
+                                                var top = design_obj.top / scaleFactor;
+                                                var left = design_obj.left / scaleFactor;
+                                                var width = design_obj.width / scaleFactor;
+                                                var height = design_obj.height / scaleFactor;
+                                                design_obj.top = design_obj.top / scaleFactor;
+                                                design_obj.left = design_obj.left / scaleFactor;
+                                                design_obj.width = design_obj.width / scaleFactor;
+                                                design_obj.height = design_obj.height / scaleFactor;
+                                            }
+                                        }
+                                        if (design_obj.wInnerWidth < 360 && design_obj.wInnerWidth >= 320) {
+                                            if (window.innerWidth >= 320) {
+                                                scaleFactor = 2.3;
+                                                var top = design_obj.top * scaleFactor;
+                                                var left = design_obj.left * scaleFactor;
+                                                var width = design_obj.width * scaleFactor;
+                                                var height = design_obj.height * scaleFactor;
+                                                design_obj.top = design_obj.top * scaleFactor;
+                                                design_obj.left = design_obj.left * scaleFactor;
+                                                design_obj.width = design_obj.width * scaleFactor;
+                                                design_obj.height = design_obj.height * scaleFactor;
+                                            } else {
+                                                scaleFactor = 2.3;
+                                                var top = design_obj.top / scaleFactor;
+                                                var left = design_obj.left / scaleFactor;
+                                                var width = design_obj.width / scaleFactor;
+                                                var height = design_obj.height / scaleFactor;
+                                                design_obj.top = design_obj.top / scaleFactor;
+                                                design_obj.left = design_obj.left / scaleFactor;
+                                                design_obj.width = design_obj.width / scaleFactor;
+                                                design_obj.height = design_obj.height / scaleFactor;
+                                            }
+                                        }
+                                        if (design_obj.wInnerWidth < 320) {
+                                            scaleFactor = 3.4;
+                                            var top = design_obj.top * scaleFactor;
+                                            var left = design_obj.left * scaleFactor;
+                                            var width = design_obj.width * scaleFactor;
+                                            var height = design_obj.height * scaleFactor;
+                                            design_obj.top = design_obj.top * scaleFactor;
+                                            design_obj.left = design_obj.left * scaleFactor;
+                                            design_obj.width = design_obj.width * scaleFactor;
+                                            design_obj.height = design_obj.height * scaleFactor;
+                                        }
+                                    } else {
+                                        if (design_obj.wInnerWidth != window.innerWidth) {
+                                            if (window.innerWidth < 640 && window.innerWidth >= 480) {
+                                                scaleFactor = 1.4;
+                                                var top = design_obj.top / scaleFactor;
+                                                var left = design_obj.left / scaleFactor;
+                                                var width = design_obj.width / scaleFactor;
+                                                var height = design_obj.height / scaleFactor;
+                                                design_obj.top = design_obj.top / scaleFactor;
+                                                design_obj.left = design_obj.left / scaleFactor;
+                                                design_obj.width = design_obj.width / scaleFactor;
+                                                design_obj.height = design_obj.height / scaleFactor;
+                                            }
+                                            if (window.innerWidth < 480 && window.innerWidth >= 360) {
+                                                scaleFactor = 1.8;
+                                                var top = design_obj.top / scaleFactor;
+                                                var left = design_obj.left / scaleFactor;
+                                                var width = design_obj.width / scaleFactor;
+                                                var height = design_obj.height / scaleFactor;
+                                                design_obj.top = design_obj.top / scaleFactor;
+                                                design_obj.left = design_obj.left / scaleFactor;
+                                                design_obj.width = design_obj.width / scaleFactor;
+                                                design_obj.height = design_obj.height / scaleFactor;
+                                            }
+                                            if (window.innerWidth < 360 && window.innerWidth >= 320) {
+                                                scaleFactor = 2.3;
+                                                var top = design_obj.top / scaleFactor;
+                                                var left = design_obj.left / scaleFactor;
+                                                var width = design_obj.width / scaleFactor;
+                                                var height = design_obj.height / scaleFactor;
+                                                design_obj.top = design_obj.top / scaleFactor;
+                                                design_obj.left = design_obj.left / scaleFactor;
+                                                design_obj.width = design_obj.width / scaleFactor;
+                                                design_obj.height = design_obj.height / scaleFactor;
+                                            }
+                                            if (window.innerWidth < 320) {
+                                                scaleFactor = 3.4;
+                                                var top = design_obj.top / scaleFactor;
+                                                var left = design_obj.left / scaleFactor;
+                                                var width = design_obj.width / scaleFactor;
+                                                var height = design_obj.height / scaleFactor;
+                                                design_obj.top = design_obj.top / scaleFactor;
+                                                design_obj.left = design_obj.left / scaleFactor;
+                                                design_obj.width = design_obj.width / scaleFactor;
+                                                design_obj.height = design_obj.height / scaleFactor;
+                                            }
+                                        }
+                                    }
+                                    var top = design_obj.top;
+                                    var left = design_obj.left;
+                                    var type = design_obj.type;
+                                    var price = design_obj.price;
+                                    var image_id = design_obj.image_id;
+                                    var image_id1 = '@' + design_obj.image_id;
+                                    var object_id = i;
+                                    var objFilters = design_obj.objFilters;
+                                    var used_colors_old = design_obj.used_colors_old;
+                                    var brush_path = design_obj.brush_path;
+                                    var name = design_obj.name;
+                                    var scalex = design_obj.scalex;
+                                    var scaley = design_obj.scaley;
+                                    var objWidth = design_obj.width;
+                                    var objHeight = design_obj.height;
+                                    var object_id = i;
+                                    if (type == 'text' || type == 'group') {
+                                        if (type == 'group') {
+                                            var arcText = '';
+                                            var arcObject = {};
+                                            arcObject.textObj = design_obj.textObj;
+                                            for (var i = 0; i < design_obj.textObj.objects.length; i++) {
+                                                var newObj = design_obj.textObj.objects[i];
+                                                if (newObj.type == 'text') {
+                                                    arcText = arcText + design_obj.textObj.objects[i].text;
+                                                    arcObject.textObj.fontFamily = design_obj.textObj.objects[0].fontFamily;
+                                                    arcObject.textObj.fontWeight = design_obj.textObj.objects[0].fontWeight;
+                                                    arcObject.textObj.fontStyle = design_obj.textObj.objects[0].fontStyle;
+                                                    arcObject.textObj.textDecoration = design_obj.textObj.objects[0].textDecoration;
+                                                    arcObject.textObj.fill = design_obj.textObj.objects[0].fill;
+                                                    arcObject.textObj.textBackgroundColor = design_obj.textObj.objects[0].textBackgroundColor;
+                                                    arcObject.textObj.textAlign = design_obj.textObj.objects[0].textAlign;
+                                                    arcObject.textObj.stroke = design_obj.textObj.objects[0].stroke;
+                                                    arcObject.textObj.strokeWidth = design_obj.textObj.objects[0].strokeWidth;
+                                                    arcObject.textObj.shadow = design_obj.textObj.objects[0].shadow;
+                                                    arcObject.textObj.shadow = design_obj.textObj.objects[0].shadow;
+                                                }
+                                            }
+                                            arcObject.textObj.type = 'text';
+                                            arcObject.textObj.tab = design_obj.tab ? design_obj.tab : "text";
+                                            arcObject.textObj.name = design_obj.name ? design_obj.name : '';
+                                            arcObject.textObj.designarea_id = design_obj.designarea_id;
+                                            arcObject.textObj.mydesign = true;
+                                            arcObject.textObj.image_side = design_obj.image_side;
+                                            arcObject.textObj.image_id = '@' + design_obj.image_id;
+                                            arcObject.textObj.arc = design_obj.arc;
+                                            arcObject.textObj.arcObjText = arcText;
+                                            arcObjects[i] = arcObject;
+                                        } else {
+                                            var text = design_obj.text;
+                                            design_obj.textObj.tab = design_obj.tab ? design_obj.tab : "text";
+                                            design_obj.textObj.name = design_obj.name ? design_obj.name : '';
+                                            design_obj.textObj.designarea_id = design_obj.designarea_id;
+                                            design_obj.textObj.mydesign = true;
+                                            design_obj.textObj.image_side = design_obj.image_side;
+                                            design_obj.textObj.image_id = '@' + design_obj.image_id;
+                                            var textObject = new fabric.Text(text, design_obj.textObj);
+                                            var cmd = new InsertCanvasObject(ProductDesigner.prototype, textObject);
+                                            cmd.exec();
+                                            History.prototype.push(cmd);
+                                            jQuery('#pd_loading_img').show();
+                                            flag++;
+                                            if (total_objects == flag) {
+                                                jQuery('#pd_loading_img').show();
+                                                ProductDesigner.prototype.setzIndexes();
+                                                jQuery('#pd_loading_img').show();
+                                                setTimeout(function() {
+                                                    jQuery('#pd_loading_img').show();
+                                                    jQuery('.product-side-img').each(function(index, val) {
+                                                        if (index != 0) jQuery('.product-side-img')[index].click();
+                                                    }.bind(this));
+                                                    jQuery('#pd_loading_img').show();
+                                                    if (jQuery('#product-sides')[0].children[1].children[1] != undefined) {
+                                                        jQuery('#product-sides')[0].children[1].children[0].children[0].click();
+                                                    }
+                                                    jQuery('#pd_loading_img').hide();
+                                                    for (var key in LayersManager.prototype.layers) {
+                                                        var obj = LayersManager.prototype.layers[key];
+                                                        if (obj || obj != null) {
+                                                            if (obj.type == 'text') {
+                                                                ProductDesigner.prototype.canvas.setActiveObject(obj);
+                                                                jQuery('#btn_left_align').click();
+                                                                jQuery('#pd_loading_img').hide();
+                                                            }
+                                                        }
+                                                    }
+                                                }, 4000);
+                                            }
+                                        }
+                                    } else {
+                                        if (((design_obj.type == 'path-group') || (design_obj.type == 'path')) && (design_obj.name != 'brush')) {
+                                            var url = ProductDesigner.prototype.mediaUrl + design_obj.url;
+                                            var objData = design_obj;
+                                            var scalex = design_obj.scalex;
+                                            var scaley = design_obj.scaley;
+                                            var objTop = design_obj.top;
+                                            var objLeft = design_obj.left;
+                                            var objWidth = design_obj.width;
+                                            var objHeight = design_obj.height;
+                                            var angle = design_obj.angle;
+                                            var obj_id = design_obj.obj_id;
+                                            var image_id = design_obj.image_id;
+                                            var obj_side = design_obj.obj_side;
+                                            var used_colors = design_obj.used_colors;
+                                            var used_colors_old = design_obj.used_colors_old;
+                                            var textObject = designs[i];
+                                            fabric.loadSVGFromURL(url, (function(objData) {
+                                                return function(objects, options) {
+                                                    var obj = fabric.util.groupSVGElements(objects, options);
+                                                    obj.set({
+                                                        top: objData.top,
+                                                        left: objData.left,
+                                                        width: objData.width,
+                                                        height: objData.height,
+                                                        scaleX: objData.scaleX,
+                                                        scaleY: objData.scaleY,
+                                                        angle: objData.angle,
+                                                        tab: objData.tab,
+                                                        image_id: objData.image_id,
+                                                        obj_side: objData.obj_side,
+                                                        obj_id: 'id_' + Date.now(),
+                                                        image_side: objData.image_side,
+                                                        image_id1: objData.image_id1,
+                                                        resized_url: objData.url,
+                                                        designarea_id: objData.designarea_id,
+                                                        tab: objData.tab,
+                                                        mydesign: true,
+                                                        src: objData.src,
+                                                        isScaleObj: true,
+                                                        used_colors_old: objData.used_colors_old,
+                                                    });
+                                                    var cmd = new InsertCanvasObject(ProductDesigner.prototype, obj);
+                                                    cmd.exec();
+                                                    History.prototype.push(cmd);
+                                                    jQuery('#pd_loading_img').show();
+                                                    flag++;
+                                                    if (total_objects == flag) {
+                                                        jQuery('#pd_loading_img').show();
+                                                        ProductDesigner.prototype.setzIndexes();
+                                                        jQuery('#pd_loading_img').show();
+                                                        setTimeout(function() {
+                                                            jQuery('#pd_loading_img').show();
+                                                            jQuery('.product-side-img').each(function(index, val) {
+                                                                if (index != 0) jQuery('.product-side-img')[index].click();
+                                                            }.bind(this));
+                                                            jQuery('#pd_loading_img').show();
+                                                            if (jQuery('#product-sides')[0].children[1].children[1] != undefined) {
+                                                                jQuery('#product-sides')[0].children[1].children[0].children[0].click();
+                                                            }
+                                                            jQuery('#pd_loading_img').hide();
+                                                            for (var key in LayersManager.prototype.layers) {
+                                                                var obj = LayersManager.prototype.layers[key];
+                                                                if (obj || obj != null) {
+                                                                    if (obj.type == 'text') {
+                                                                        ProductDesigner.prototype.canvas.setActiveObject(obj);
+                                                                        jQuery('#btn_left_align').click();
+                                                                        jQuery('#pd_loading_img').hide();
+                                                                    }
+                                                                }
+                                                            }
+                                                        }, 4000);
+                                                    }
+                                                }
+                                            })({
+                                                top: objTop,
+                                                left: objLeft,
+                                                width: objWidth,
+                                                height: objHeight,
+                                                scaleX: scalex,
+                                                scaleY: scaley,
+                                                angle: design_obj.angle,
+                                                image_side: design_obj.image_side,
+                                                image_id1: image_id1,
+                                                resized_url: design_obj.url,
+                                                designarea_id: design_obj.designarea_id,
+                                                tab: design_obj.tab,
+                                                mydesign: true,
+                                                image_id: design_obj.image_id,
+                                                obj_side: design_obj.obj_side,
+                                                obj_id: 'id_' + Date.now(),
+                                                src: url,
+                                                isScaleObj: true,
+                                                used_colors_old: used_colors_old,
+                                            }));
+                                            //}
+                                        } else {
+                                            var url = ProductDesigner.prototype.mediaUrl + design_obj.url;
+                                            var objData = design_obj;
+                                            var scalex = design_obj.scalex;
+                                            var scaley = design_obj.scaley;
+                                            var objTop = design_obj.top;
+                                            var objLeft = design_obj.left;
+                                            var objWidth = design_obj.width;
+                                            var objHeight = design_obj.height;
+                                            var angle = design_obj.angle;
+                                            var obj_id = design_obj.obj_id;
+                                            var image_id = design_obj.image_id;
+                                            var obj_side = design_obj.obj_side;
+                                            var used_colors = design_obj.used_colors;
+                                            var used_colors_old = design_obj.used_colors_old;
+                                            var textObject = designs[i];
+                                            var url = ProductDesigner.prototype.mediaUrl + design_obj.url;
+                                            fabric.Image.fromURL(url, (function(objData) {
+                                                return function(obj) {
+                                                    obj.set({
+                                                        top: objData.top,
+                                                        left: objData.left,
+                                                        width: objData.width,
+                                                        height: objData.height,
+                                                        scaleX: objData.scaleX,
+                                                        scaleY: objData.scaleY,
+                                                        mydesign: true,
+                                                        angle: objData.angle,
+                                                        tab: objData.tab,
+                                                        resized_url: design_obj.url,
+                                                        image_id: '@' + objData.image_id,
+                                                        designarea_id: objData.designarea_id,
+                                                        obj_side: objData.obj_side,
+                                                        image_side: objData.image_side,
+                                                        obj_id: 'id_' + Date.now(),
+                                                        src: objData.src,
+                                                        isScaleObj: true,
+                                                        used_colors_old: objData.used_colors_old,
+                                                        textObj: objData.textObj,
+                                                        objFilters: objData.objFilters
+                                                    });
+                                                    var cmd = new InsertCanvasObject(ProductDesigner.prototype, obj, false);
+                                                    cmd.exec();
+                                                    History.prototype.push(cmd);
+                                                    jQuery('#pd_loading_img').show();
+                                                    flag++;
+                                                    if (total_objects == flag) {
+                                                        jQuery('#pd_loading_img').show();
+                                                        ProductDesigner.prototype.setzIndexes();
+                                                        jQuery('#pd_loading_img').show();
+                                                        setTimeout(function() {
+                                                            jQuery('#pd_loading_img').show();
+                                                            jQuery('.product-side-img').each(function(index, val) {
+                                                                if (index != 0) jQuery('.product-side-img')[index].click();
+                                                            }.bind(this));
+                                                            jQuery('#pd_loading_img').show();
+                                                            if (jQuery('#product-sides')[0].children[1].children[1] != undefined) {
+                                                                jQuery('#product-sides')[0].children[1].children[0].children[0].click();
+                                                            }
+                                                            jQuery('#pd_loading_img').hide();
+                                                            for (var key in LayersManager.prototype.layers) {
+                                                                var obj = LayersManager.prototype.layers[key];
+                                                                if (obj || obj != null) {
+                                                                    if (obj.type == 'text') {
+                                                                        ProductDesigner.prototype.canvas.setActiveObject(obj);
+                                                                        jQuery('#btn_left_align').click();
+                                                                        jQuery('#pd_loading_img').hide();
+                                                                    }
+                                                                }
+                                                            }
+                                                        }, 4000);
+                                                    }
+                                                }
+                                            })({
+                                                top: objTop,
+                                                left: objLeft,
+                                                width: objWidth,
+                                                height: objHeight,
+                                                scaleX: scalex,
+                                                price: price,
+                                                scaleY: scaley,
+                                                angle: design_obj.angle,
+                                                resized_url: design_obj.url,
+                                                designarea_id: design_obj.designarea_id,
+                                                mydesign: true,
+                                                tab: design_obj.tab,
+                                                obj_side: design_obj.obj_side,
+                                                image_side: design_obj.image_side,
+                                                obj_id: 'id_' + Date.now(),
+                                                used_colors: design_obj.used_colors,
+                                                isScaleObj: true,
+                                                image_id: design_obj.image_id,
+                                                src: url,
+                                                textObj: design_obj.textObj,
+                                                objFilters: design_obj.objFilters
+                                            }));
+                                        }
+                                    }
+                                }
+                                if (arcText != '' && arcText != undefined) {
+                                    for (key in arcObjects) {
+                                        var textObject = new fabric.Text(arcObjects[key].textObj.arcObjText, arcObjects[key].textObj);
+                                        var cmd = new InsertCanvasObject(ProductDesigner.prototype, textObject);
+                                        cmd.exec();
+                                        History.prototype.push(cmd);
+                                        var currentArc = parseInt(jQuery('#text_arc').val());
+                                        //var canvas = ProductDesigner.prototype.canvas;
+                                        var canvas = ProductDesigner.prototype.containerCanvases[arcObjects[key].textObj.designarea_id];
+                                        var defaultArc = arcObjects[key].textObj.arc ? arcObjects[key].textObj.arc : 0;
+                                        cmd = new TextSpaceAngleChange(ProductDesigner.prototype, canvas, {
+                                            arc: defaultArc
+                                        }, {
+                                            arc: currentArc
+                                        });
+                                        cmd.exec();
+                                        History.prototype.push(cmd);
+                                        flag++;
+                                    }
+                                }
+                            } else {
+                                jQuery('#pd_loading_img').hide();
+                            }
+                        }
+                        ProductDesigner.prototype.observeCanvas();
+                    }
+                }.bind(this),
+                onFailure: function() {
+                    alert('Something is wrong... Please try again.');
+                }
+            });
+        }.bind(this));
+        jQuery('#mydesigns_images_container').on('click', '.delete_design_image', function(e, elm) {
+            var r = confirm("Are you sure to delete this image?");
+            if (r == true) {
+                var img = e.target || e.srcElement;
+                var design_id = img.getAttribute('data-design_id');
+                var data = {};
+                data['design_id'] = design_id;
+                data['is_ajax'] = 1;
+                jQuery('#pd_loading_img').show();
+                jQuery.ajax({
+                    url: this.delete_design_url,
+                    method: 'post',
+                    data: {
+                        data: data
+                    },
+                    success: function(data, textStatus, jqXHR) {
+                        var response = JSON.parse(data);
+                        if (response.status == 'success') {
+                            if (response.designs) {
+                                if (jQuery('#mydesigns_images_container') != undefined) jQuery('#mydesigns_images_container').html(response.designs);
+                            }
+                            jQuery('#pd_loading_img').hide();
+                            alert('Design deleted successfully');
+                        } else {
+                            alert('Something is wrong... Please try again.');
+                        }
+                    },
+                    onFailure: function() {
+                        alert('Something is wrong... Please try again.');
+                    }
+                });
+            }
+        }.bind(this));
     }
 };

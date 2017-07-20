@@ -53,7 +53,7 @@
                 <block class="Biztech\Productdesigner\Block\Designer" name="template_categories" template="Biztech_Productdesigner::productdesigner/templates/categories.phtml" />
                 <block class="Biztech\Productdesigner\Block\Designer" name="template_images" template="Biztech_Productdesigner::productdesigner/templates/list.phtml" />
 
-                <block class="Biztech\Productdesigner\Block\Designer" name="mydesigns" template="Biztech_Productdesigner::productdesigner/mydesigns/list.phtml" />    
+                <block class="Biztech\Productdesigner\Block\Designer" name="mydesigns" template="Biztech_Productdesigner::productdesigner/mydesigns/list_band.phtml" />    
                 
                 <!-- <block class="Biztech\Productdesigner\Block\Group" name="grouporder" template="Biztech_Productdesigner::productdesigner/grouporder/grouporder.phtml" />  -->   
                 
