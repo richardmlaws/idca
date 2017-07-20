@@ -43,7 +43,7 @@ class saveDesign extends \Magento\Framework\App\Action\Action {
             $params = $this->getRequest()->getParams();
             $images = $params['data']['images'];
             $large_images = $params['data']['large_images'];
-
+            $product_id = $params['data']['id'];
             $saveDesign = $this->_saveDesign($images, $large_images,$customer_id);
 
         }
@@ -59,8 +59,16 @@ class saveDesign extends \Magento\Framework\App\Action\Action {
         $customer_id = $customerData->getId();*/
         $resultPage = $objectManager->create('Magento\Framework\View\LayoutInterface');
         $layout = $resultPage->createBlock('Biztech\Productdesigner\Block\Productdesigner');
+        $obj_product = $objectManager->create('Magento\Catalog\Model\Product');
+        $product = $obj_product->load($product_id);
+        
 
-        $result["designs"] = $layout->setData(array("customer_id" => $customer_id))->setTemplate('productdesigner/mydesigns/list.phtml')->toHtml();
+        if($product->getEnableWristband()){
+            $result["designs"] = $layout->setData(array("customer_id" => $customer_id))->setTemplate('productdesigner/mydesigns/list_band.phtml')->toHtml();
+        } else {
+            $result["designs"] = $layout->setData(array("customer_id" => $customer_id))->setTemplate('productdesigner/mydesigns/list.phtml')->toHtml();    
+        }
+        
         
         
 

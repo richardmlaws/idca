@@ -16,8 +16,6 @@ class Productdesigner extends Field
 
     const WIDTH                = 'productdesigner/general/imagewidth';
     const HEIGHT               = 'productdesigner/general/imageheight';
-    const WIDTHBAND            = 'productdesigner/general/imagewidthband';
-    const HEIGHTBAND           = 'productdesigner/general/imageheightband';
     const ProductGeneralEnable = 'productdesigner/categoryproductsconfiguration/enablecategoryproducts';
     const TEXT                 = 'productdesigner/textconfiguration/enabletexttab';
     const QUOTE                = 'productdesigner/quotesconfiguration/enablequotes';
@@ -78,18 +76,6 @@ class Productdesigner extends Field
     {
 
         return $this->_scopeConfig->getValue(self::HEIGHT,
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-    }
-    public function getWidthBand()
-    {
-
-        return $this->_scopeConfig->getValue(self::WIDTHBAND,
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-    }
-    public function getHeightBand()
-    {
-
-        return $this->_scopeConfig->getValue(self::HEIGHTBAND,
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
@@ -222,8 +208,9 @@ class Productdesigner extends Field
 
         $_regularPrice = $product->getPrice();
         $_finalPrice   = $product->getFinalPrice();
-        $taxprice      = $objectManager->create('Magento\Catalog\Helper\Data');
-        $priceHelper   = $objectManager->create('Magento\Framework\Pricing\Helper\Data');
+
+        $taxprice    = $objectManager->create('Magento\Catalog\Helper\Data');
+        $priceHelper = $objectManager->create('Magento\Framework\Pricing\Helper\Data');
         if ($product->getTypeId() == 'bundle') {
             $_priceInclTax = $taxprice->getTaxPrice($product,
                 $_finalPrice,
@@ -244,11 +231,15 @@ class Productdesigner extends Field
                 null,
                 false);
         } else {
-            $_priceInclTax = $taxprice->getTaxPrice($product,
-                $_finalPrice,
-                true);
-            $_priceExclTax = $taxprice->getTaxPrice($product,
-                $_finalPrice);
+            // $_priceInclTax = $taxprice->getTaxPrice($product,
+            //         $_finalPrice,
+            //         true);
+            // $_priceExclTax = $taxprice->getTaxPrice($product,
+            //         $_finalPrice);
+            $_priceInclTax    = number_format((string) $product->getPriceInfo()->getPrice('final_price')->getAmount(), 2);
+            $_priceExclTax = number_format((string) $product->getPriceInfo()->getPrice('final_price')->getAmount()->getBaseAmount(), 2);
+            
+
         }
         /* $_tierPrices = array();
         $_tierPricesInclTax = array();
