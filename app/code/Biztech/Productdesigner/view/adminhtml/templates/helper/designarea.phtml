@@ -33,7 +33,7 @@ if ($isEnableBand) {
         $resize_width = 540;
     }
     if (!isset($resize_width_band) && $resize_width_band == null) {
-        $resize_height = 100;
+        $resize_height = 250;
     }
 }
 $url = $_imagehelper->init($product, 'product_page_image')->setImageFile($image_url)->resize($resize_width, $resize_height)->keepAspectRatio(true)->constrainOnly(false)->getUrl();

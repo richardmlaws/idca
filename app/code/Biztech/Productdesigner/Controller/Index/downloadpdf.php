@@ -141,7 +141,7 @@ class downloadpdf extends \Magento\Framework\App\Action\Action
                 $resize_width = 540;
             }
             if (!isset($resize_height_band) && $resize_height_band == null) {
-                $resize_height = 100;
+                $resize_height = 250;
             }
         }
         $imagehelper = $objectManager->create('Magento\Catalog\Helper\Image');
@@ -209,7 +209,7 @@ class downloadpdf extends \Magento\Framework\App\Action\Action
                 $resize_width = 540;
             }
             if (!isset($resize_height_band) && $resize_height_band == null) {
-                $resize_height = 100;
+                $resize_height = 250;
             }
 
             $resize = $this->resizeAndCreateDesignImage($prod_image_path, $newPath_c, $resize_width, $resize_height);
