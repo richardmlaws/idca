@@ -8335,47 +8335,100 @@ ProductDesigner.prototype = {
             ProductDesigner.prototype.windowHeight = window.innerHeight;
         });
     },
-    observePreviewButton: function () {
-        this.createPreviewWindow();
+    observePreviewButton: function() {
+        jQuery('#preview_btn').on('click', function(e) {
+            //e.stop();
+            this.createPreviewWindow();
+            //this.previewWindow.showCenter(true);
+            // this._toggleControlsButtons();
+        }.bind(this));
+
     },
-    createPreviewWindow: function ()
-    {
+    createPreviewWindow: function() {
         var flag = 0;
         if (!this.previewWindow) {
 
-            jQuery('#preview_btn').on('click', function (e) {
+            if (!ProductDesigner.prototype.canvasesHasDesigns()) {
+                alert('Please design product');
+                return;
+            }
 
-                if (!this.canvasesHasDesigns()) {
-                    alert('Please design product');
-                    return;
-                } else {
+            jQuery('#pd_loading_img').show();
+            var data = {};
+            var colorImages = ProductDesigner.prototype.reStuctureImagesObject(ProductDesigner.prototype.data.product.images);
+            var images = {};
+            var parentImageId = {};
+            for (var imageId in ProductDesigner.prototype.containerCanvases) {
+                var index1 = imageId.split("&");
+                var index2 = index1[0];
+                if (ProductDesigner.prototype.containerCanvases.hasOwnProperty(imageId) && colorImages.hasOwnProperty(imageId) && index2 == ProductDesigner.prototype.currentProduct) {
+                    var canvas = ProductDesigner.prototype.containerCanvases[imageId];
+                    if (canvas.getObjects().length > 0) {
+                        canvas.deactivateAll();
+                        canvas.renderAll();
+                        var image = canvas.toDataURLWithMultiplier('png', ProductDesigner.prototype.scaleFactor);
+                        image = image.substr(image.indexOf(',') + 1).toString();
+                        images[imageId] = image;
+                        var parentImage = imageId.split("&")[0];
+                        if (ProductDesigner.prototype.ImageMultipleArray['@' + ProductDesigner.prototype.data.product.images[ProductDesigner.prototype.currentProductColor][parentImage].image_id]) {
+                            parentImageId[imageId] = ProductDesigner.prototype.data.product.images[ProductDesigner.prototype.currentProductColor][parentImage].dim[0].image_id;
+                            flag = 1;
+                        } else {
+                            parentImageId[imageId] = ProductDesigner.prototype.data.product.images[ProductDesigner.prototype.currentProductColor][parentImage].dim.image_id;
+                            flag = 1;
+                        }
+                    }
+                }
+            }
+            if (flag == 1) {
+                var params = getUrlParams();
+                data['id'] = params['id'];
+                data['images'] = JSON.stringify(images);
+                data['parentImageId'] = JSON.stringify(parentImageId);
+                data['image_id'] = ProductDesigner.prototype.currentProduct;
+                var is_config = ProductDesigner.prototype.data.product.images[ProductDesigner.prototype.currentProductColor][ProductDesigner.prototype.currentProduct].is_configurable;
+                if (is_config == 1 && !ProductDesigner.prototype.isAdmin) {
+                    if (ProductDesigner.prototype.currentProductColor) {
+                        data['color'] = this.currentProductColor;
+                    }
+                }
+                jQuery.ajax({
+                    url: ProductDesigner.prototype.previewImageUrl,
+                    method: 'post',
+                    data: {
+                        data: data
+                    },
+                    success: function(data, textStatus, jqXHR) {
+                        jQuery('#pd_loading_img').hide();
 
-
-
-                    require([
-                        'jquery',
-                        'Magento_Ui/js/modal/modal'
-                    ],
-                            function ($, alert) {
+                        require([
+                                'jquery',
+                                'Magento_Ui/js/modal/alert'
+                            ],
+                            function($, alert) {
                                 alert({
                                     modalClass: 'productdesigner-preview',
                                     title: "Design Preview",
                                     height: '100px',
                                     width: '100px',
-                                    content: ProductDesigner.prototype.createImagePreview(),
+                                    content: JSON.parse(data),
                                     actions: {
-                                        always: function () {
+                                        always: function() {
                                             //console.log("modal closed");
                                         }
                                     }
                                 });
                             }
-                    );
-                }
-            }.bind(this));
+                        );
+                    }
+                });
+            } else {
+                jQuery('#pd_loading_img').hide();
+                alert("please design product for current side");
+            }
         }
     },
-    createImagePreview: function () {
+    createImagePreview: function() {
 
         if (this.data.product.images[this.currentProductColor][this.currentProduct].url == undefined) {
             return;
@@ -8400,8 +8453,7 @@ ProductDesigner.prototype = {
 
 
 
-
-        fabric.Image.fromURL(bgimgUrl, function (backgroundobj) {
+        fabric.Image.fromURL(bgimgUrl, function(backgroundobj) {
             backgroundobj.lockMovementX = true;
             backgroundobj.lockMovementY = true;
 
@@ -8425,12 +8477,11 @@ ProductDesigner.prototype = {
             for (var index in this.containerCanvases) {
                 var index1 = index.split("&");
                 var index2 = index1[0];
-                if (index2 == this.currentProduct)
-                {
+                if (index2 == this.currentProduct) {
                     var canvas = this.containerCanvases[index];
                     canvas.deactivateAll();
                     canvas.renderAll();
-                    fabric.Image.fromURL(canvas.toDataURL(), function (obj) {
+                    fabric.Image.fromURL(canvas.toDataURL(), function(obj) {
 
                         var desigImage = this.prepareImageForPreview(obj, index, this.currentProduct);
 
@@ -8441,13 +8492,19 @@ ProductDesigner.prototype = {
                         zoomCanvas.setActiveObject(group);
 
                         zoomCanvas.renderAll();
-                    }.bind(this), {"designId": index, "currentProduct": this.currentProduct, "id": index1[1]})
+                    }.bind(this), {
+                        "designId": index,
+                        "currentProduct": this.currentProduct,
+                        "id": index1[1]
+                    })
                 }
-            }
-            ;
+            };
         }.bind(this));
     },
-    createPreviewImage: function () {
+    createPreviewImage: function() {
+
+        //        if (ProductDesigner.prototype.data.product.images[this.currentProductColor][this.currentProduct].url == undefined) {
+        //            return;
 
 
         var bgimgUrl = this.data.product.images[ProductDesigner.prototype.currentProductColor][ProductDesigner.prototype.currentProduct].url;
@@ -8459,7 +8516,7 @@ ProductDesigner.prototype = {
         // canvas.style.border = '1px dashed';
         jQuery('#product-zoom-container').append(canvas);
         var zoomCanvas = new fabric.Canvas(canvas[0]);
-        fabric.Image.fromURL(bgimgUrl, function (backgroundobj) {
+        fabric.Image.fromURL(bgimgUrl, function(backgroundobj) {
             backgroundobj.lockMovementX = true;
             backgroundobj.lockMovementY = true;
             var group = new fabric.Group([], {
@@ -8475,12 +8532,11 @@ ProductDesigner.prototype = {
             for (var index in ProductDesigner.prototype.containerCanvases) {
                 var index1 = index.split("&");
                 var index2 = index1[0];
-                if (index2 == ProductDesigner.prototype.currentProduct)
-                {
+                if (index2 == ProductDesigner.prototype.currentProduct) {
                     var canvas = ProductDesigner.prototype.containerCanvases[index];
                     canvas.deactivateAll();
                     canvas.renderAll();
-                    fabric.Image.fromURL(canvas.toDataURL(), function (obj) {
+                    fabric.Image.fromURL(canvas.toDataURL(), function(obj) {
 
                         var desigImage = ProductDesigner.prototype.prepareImageForPreview(obj, index, ProductDesigner.prototype.currentProduct);
                         this.currCanvasGroup.add(obj);
@@ -8489,10 +8545,13 @@ ProductDesigner.prototype = {
                         zoomCanvas.add(this.currCanvasGroup);
                         zoomCanvas.setActiveObject(group);
                         zoomCanvas.renderAll();
-                    }.bind(this), {"designId": index, "currentProduct": ProductDesigner.prototype.currentProduct, "id": index1[1]})
+                    }.bind(this), {
+                        "designId": index,
+                        "currentProduct": ProductDesigner.prototype.currentProduct,
+                        "id": index1[1]
+                    })
                 }
-            }
-            ;
+            };
         }.bind(this));
     },
     prepareImageForPreview: function (obj) {

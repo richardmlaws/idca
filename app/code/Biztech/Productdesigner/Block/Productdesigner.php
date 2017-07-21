@@ -16,6 +16,8 @@ class Productdesigner extends Field
 
     const WIDTH                = 'productdesigner/general/imagewidth';
     const HEIGHT               = 'productdesigner/general/imageheight';
+    const WIDTHBAND                = 'productdesigner/general/imagewidthband';
+    const HEIGHTBAND              = 'productdesigner/general/imageheightband';
     const ProductGeneralEnable = 'productdesigner/categoryproductsconfiguration/enablecategoryproducts';
     const TEXT                 = 'productdesigner/textconfiguration/enabletexttab';
     const QUOTE                = 'productdesigner/quotesconfiguration/enablequotes';
@@ -52,7 +54,7 @@ class Productdesigner extends Field
         \Magento\Tax\Helper\Data $helper,
         \Magento\Framework\Locale\FormatInterface $localeFormat,
         array $data = []
-    ) {
+        ) {
         /*  $this->_scopeConfig = $scopeConfig;
         $this->_storeManager = $storeManager;
         $this->_urlInterface = $urlInterface; */
@@ -76,6 +78,19 @@ class Productdesigner extends Field
     {
 
         return $this->_scopeConfig->getValue(self::HEIGHT,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+    }
+    public function getWidthBand()
+    {
+
+        return $this->_scopeConfig->getValue(self::WIDTHBAND,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+    }
+
+    public function getHeightBand()
+    {
+
+        return $this->_scopeConfig->getValue(self::HEIGHTBAND,
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
@@ -189,58 +204,58 @@ class Productdesigner extends Field
         $config = array();
         /* if (!$this->hasOptions()) {
         return Mage::helper('core')->jsonEncode($config);
-        } */
+    } */
 
-        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
 
-        $_request = $objectManager->get('\Magento\Tax\Model\Calculation')->getRateRequest(false,
-            false,
-            false);
+    $_request = $objectManager->get('\Magento\Tax\Model\Calculation')->getRateRequest(false,
+        false,
+        false);
         //$_request = Mage::getSingleton('tax/calculation')->getRateRequest(false, false, false);
-        /* @var $product Mage_Catalog_Model_Product */
-        $product = $this->getProduct();
-        $_request->setProductClassId($product->getTaxClassId());
-        $defaultTax = $objectManager->get('\Magento\Tax\Model\Calculation')->getRate($_request);
+    /* @var $product Mage_Catalog_Model_Product */
+    $product = $this->getProduct();
+    $_request->setProductClassId($product->getTaxClassId());
+    $defaultTax = $objectManager->get('\Magento\Tax\Model\Calculation')->getRate($_request);
 
-        $_request = $objectManager->get('\Magento\Tax\Model\Calculation')->getRateRequest();
-        $_request->setProductClassId($product->getTaxClassId());
-        $currentTax = $objectManager->get('\Magento\Tax\Model\Calculation')->getRate($_request);
+    $_request = $objectManager->get('\Magento\Tax\Model\Calculation')->getRateRequest();
+    $_request->setProductClassId($product->getTaxClassId());
+    $currentTax = $objectManager->get('\Magento\Tax\Model\Calculation')->getRate($_request);
 
-        $_regularPrice = $product->getPrice();
-        $_finalPrice   = $product->getFinalPrice();
+    $_regularPrice = $product->getPrice();
+    $_finalPrice   = $product->getFinalPrice();
 
-        $taxprice    = $objectManager->create('Magento\Catalog\Helper\Data');
-        $priceHelper = $objectManager->create('Magento\Framework\Pricing\Helper\Data');
-        if ($product->getTypeId() == 'bundle') {
-            $_priceInclTax = $taxprice->getTaxPrice($product,
-                $_finalPrice,
-                true,
-                null,
-                null,
-                null,
-                null,
-                null,
-                false);
-            $_priceExclTax = $taxprice->getTaxPrice($product,
-                $_finalPrice,
-                false,
-                null,
-                null,
-                null,
-                null,
-                null,
-                false);
-        } else {
+    $taxprice    = $objectManager->create('Magento\Catalog\Helper\Data');
+    $priceHelper = $objectManager->create('Magento\Framework\Pricing\Helper\Data');
+    if ($product->getTypeId() == 'bundle') {
+        $_priceInclTax = $taxprice->getTaxPrice($product,
+            $_finalPrice,
+            true,
+            null,
+            null,
+            null,
+            null,
+            null,
+            false);
+        $_priceExclTax = $taxprice->getTaxPrice($product,
+            $_finalPrice,
+            false,
+            null,
+            null,
+            null,
+            null,
+            null,
+            false);
+    } else {
             // $_priceInclTax = $taxprice->getTaxPrice($product,
             //         $_finalPrice,
             //         true);
             // $_priceExclTax = $taxprice->getTaxPrice($product,
             //         $_finalPrice);
-            $_priceInclTax    = number_format((string) $product->getPriceInfo()->getPrice('final_price')->getAmount(), 2);
-            $_priceExclTax = number_format((string) $product->getPriceInfo()->getPrice('final_price')->getAmount()->getBaseAmount(), 2);
-            
+        $_priceInclTax    = number_format((string) $product->getPriceInfo()->getPrice('final_price')->getAmount(), 2);
+        $_priceExclTax = number_format((string) $product->getPriceInfo()->getPrice('final_price')->getAmount()->getBaseAmount(), 2);
 
-        }
+
+    }
         /* $_tierPrices = array();
         $_tierPricesInclTax = array();
         foreach ($product->getTierPrice() as $tierPrice) {
@@ -253,26 +268,26 @@ class Productdesigner extends Field
         true),
         false,
         false);
-        }*/
-        $locale = $objectManager->create('\Magento\Directory\Model\Currency');
-        $config = array(
-            'productId'           => $this->getRequest()->getParam('id'),
-            'priceFormat'         => $this->localeFormat->getPriceFormat(),
-            'includeTax'          => $this->helper->priceIncludesTax() ? 'true' : 'false',
-            'showIncludeTax'      => $this->helper->displayPriceIncludingTax(),
-            'showBothPrices'      => $this->helper->displayBothPrices(),
-            'productPrice'        => $priceHelper->currency($_finalPrice,
-                false,
-                false),
-            'productOldPrice'     => $priceHelper->currency($_regularPrice,
-                false,
-                false),
-            'priceInclTax'        => $priceHelper->currency($_priceInclTax,
-                false,
-                false),
-            'priceExclTax'        => $priceHelper->currency($_priceExclTax,
-                false,
-                false),
+}*/
+$locale = $objectManager->create('\Magento\Directory\Model\Currency');
+$config = array(
+    'productId'           => $this->getRequest()->getParam('id'),
+    'priceFormat'         => $this->localeFormat->getPriceFormat(),
+    'includeTax'          => $this->helper->priceIncludesTax() ? 'true' : 'false',
+    'showIncludeTax'      => $this->helper->displayPriceIncludingTax(),
+    'showBothPrices'      => $this->helper->displayBothPrices(),
+    'productPrice'        => $priceHelper->currency($_finalPrice,
+        false,
+        false),
+    'productOldPrice'     => $priceHelper->currency($_regularPrice,
+        false,
+        false),
+    'priceInclTax'        => $priceHelper->currency($_priceInclTax,
+        false,
+        false),
+    'priceExclTax'        => $priceHelper->currency($_priceExclTax,
+        false,
+        false),
             /**
              * @var skipCalculate
              * @deprecated after 1.5.1.0
@@ -288,7 +303,7 @@ class Productdesigner extends Field
             'minusDisposition'    => 0,
             //'tierPrices' => $_tierPrices,
             //'tierPricesInclTax' => $_tierPricesInclTax,
-        );
+            );
 
 //        $responseObject = new Varien_Object();
         //        Mage::dispatchEvent('catalog_product_view_config', array('response_object' => $responseObject));
@@ -298,48 +313,48 @@ class Productdesigner extends Field
         //            }
         //        }
         //return Mage::helper('core')->jsonEncode($config);
-        return json_encode($config);
-    }
+return json_encode($config);
+}
 
-    public function getLogoSrc()
-    {
-        if (empty($this->_data['logo_src'])) {
-            $this->_data['logo_src'] = $this->_getLogoUrl();
-        }
-        return $this->_data['logo_src'];
+public function getLogoSrc()
+{
+    if (empty($this->_data['logo_src'])) {
+        $this->_data['logo_src'] = $this->_getLogoUrl();
     }
+    return $this->_data['logo_src'];
+}
 
-    protected function _getLogoUrl()
-    {
-        $folderName    = \Magento\Config\Model\Config\Backend\Image\Logo::UPLOAD_DIR;
-        $storeLogoPath = $this->_scopeConfig->getValue(
-            'design/header/logo_src',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+protected function _getLogoUrl()
+{
+    $folderName    = \Magento\Config\Model\Config\Backend\Image\Logo::UPLOAD_DIR;
+    $storeLogoPath = $this->_scopeConfig->getValue(
+        'design/header/logo_src',
+        \Magento\Store\Model\ScopeInterface::SCOPE_STORE
         );
-        $path    = $folderName . '/' . $storeLogoPath;
-        $logoUrl = $this->_urlBuilder
-            ->getBaseUrl(['_type' => \Magento\Framework\UrlInterface::URL_TYPE_MEDIA]) . $path;
+    $path    = $folderName . '/' . $storeLogoPath;
+    $logoUrl = $this->_urlBuilder
+    ->getBaseUrl(['_type' => \Magento\Framework\UrlInterface::URL_TYPE_MEDIA]) . $path;
 
-        if ($storeLogoPath !== null) {
-            $url = $logoUrl;
-        } elseif ($this->getLogoFile()) {
-            $url = $this->getViewFileUrl($this->getLogoFile());
-        } else {
-            $url = $this->getViewFileUrl('images/logo.svg');
-        }
-        return $url;
+    if ($storeLogoPath !== null) {
+        $url = $logoUrl;
+    } elseif ($this->getLogoFile()) {
+        $url = $this->getViewFileUrl($this->getLogoFile());
+    } else {
+        $url = $this->getViewFileUrl('images/logo.svg');
     }
+    return $url;
+}
 
-    public function getLogoWidth()
-    {
-        if (empty($this->_data['logo_width'])) {
-            $this->_data['logo_width'] = $this->_scopeConfig->getValue(
-                'design/header/logo_width',
-                \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+public function getLogoWidth()
+{
+    if (empty($this->_data['logo_width'])) {
+        $this->_data['logo_width'] = $this->_scopeConfig->getValue(
+            'design/header/logo_width',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
             );
-        }
-        return (int) $this->_data['logo_width'] ?: (int) $this->getLogoImgWidth();
     }
+    return (int) $this->_data['logo_width'] ?: (int) $this->getLogoImgWidth();
+}
 
     /**
      * Retrieve logo height
@@ -352,7 +367,7 @@ class Productdesigner extends Field
             $this->_data['logo_height'] = $this->_scopeConfig->getValue(
                 'design/header/logo_height',
                 \Magento\Store\Model\ScopeInterface::SCOPE_STORE
-            );
+                );
         }
         return (int) $this->_data['logo_height'] ?: (int) $this->getLogoImgHeight();
     }

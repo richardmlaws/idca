@@ -5651,11 +5651,12 @@ ele.up().addClassName('selected');*/
                             }
                         }
                         if (tierflag == 0) {
-                            tierpriceInclTax = OptionsPrice.priceInclTax;
+                            tierpriceInclTax = OptionsPrice.priceExclTax;
                         }
                         var newdesignerprice = tierpriceInclTax + OptionsPrice.customPrices.fixed_price.price + OptionsPrice.customPrices.design_image_price.price + OptionsPrice.customPrices.design_text_price.price + OptionsPrice.customPrices.design_custom_image_price.price;
-                        jQuery("#excl-tax-price").html(OptionsPrice.formatPrice(tierpriceInclTax * qty));
-                        jQuery("#incl-tax-price").html(OptionsPrice.formatPrice(OptionsPrice.priceExclTax * qty));
+                       tax = (tierpriceInclTax * OptionsPrice.currentTax) / 100;
+                    jQuery("#excl-tax-price").html(OptionsPrice.formatPrice(tierpriceInclTax * qty));
+                    jQuery("#incl-tax-price").html(OptionsPrice.formatPrice((tierpriceInclTax + tax) * qty));
                         // jQuery('#total_cost').html(OptionsPrice.formatPrice(added_products_price * qty + newdesignerprice * qty + customtotalprice * qty));
                     } else {
                         added_products_price = 0
@@ -5695,9 +5696,12 @@ ele.up().addClassName('selected');*/
                                 }
                             }
                             if (tierflag == 0) {
-                                tierpriceInclTax = OptionsPrice.priceInclTax;
+                                tierpriceInclTax = OptionsPrice.priceExclTax;
                             }
                             var newdesignerprice = tierpriceInclTax + OptionsPrice.customPrices.fixed_price.price + OptionsPrice.customPrices.design_image_price.price + OptionsPrice.customPrices.design_text_price.price + OptionsPrice.customPrices.design_custom_image_price.price;
+                            tax = (tierpriceInclTax * OptionsPrice.currentTax) / 100;
+                    jQuery("#excl-tax-price").html(OptionsPrice.formatPrice(tierpriceInclTax * qty));
+                    jQuery("#incl-tax-price").html(OptionsPrice.formatPrice((tierpriceInclTax + tax) * qty));
                             //jQuery('#total_cost').html(OptionsPrice.formatPrice(newdesignerprice * qty + customtotalprice * qty));
                         } else {
                             added_products_price = 0
@@ -5820,7 +5824,7 @@ ele.up().addClassName('selected');*/
                             }
                         }
                         if (tierflag == 0) {
-                            tierpriceInclTax = OptionsPrice.priceInclTax;
+                            tierpriceInclTax = OptionsPrice.priceExclTax;
                         }
                         var newdesignerprice = tierpriceInclTax + OptionsPrice.customPrices.fixed_price.price + OptionsPrice.customPrices.design_image_price.price + OptionsPrice.customPrices.design_text_price.price + OptionsPrice.customPrices.design_custom_image_price.price;
                         //Check if array length is more that 1 than addition of sum start
@@ -5831,6 +5835,9 @@ ele.up().addClassName('selected');*/
                             }
                             jQuery('#item_count_value').html(qty);
                             jQuery('#item_cost_value').html(OptionsPrice.formatPrice(sum1));
+                            tax = (tierpriceInclTax * OptionsPrice.currentTax) / 100;
+                    jQuery("#excl-tax-price").html(OptionsPrice.formatPrice(tierpriceInclTax * qty));
+                    jQuery("#incl-tax-price").html(OptionsPrice.formatPrice((tierpriceInclTax + tax) * qty));
                             //  jQuery('#total_cost').html(OptionsPrice.formatPrice(sum1 * qty + newdesignerprice * qty + customtotalprice * qty));
                         } else {
                             jQuery('#item_count_value').html(qty);
@@ -5880,12 +5887,15 @@ ele.up().addClassName('selected');*/
                     }
                 }
                 if (tierflag == 0) {
-                    tierpriceInclTax = OptionsPrice.priceInclTax;
+                    tierpriceInclTax = OptionsPrice.priceExclTax;
                 }
                 var newdesignerprice = tierpriceInclTax + OptionsPrice.customPrices.fixed_price.price + OptionsPrice.customPrices.design_image_price.price + OptionsPrice.customPrices.design_text_price.price + OptionsPrice.customPrices.design_custom_image_price.price;
                 added_products_price = parseFloat(printing_front_surcharge);
                 jQuery('#item_count_value').innerHTML = qty;
                 jQuery('#item_cost_value').innerHTML = OptionsPrice.formatPrice(added_products_price);
+                tax = (tierpriceInclTax * OptionsPrice.currentTax) / 100;
+                    jQuery("#excl-tax-price").html(OptionsPrice.formatPrice(tierpriceInclTax * qty));
+                    jQuery("#incl-tax-price").html(OptionsPrice.formatPrice((tierpriceInclTax + tax) * qty));
                 // jQuery('#total_cost').html(OptionsPrice.formatPrice(added_products_price * qty + newdesignerprice * qty + customtotalprice * qty));
             }
         } else {
@@ -6024,11 +6034,12 @@ ele.up().addClassName('selected');*/
                         }
                     }
                     if (tierflag == 0) {
-                        tierpriceInclTax = OptionsPrice.priceInclTax;
+                        tierpriceInclTax = OptionsPrice.priceExclTax;
                     }
                     var newdesignerprice = tierpriceInclTax + OptionsPrice.customPrices.fixed_price.price + OptionsPrice.customPrices.design_image_price.price + OptionsPrice.customPrices.design_text_price.price + OptionsPrice.customPrices.design_custom_image_price.price;
+                    tax = (tierpriceInclTax * OptionsPrice.currentTax) / 100;
                     jQuery("#excl-tax-price").html(OptionsPrice.formatPrice(tierpriceInclTax * qty));
-                    jQuery("#incl-tax-price").html(OptionsPrice.formatPrice(OptionsPrice.priceExclTax * qty));
+                    jQuery("#incl-tax-price").html(OptionsPrice.formatPrice((tierpriceInclTax + tax) * qty));
                     //jQuery('#total_cost').html(OptionsPrice.formatPrice(added_products_price * qty + newdesignerprice * qty + customtotalprice * qty));
                     jQuery('#item_count_value').innerHTML = qty;
                 } else {
@@ -6069,11 +6080,14 @@ ele.up().addClassName('selected');*/
                     }
                 }
                 if (tierflag == 0) {
-                    tierpriceInclTax = OptionsPrice.priceInclTax;
+                    tierpriceInclTax = OptionsPrice.priceExclTax;
                 }
                 var newdesignerprice = tierpriceInclTax + OptionsPrice.customPrices.fixed_price.price + OptionsPrice.customPrices.design_image_price.price + OptionsPrice.customPrices.design_text_price.price + OptionsPrice.customPrices.design_custom_image_price.price;
                 // added_products_price = parseFloat(printing_front_surcharge);
                 jQuery('#item_count_value').innerHTML = qty;
+                tax = (tierpriceInclTax * OptionsPrice.currentTax) / 100;
+                    jQuery("#excl-tax-price").html(OptionsPrice.formatPrice(tierpriceInclTax * qty));
+                    jQuery("#incl-tax-price").html(OptionsPrice.formatPrice((tierpriceInclTax + tax) * qty));
                 // jQuery('#item_cost_value').innerHTML = OptionsPrice.formatPrice(added_products_price);
                 //jQuery('#total_cost').html(OptionsPrice.formatPrice(newdesignerprice * qty + customtotalprice * qty));
             }
@@ -8078,7 +8092,7 @@ TextDesigner.prototype = {
                         textarea: 'one',
                         left: leftPosition,
                         top: topPosition,
-                        scaleY:0.4
+                        scaleY: 0.4
                     });
                     var cmd = new InsertCanvasObject(this.productDesigner, textObject, true);
                     cmd.exec();
@@ -8260,7 +8274,7 @@ TextDesigner.prototype = {
                         textarea: 'two',
                         left: leftPosition,
                         top: topPosition,
-                        scaleY:0.4
+                        scaleY: 0.4
                     });
                     var cmd = new InsertCanvasObject(this.productDesigner, textObject, true);
                     cmd.exec();
@@ -8284,7 +8298,7 @@ TextDesigner.prototype = {
             if (obj && (obj.type == 'text' || obj.type == 'group')) {
                 var cmd = new UpdateCommand(canvas, obj, {
                     fontSize: jQuery('#font_size_selection').val(),
-                    scaleY:0.4
+                    scaleY: 0.4
                 });
                 cmd.exec();
                 History.prototype.push(cmd);
