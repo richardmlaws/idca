@@ -76,34 +76,8 @@ class Collectband extends Action
             }
 
             if ($watermarktext != '') {
-                // $im = imagecreatetruecolor(750, 723);
-                // $white = imagecolorallocate($im, 255, 255, 255);
-                // $grey = imagecolorallocate($im, 230, 230, 230);
-                // $black = imagecolorallocate($im, 0, 0, 0);
-                // $red = imagecolorallocate($im, 255, 0, 0);
-                // $newgrey = imagecolorallocate($im, 236, 236, 236);
-                // imagefilledrectangle($im, 0, 0, 749, 722, $newgrey);
-                // ini_set('display_errors', 1);
-                // $col_transparent = imagecolorallocatealpha($im, 255, 255, 255,0);
-                //       imagefill($im, 0, 0, $col_transparent);  // set the transparent colour as the background.
-                //       imagecolortransparent ($im, $col_transparent); // actually make it transparent
-                //       imagefilledrectangle($im, 0, 0, 749, 722, $col_transparent);
-                //       $text = $this->getRequest()->getParam('watermarktext');
-                //       $om = \Magento\Framework\App\ObjectManager::getInstance();
-                //       $filesystem = $om->get('Magento\Framework\Filesystem');
-                //       $font = $reader->getAbsolutePath() . 'productdesigner/fonts/OpenSans-Bold.ttf';
-                //       if(strlen($text) <=6){
-                //         imagettftext($im, 180, 45, 120, 730, $newgrey, $font, $text);
-                //         imagettftext($im, 180, 45, 120, 730, $red, $font, $text);
-                //       }else if(strlen($text) > 6 &&  strlen($text) <= 9  ){
-                //         imagettftext($im, 140, 45, 120, 730, $newgrey, $font, $text);
-                //         imagettftext($im, 140, 45, 120, 730, $red, $font, $text);
-                //       }else if(strlen($text) > 10 ){
-                //         imagettftext($im, 110, 45, 120, 730, $newgrey, $font, $text);
-                //         imagettftext($im, 110, 45, 120, 730, $red, $font, $text);
-                //       }
                 $imgWidth  = 540;
-                $imgHeight = 173;
+                $imgHeight = 100;
                 $im        = imagecreatetruecolor($imgWidth, $imgHeight);
                 $font      = $reader->getAbsolutePath() . 'productdesigner/fonts/Ubuntu-regular.ttf';
                 $text      = $this->getRequest()->getParam('watermarktext');
@@ -128,7 +102,7 @@ class Collectband extends Action
 
                     //add some shadow to the text
                     //add the text
-                    imagettftext($im, 68, 30, $x, $y, $black, $font, $txt);
+                    imagettftext($im, 30, 30, 200, 100, $black, $font, $txt);
 
                 }
 

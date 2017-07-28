@@ -1200,3 +1200,5 @@ input,button,select,textarea{-webkit-box-shadow:none!important;box-shadow:none!i
 @media screen and (min-width: 981px) {
     .productdesigner-index-band .resp-tabs-container {display: block !important;} 
 }
+
+.productdesigner-index-band .desgin-detail li.size-ranger { width: 100%;}

@@ -269,7 +269,7 @@ class downloadpdf extends \Magento\Framework\App\Action\Action
 
                             //$src = imagecreatefrompng($logo);
 
-                            $percent              = 0.5;
+                            $percent              = 1;
                             list($width, $height) = getimagesize($logo);
                             $newwidth             = $width * $percent;
                             $newheight            = $height * $percent;
@@ -283,7 +283,7 @@ class downloadpdf extends \Magento\Framework\App\Action\Action
                         default:
                             Mage::throwException('Invalid image type.');
                     }
-                    imagecopy($dest, $thumb, 100, 200, 20, 13, imagesx($thumb), imagesy($thumb));
+                    imagecopy($dest, $thumb, 0, 0, 0, 0, imagesx($thumb), imagesy($thumb));
                 elseif (($config->getValue('productdesigner/downloaddesign_general/watermark_band') != null) || ($config->getValue('productdesigner/downloaddesign_general/watermark_band') != '')):
                     $info    = getimagesize($logo);
                     $imgtype = image_type_to_mime_type($info[2]);
@@ -298,7 +298,7 @@ class downloadpdf extends \Magento\Framework\App\Action\Action
 
                             //$src = imagecreatefrompng($logo);
 
-                            $percent              = 0.5;
+                            $percent              = 1;
                             list($width, $height) = getimagesize($logo);
                             $newwidth             = $width * $percent;
                             $newheight            = $height * $percent;
@@ -312,7 +312,7 @@ class downloadpdf extends \Magento\Framework\App\Action\Action
                         default:
                             Mage::throwException('Invalid image type.');
                     }
-                    imagecopy($dest, $thumb, 100, 200, 20, 13, imagesx($thumb), imagesy($thumb));
+                    imagecopy($dest, $thumb, 0, 0, 0, 0, imagesx($thumb), imagesy($thumb));
                 endif;
                 // print_r($thumb);
                 // imagecopy($dest, $thumb, 100, 200, 20, 13, imagesx($thumb), imagesy($thumb));
