@@ -170,19 +170,18 @@ $defautlt_font_size = $block->getFontSize();
 
                 ?>
 
-                <li class="size-ranger">
+                <li class="size-ranger" style="display:none;">
 
                     <!-- slider to choose size -->
                     <span class="size-label"><?php echo __("Size"); ?>
                         <span id="size_label" class="label"><?php echo " (" . $defautlt_font_size . ")"; ?></span><span class="size-px"></span>
                     </span>
-                    <input type="range" step="1" max="24" min="8" id="font_size_selection" value="<?php echo $defautlt_font_size ?>"></li>
-                    <!-- ends -->
-
-                    <!-- ends -->
-
+                    
+                    <input type="range" step="1" max="24" min="8" id="font_size_selection" value="<?php echo $defautlt_font_size ?>">
                 </li>
+                    <!-- ends -->
 
+                    <!-- ends -->
 
                 <li class="size-ranger ppacity-ranger ">
                     <!-- slider to set opacity -->

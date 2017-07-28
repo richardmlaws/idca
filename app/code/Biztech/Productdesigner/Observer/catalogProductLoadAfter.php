@@ -180,7 +180,7 @@ class catalogProductLoadAfter implements ObserverInterface
                 }
             }
 
-            if ($item->getProductType() == 'configurable') {
+            /*if ($item->getProductType() == 'configurable') {
 
                 $product = \Magento\Framework\App\ObjectManager::getInstance()->create('Magento\Catalog\Model\Product')->load($item->getProductId());
                 if ($product->getConfigurableGridView()) {
@@ -200,7 +200,7 @@ class catalogProductLoadAfter implements ObserverInterface
                         $same[$product->getId()][$price]['skus'][]    = $item->getSku();
                     }
                 }
-            }
+            }*/
 
             if ($item->getProductType() == 'configurable') {
                 foreach ($same as $productId => $pId) {
