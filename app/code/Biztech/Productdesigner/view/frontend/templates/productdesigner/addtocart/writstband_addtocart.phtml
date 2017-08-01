@@ -195,7 +195,7 @@ $formattedPriceWithoutTax = $priceHelper->currency($priceWithoutTax, true, false
                                         <?php if (!empty($tier_prices)) {
                                             ?>
 
-                                            <div id ="details" class="tier-prices product-pricing">
+                                            <div id ="details" class="tier-prices product-pricing" style="display:none;">
                                                 <ul>
                                                     <?php
                                                     $finalProductPrice = '';
@@ -423,7 +423,7 @@ if ($product->getTypeId() != 'configurable') {
     <!-- tierPrice block  start -->
     <?php if (!empty($product->getTierPrice())) {
         ?>
-        <div id ="details" class="tier-prices product-pricing">
+        <div id ="details" class="tier-prices product-pricing" style="display:none;">
 
             <ul>
                 <?php

@@ -6380,6 +6380,7 @@ ele.up().addClassName('selected');*/
                     return;
                 }
                 this.downloadFunction(this.downloadUrl, element);
+
             }.bind(this));
         }
     },
@@ -6424,10 +6425,12 @@ ele.up().addClassName('selected');*/
                 var response = JSON.parse(data);
                 var download_url = response['url'];
                 //window.open(download_url);
+                
                 var downloadButtonFile = jQuery('#download_btn_file').attr('href', download_url).attr('download', 'design.jpg');
                 //$('a[target="_blank"]').removeAttr('target');
                 downloadButtonFile[0].click();
                 jQuery('#pd_loading_img').hide();
+
             }
         });
     },
@@ -7558,7 +7561,10 @@ var InsertCanvasObject = function(designerWindow, obj, alignByCenter, name, new2
                     //obj.center();
                 }
             };
-            i
+            if(obj.type == 'image')
+            {
+                obj.centerV();
+            }
             /*f (ext == 'svg') {
                             obj.scaleToWidth(canvas.width - 40);
                             obj.center();
@@ -8014,7 +8020,7 @@ TextDesigner.prototype = {
                             allObj[i].centerV();
                             var cmd = new UpdateCommand(canvas, allObj[i], {
                                 fontSize: 40,
-                                top: 0
+                                top: -5
                             });
                             cmd.exec();
                             History.prototype.push(cmd);
@@ -8114,7 +8120,7 @@ TextDesigner.prototype = {
                         }
                     }
                     var textObject = new fabric.Text(text, textObjectData);
-                    var topPosition = 0;
+                    var topPosition = -5;
                     var allObj = canvas.getObjects();
                     var leftPosition = 10;
                     for (var i = 0; i < allObj.length; i++) {
@@ -8130,7 +8136,7 @@ TextDesigner.prototype = {
                     });
                     var cmd = new InsertCanvasObject(this.productDesigner, textObject, true);
                     cmd.exec();
-                    var topPosition2 = textObject.height - 2;
+                    var topPosition2 = textObject.height - 7;
                     if (jQuery('#add_text_area_2').val() != null && jQuery('#add_text_area_2').val() != '') {
                         var allObj = canvas.getObjects();
                         for (var i = 0; i < allObj.length; i++) {
@@ -8194,7 +8200,7 @@ TextDesigner.prototype = {
                             allObj[i].centerV();
                             var cmd = new UpdateCommand(canvas, allObj[i], {
                                 fontSize: 40,
-                                top: 0
+                                top: -5
                             });
                             cmd.exec();
                             History.prototype.push(cmd);
@@ -8292,7 +8298,7 @@ TextDesigner.prototype = {
                     }
                     var textObject = new fabric.Text(text, textObjectData);
                     var fontSizeText2 = 40;
-                    var topPosition = 0;
+                    var topPosition = -5;
                     if (jQuery('#add_text_area').val() != null && jQuery('#add_text_area').val() != '') {
                         var allObj = canvas.getObjects();
                         for (var i = 0; i < allObj.length; i++) {
@@ -8305,7 +8311,7 @@ TextDesigner.prototype = {
                                     cmd.exec();
                                     allObj[i].setCoords();
                                     fontSizeText2 = 20;
-                                    topPosition = allObj[i].height - 2;
+                                    topPosition = allObj[i].height - 7;
                                 }
                             }
                         }
