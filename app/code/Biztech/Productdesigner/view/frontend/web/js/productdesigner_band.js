@@ -911,7 +911,6 @@ observeObjectModified: function() {
                 History.prototype.push(cmd);
             }
         }.bind(this));
-<<<<<<< HEAD
 },
 observeCanvasObjectRendered: function() {
     if ((this.canvas == null) || this.canvas == 'undefined') {
@@ -956,54 +955,9 @@ observeCanvasObjectRendered: function() {
             if (parseFloat(l) + parseFloat(o.getBoundingRect().width) > this.canvas.getWidth()) f = true;
             if (f) {
                 n++;
-=======
-    },
-    observeCanvasObjectRendered: function() {
-        if ((this.canvas == null) || this.canvas == 'undefined') {
-            return;
-        }
-        this.canvas.observe('after:render', function(e) {
-            var n = 0;
-            this.canvas.forEachObject(function(o) {
-                var objectCanvas = o.canvas;
-                if (ProductDesigner.prototype.data.base_unit == "cm") {
-                    o.canvas.areaWidth = o.canvas.width / (37.79);
-                    o.canvas.areaHeight = o.canvas.height / (37.79);
-                } else if (ProductDesigner.prototype.data.base_unit == "px") {
-                    o.canvas.areaWidth = o.canvas.width;
-                    o.canvas.areaHeight = o.canvas.height;
-                }
-                if (ProductDesigner.prototype.data.base_unit == "cm") {
-                    var objectCanvasWidth = parseFloat(o.canvas.areaWidth) * 37.79;
-                    var objectCanvasHeight = parseFloat(o.canvas.areaHeight) * 37.79;
-                } else if (ProductDesigner.prototype.data.base_unit == "px") {
-                    var objectCanvasWidth = parseFloat(o.canvas.areaWidth) * 1;
-                    var objectCanvasHeight = parseFloat(o.canvas.areaHeight) * 1;
-                }
-                var widthAspectRatio = Number(objectCanvasWidth / objectCanvas.width).toFixed(2);
-                var heightAspectRatio = Number(objectCanvasHeight / objectCanvas.height).toFixed(2);
-                o.set({
-                    currWidthObjNew: o.currentWidth * widthAspectRatio,
-                    currHeightObjNew: o.currentHeight * heightAspectRatio,
-                    currTopObjNew: o.top,
-                    currLeftObjNew: o.left,
-                    DesignAreaWidthNew: o.canvas.areaWidth,
-                    DesignAreaHeightNew: o.canvas.areaHeight,
-                });
-                var l = o.getBoundingRect().left;
-                var t = o.getBoundingRect().top;
-                var w = Math.round(o.getWidth() / 2);
-                var h = Math.round(o.getHeight() / 2);
-                var f = false;
-                if (l < 0) f = true;
-                if (t < 0) f = true;
-                if (parseFloat(t) + parseFloat(o.getBoundingRect().height) > this.canvas.getHeight()) f = true;
-                if (parseFloat(l) + parseFloat(o.getBoundingRect().width) > this.canvas.getWidth()) f = true;
-                if (f) {
-                    n++;
-                }
-            }.bind(this));
-            if (n > 0) {
+            }
+        }.bind(this));
+if (n > 0) {
                 // this.designArea.style.border = '1px dashed red';
                 jQuery('#print_area_warning').show();
             } else {
@@ -1012,20 +966,8 @@ observeCanvasObjectRendered: function() {
             }
             if (!this.canvas.getActiveObject()) {
                 return;
->>>>>>> 83e490e3e42e01422fa0d915e8e66d2e55c4c5b3
             }
         }.bind(this));
-if (n > 0) {
-    this.designArea.style.border = '1px dashed red';
-    jQuery('#print_area_warning').show();
-} else {
-    this.designArea.style.border = '1px dashed';
-    jQuery('#print_area_warning').hide();
-}
-if (!this.canvas.getActiveObject()) {
-    return;
-}
-}.bind(this));
 },
 observeCanvasSelection: function() {
     if ((this.canvas == null) || this.canvas == 'undefined') {
@@ -1392,7 +1334,6 @@ loadSavedDesign: function() {
     var data = {};
     if ((this.data.my_design_url != undefined) && (params.design != undefined)) {
         jQuery('#pd_loading_img').show();
-<<<<<<< HEAD
         data["shapes_category_id"] = params.design;
         jQuery.ajax({
             url: this.data.my_design_url,
@@ -1404,44 +1345,13 @@ loadSavedDesign: function() {
                 var response = JSON.parse(data);
                 ProductDesigner.prototype.zIndexes = {};
                 if (response.design_id != null && response.design_id != '') {
+                    jQuery('#pd_loading_img').show();
                     var p_color = response.selected_product_color;
                     jQuery('.product-colors .color-img').each(function(index, val) {
                         if (val.getAttribute('data-color_id') == p_color) {
                             var color = val.getAttribute('data-color_id');
                             if (ProductDesigner.prototype.currentProductColor != color) {
                                 jQuery(val).addClass('selected');
-=======
-        for (var i in ProductDesigner.prototype.zIndexes) {
-            jQuery(ProductDesigner.prototype.containerCanvases[ProductDesigner.prototype.currentDesignArea].getObjects()).each(function(i, obj) {
-                obj.moveTo(ProductDesigner.prototype.zIndexes[obj.obj_id]);
-            });
-        }
-        jQuery('#pd_loading_img').hide();
-    },
-    loadSavedDesign: function() {
-        var params = getUrlParams();
-        var data = {};
-        if ((this.data.my_design_url != undefined) && (params.design != undefined)) {
-            jQuery('#pd_loading_img').show();
-            data["shapes_category_id"] = params.design;
-            jQuery.ajax({
-                url: this.data.my_design_url,
-                method: 'post',
-                data: {
-                    data: data
-                },
-                success: function(data, textStatus, jqXHR) {
-                    var response = JSON.parse(data);
-                    ProductDesigner.prototype.zIndexes = {};
-                    if (response.design_id != null && response.design_id != '') {
-                        jQuery('#pd_loading_img').show();
-                        var p_color = response.selected_product_color;
-                        jQuery('.product-colors .color-img').each(function(index, val) {
-                            if (val.getAttribute('data-color_id') == p_color) {
-                                var color = val.getAttribute('data-color_id');
-                                if (ProductDesigner.prototype.currentProductColor != color) {
-                                    jQuery(val).addClass('selected');
->>>>>>> 83e490e3e42e01422fa0d915e8e66d2e55c4c5b3
                                     //index.up().addClassName('selected');
                                     ProductDesigner.product_default_color_id = val.getAttribute('data-color_id');
                                     ProductDesigner.prototype.changeProductColor(color, canvas);
@@ -1449,17 +1359,19 @@ loadSavedDesign: function() {
                                 }
                             }
                         });
-<<<<<<< HEAD
                     jQuery('.product-side-img').each(function(index, val) {
                         if (index != 0) jQuery('.product-side-img')[index].click();
                         jQuery('#pd_loading_img').show();
                     }.bind(this));
+                    jQuery('#pd_loading_img').show();
                     jQuery('#product-sides')[0].children[1].children[0].children[0].click();
                     jQuery('#pd_loading_img').show();
                     var designs = JSON.parse(response.designs);
                     var flag = 0;
                     var total_objects = Object.keys(designs).length;
                     var masking = JSON.parse(response.masking);
+                    ProductDesigner.prototype.clearCanvas();                        
+                    ProductDesigner.prototype.clickZoomImage();
                     if (response.product_id == ProductDesigner.prototype.data.productId) {
                         var arcObjects = {};
                         for (var i in designs) {
@@ -1481,31 +1393,6 @@ loadSavedDesign: function() {
                                         design_obj.height = design_obj.height * scaleFactor;
                                     } else {
                                         if (window.innerWidth > 360) {
-=======
-                        jQuery('.product-side-img').each(function(index, val) {
-                            if (index != 0) jQuery('.product-side-img')[index].click();
-                            jQuery('#pd_loading_img').show();
-                        }.bind(this));
-                        jQuery('#pd_loading_img').show();
-                        jQuery('#product-sides')[0].children[1].children[0].children[0].click();
-                        jQuery('#pd_loading_img').show();
-                        var designs = JSON.parse(response.designs);
-                        var flag = 0;
-                        var total_objects = Object.keys(designs).length;
-                        var masking = JSON.parse(response.masking);
-                        ProductDesigner.prototype.clearCanvas();                        
-                        ProductDesigner.prototype.clickZoomImage();
-                        if (response.product_id == ProductDesigner.prototype.data.productId) {
-                            var arcObjects = {};
-                            for (var i in designs) {
-                                var design_obj = designs[i];
-                                var img_url = design_obj.url;
-                                var tab = design_obj.tab;
-                                var product_id = design_obj.product_id;
-                                if (design_obj.wInnerWidth < 640 && design_obj.wInnerWidth != window.innerWidth) {
-                                    if (design_obj.wInnerWidth < 640 && design_obj.wInnerWidth >= 480) {
-                                        if (window.innerWidth >= 480) {
->>>>>>> 83e490e3e42e01422fa0d915e8e66d2e55c4c5b3
                                             scaleFactor = 1.4;
                                         } else if (window.innerWidth >= 320) {
                                             scaleFactor = 1.8;
@@ -3413,7 +3300,6 @@ if (arcText != '' && arcText != undefined) {
                     alert('Something is wrong... Please try again.');
                 }
             });
-<<<<<<< HEAD
 }
 },
 setDesignArea: function(prod, selection_Area) {
@@ -3433,35 +3319,10 @@ setDesignArea: function(prod, selection_Area) {
             designArea.style.marginTop = prod.dim.y1 + 'px';
             designArea.style.width = prod.dim.width + 'px';
             designArea.style.height = prod.dim.height + 'px';
-            designArea.style.border = '1px dashed';
-            designArea.style.zIndex = '1000';
-            designArea.setAttribute('selection_area', '@' + prod.image_id + '&' + prod.designArea_id);
-            designArea.setAttribute('designAreaId', prod.designArea_id);
-=======
-        }
-    },
-    setDesignArea: function(prod, selection_Area) {
-        if (typeof prod === 'undefined') {
-            return;
-        }
-        ProductDesigner.prototype.product_container.style.height = parseInt(prod.height) + 'px';
-        ProductDesigner.prototype.product_container.style.width = parseInt(prod.width) + 'px';
-        ProductDesigner.prototype.product_container.style.background = 'url(' + prod.url + ') no-repeat center';
-        if (prod.dim.length == undefined) {
-            if (typeof ProductDesigner.prototype.product_container_layers['@' + prod.image_id + '&' + prod.designArea_id] === 'undefined') {
-                var designArea = document.createElement('div');
-                designArea.setAttribute('class', 'design-container');
-                designArea.setAttribute('id', 'designArea-' + prod.image_id);
-                designArea.style.position = 'absolute';
-                designArea.style.marginLeft = prod.dim.x1 + 'px';
-                designArea.style.marginTop = prod.dim.y1 + 'px';
-                designArea.style.width = prod.dim.width + 'px';
-                designArea.style.height = prod.dim.height + 'px';
                 //designArea.style.border = '1px dashed';
                 designArea.style.zIndex = '1000';
                 designArea.setAttribute('selection_area', '@' + prod.image_id + '&' + prod.designArea_id);
                 designArea.setAttribute('designAreaId', prod.designArea_id);
->>>>>>> 83e490e3e42e01422fa0d915e8e66d2e55c4c5b3
                 // designArea.style.border = '2px dashed';
                 //designArea.style.borderColor = "red";
                 var canvas = document.createElement('canvas');
@@ -3605,8 +3466,7 @@ setDesignArea: function(prod, selection_Area) {
             // $('designArea-'+elm.readAttribute('id')).style.borderColor = "red";
             var designAreaNew = e.currentTarget;
             // designAreaNew.style.border = '2px dashed';
-<<<<<<< HEAD
-            jQuery(designAreaNew).css('border-color', 'red');
+            //jQuery(designAreaNew).css('border-color', 'red');
             //this.addBrush(this.canvas);
         }.bind(this));
 },
@@ -3620,34 +3480,12 @@ removeAllSelectedObject: function(canvas_current) {
 },
 resetCanvasBorder: function() {
     jQuery('.design-container').each(function(index, val) {
-        jQuery(val).css('border', '1px dashed');
-        jQuery(val).css('border-color', 'black');
-    });
-},
-initPrices: function() {
-    ProductDesigner.prototype.pricesContainers[0] = jQuery('#fixed_price');
-=======
-            //jQuery(designAreaNew).css('border-color', 'red');
-            //this.addBrush(this.canvas);
-        }.bind(this));
-    },
-    removeAllSelectedObject: function(canvas_current) {
-        for (var index in ProductDesigner.prototype.containerCanvases) {
-            var canvas = ProductDesigner.prototype.containerCanvases[index];
-            if (canvas != canvas_current) {
-                canvas.deactivateAll().renderAll();
-            }
-        }
-    },
-    resetCanvasBorder: function() {
-        jQuery('.design-container').each(function(index, val) {
             /*jQuery(val).css('border', '1px dashed');
             jQuery(val).css('border-color', 'black');*/
         });
-    },
-    initPrices: function() {
-        ProductDesigner.prototype.pricesContainers[0] = jQuery('#fixed_price');
->>>>>>> 83e490e3e42e01422fa0d915e8e66d2e55c4c5b3
+},
+initPrices: function() {
+    ProductDesigner.prototype.pricesContainers[0] = jQuery('#fixed_price');
         // this.pricesContainers[1] = $('design_areas_price');
         ProductDesigner.prototype.pricesContainers[1] = jQuery('#image_price');
         ProductDesigner.prototype.pricesContainers[2] = jQuery('#text_price');
@@ -5273,7 +5111,6 @@ loginAndSaveDesign: function(url, formId, type) {
                     }
                 }
             }
-<<<<<<< HEAD
         }
         var design = 0;
         for (var imageId in ProductDesigner.prototype.containerCanvases) {
@@ -5292,6 +5129,9 @@ loginAndSaveDesign: function(url, formId, type) {
                     if (design == 0) {
                         jQuery.ajax({
                             url: ProductDesigner.prototype.getmydesign,
+                            data: {
+                                "product_id": ProductDesigner.prototype.data.productId
+                            },
                             method: 'post',
                             success: function(data, textStatus, jqXHR) {
                                 jQuery('#pd_loading_img').hide();
@@ -5300,37 +5140,6 @@ loginAndSaveDesign: function(url, formId, type) {
                                 if (response.designs) {
                                     if (jQuery('#mydesigns_images_container') != undefined) jQuery('#mydesigns_images_container').html(response.designs);
                                     jQuery('#customer-login-container').modal('closeModal');
-=======
-            var design = 0;
-            for (var imageId in ProductDesigner.prototype.containerCanvases) {
-                design = design + ProductDesigner.prototype.containerCanvases[imageId].getObjects().length;
-            }
-            var imagesData = this.prepareImagesForSave();
-            jQuery.ajax({
-                url: url,
-                method: 'post',
-                data: login_data,
-                success: function(data, textStatus, jqXHR) {
-                    var response = JSON.parse(data);
-                    if (response.status == 'success') {
-                        ProductDesigner.prototype.isCustomerLogin = '1';
-                        jQuery('#' + type + '-error-msg').html('');
-                        if (design == 0) {
-                            jQuery.ajax({
-                                url: ProductDesigner.prototype.getmydesign,
-                                data: {
-                                    "product_id": ProductDesigner.prototype.data.productId
-                                },
-                                method: 'post',
-                                success: function(data, textStatus, jqXHR) {
-                                    jQuery('#pd_loading_img').hide();
-                                    var response = JSON.parse(data);
-                                    ProductDesigner.prototype.designIdSave = response.design_id;
-                                    if (response.designs) {
-                                        if (jQuery('#mydesigns_images_container') != undefined) jQuery('#mydesigns_images_container').html(response.designs);
-                                        jQuery('#customer-login-container').modal('closeModal');
-                                    }
->>>>>>> 83e490e3e42e01422fa0d915e8e66d2e55c4c5b3
                                 }
                             }
                         });
@@ -5397,24 +5206,24 @@ loginAndSaveDesign: function(url, formId, type) {
                                             ProductDesigner.prototype.clickedSocialButton = null;
                                         }
                                     }.bind(this), 600);
-<<<<<<< HEAD
 }
 });
 }
-} else if (response.status == 'redirect' && response.url) {
-    jQuery('#pd_loading_img').hide();
-    window.top.location.href = response.url;
-} else if (response.status == 'fail' && response.error) {
-    jQuery('#pd_loading_img').hide();
-    jQuery('#' + type + '-error-msg').html('');
-    jQuery('#' + type + '-error-msg').html(response.error);
-    jQuery('#customer-register-btn').removeClass('disabled');
-    jQuery('#customer-register-btn').removeAttr('disabled');
-    jQuery('#customer-login-btn').removeClass('disabled');
-    jQuery('#customer-login-btn').removeAttr('disabled');
-}
-}
-});
+                        // ProductDesigner.prototype.clickZoomImage();
+                    } else if (response.status == 'redirect' && response.url) {
+                        jQuery('#pd_loading_img').hide();
+                        window.top.location.href = response.url;
+                    } else if (response.status == 'fail' && response.error) {
+                        jQuery('#pd_loading_img').hide();
+                        jQuery('#' + type + '-error-msg').html('');
+                        jQuery('#' + type + '-error-msg').html(response.error);
+                        jQuery('#customer-register-btn').removeClass('disabled');
+                        jQuery('#customer-register-btn').removeAttr('disabled');
+                        jQuery('#customer-login-btn').removeClass('disabled');
+                        jQuery('#customer-login-btn').removeAttr('disabled');
+                    }
+                }
+            });
 }
 },
 reloadPrintingPrice: function(isclicked) {
@@ -5463,23 +5272,6 @@ reloadPrintingPrice: function(isclicked) {
                 for (var i = 0; i < object.length; i++) {
                     if (object[i].obj_side == '' || object[i].obj_side == undefined) {
                         object[i].obj_side = current_side = ProductDesigner.prototype.data.product.images[ProductDesigner.prototype.currentProductColor][ProductDesigner.prototype.currentProduct].side;
-=======
-                                }
-                            });
-                        }
-                        // ProductDesigner.prototype.clickZoomImage();
-                    } else if (response.status == 'redirect' && response.url) {
-                        jQuery('#pd_loading_img').hide();
-                        window.top.location.href = response.url;
-                    } else if (response.status == 'fail' && response.error) {
-                        jQuery('#pd_loading_img').hide();
-                        jQuery('#' + type + '-error-msg').html('');
-                        jQuery('#' + type + '-error-msg').html(response.error);
-                        jQuery('#customer-register-btn').removeClass('disabled');
-                        jQuery('#customer-register-btn').removeAttr('disabled');
-                        jQuery('#customer-login-btn').removeClass('disabled');
-                        jQuery('#customer-login-btn').removeAttr('disabled');
->>>>>>> 83e490e3e42e01422fa0d915e8e66d2e55c4c5b3
                     }
                     side_count.push(object[i].obj_side);
                 }
@@ -6588,6 +6380,7 @@ observeDownloadButton: function() {
                     return;
                 }
                 this.downloadFunction(this.downloadUrl, element);
+
             }.bind(this));
     }
 },
@@ -6632,10 +6425,12 @@ downloadFunction: function(url, element) {
             var response = JSON.parse(data);
             var download_url = response['url'];
                 //window.open(download_url);
+                
                 var downloadButtonFile = jQuery('#download_btn_file').attr('href', download_url).attr('download', 'design.jpg');
                 //$('a[target="_blank"]').removeAttr('target');
                 downloadButtonFile[0].click();
                 jQuery('#pd_loading_img').hide();
+
             }
         });
 },
@@ -7052,6 +6847,7 @@ canvasesHasDesigns: function() {
                     }
                 }
                 this.reloadTierPrice(color);
+                ProductDesigner.prototype.clickZoomImage();
             }.bind(this));
 }
 },
@@ -7765,7 +7561,10 @@ var InsertCanvasObject = function(designerWindow, obj, alignByCenter, name, new2
                     //obj.center();
                 }
             };
-            i
+            if(obj.type == 'image')
+            {
+                obj.centerV();
+            }
             /*f (ext == 'svg') {
                             obj.scaleToWidth(canvas.width - 40);
                             obj.center();
@@ -8204,17 +8003,49 @@ observeTextAdd: function() {
             }
         }
     });
+    jQuery("#add_text_area").blur(function(e) {
+          //  if (e.which == 9) {
+            jQuery("#add_text_area_2").click();
+                e.preventDefault(); //Add this line to your code
+           // }
+       });
+
+    jQuery("#add_text_area").focus(function(e) {
+          //  if (e.which == 9) {
+            jQuery("#add_text_area").click();
+                e.preventDefault(); //Add this line to your code
+           // }
+       });
     jQuery('#add_text_area').on('keyup', function(e) {
+     
         this.productDesigner = ProductDesigner.prototype;
         var canvas = this.productDesigner.canvas;
         var allObj = canvas.getObjects();
         var obj = canvas.getActiveObject();
-        if (!jQuery('#add_text_area').val() && e.which != 13 && obj) {
+        var fontSizeText2 = 40;
+        if (!jQuery('#add_text_area').val() && e.which != 13 && obj && obj.textarea == "one") {
+            alert("Text1");
             var cmd = new RemoveCanvasObject(this.productDesigner, obj);
             cmd.exec();
             jQuery('#text_prop_container').addClass('disabled');
             History.prototype.push(cmd);
+            for (var i = 0; i < allObj.length; i++) {
+                if (allObj[i].textarea != "undefined") {
+                    if (allObj[i].textarea == 'two') {
+                        allObj[i].centerV();
+                        var cmd = new UpdateCommand(canvas, allObj[i], {
+                            fontSize: 40,
+                            top: -5
+                        });
+                        cmd.exec();
+                        History.prototype.push(cmd);
+                    }
+                }
+            }
             return;
+        }
+        if (jQuery('#add_text_area_2').val() != null && jQuery('#add_text_area_2').val() != '') {
+            fontSizeText2 = 20;
         }
         if (jQuery('#add_text_area').val()) {
             if (e.which == 13 || e.which == 46) {
@@ -8222,11 +8053,10 @@ observeTextAdd: function() {
                     return;
                 }
             }
-<<<<<<< HEAD
             var text = jQuery('#add_text_area').val();
             var a = new RGBColor(jQuery('#text_color span').css('border-color'));
             var textObjectData = {
-                fontSize: parseInt(jQuery('#font_size_selection').val()),
+                fontSize: 30,
                 fontFamily: jQuery('#font_selection').val(),
                 /*fill: a.toHex(),*/
                 obj_side: this.productDesigner.data.product.images[this.productDesigner.currentProductColor][this.productDesigner.currentProduct].side
@@ -8237,107 +8067,6 @@ observeTextAdd: function() {
                         var newObj = obj.getObjects()[i];
                         if (newObj.type == 'text') {
                             oldText = oldText + newObj.getText();
-=======
-        });
-        jQuery('#add_text_area').on('keyup', function(e) {
-            this.productDesigner = ProductDesigner.prototype;
-            var canvas = this.productDesigner.canvas;
-            var allObj = canvas.getObjects();
-            var obj = canvas.getActiveObject();
-            var fontSizeText2 = 40;
-            if (!jQuery('#add_text_area').val() && e.which != 13 && obj) {
-                var cmd = new RemoveCanvasObject(this.productDesigner, obj);
-                cmd.exec();
-                jQuery('#text_prop_container').addClass('disabled');
-                History.prototype.push(cmd);
-                for (var i = 0; i < allObj.length; i++) {
-                    if (allObj[i].textarea != "undefined") {
-                        if (allObj[i].textarea == 'two') {
-                            allObj[i].centerV();
-                            var cmd = new UpdateCommand(canvas, allObj[i], {
-                                fontSize: 40,
-                                top: 0
-                            });
-                            cmd.exec();
-                            History.prototype.push(cmd);
-                        }
-                    }
-                }
-                return;
-            }
-            if (jQuery('#add_text_area_2').val() != null && jQuery('#add_text_area_2').val() != '') {
-                fontSizeText2 = 20;
-            }
-            if (jQuery('#add_text_area').val()) {
-                if (e.which == 13 || e.which == 46) {
-                    if (jQuery('#add_text_area')[0].selectionEnd == jQuery('#add_text_area').val().length) {
-                        return;
-                    }
-                }
-                var text = jQuery('#add_text_area').val();
-                var a = new RGBColor(jQuery('#text_color span').css('border-color'));
-                var textObjectData = {
-                    fontSize: 30,
-                    fontFamily: jQuery('#font_selection').val(),
-                    /*fill: a.toHex(),*/
-                    obj_side: this.productDesigner.data.product.images[this.productDesigner.currentProductColor][this.productDesigner.currentProduct].side
-                };
-                if (obj && (obj.type == 'text' || obj.type == 'group')) {
-                    if (obj.type == 'group') {
-                        for (var i = 0; i < obj.getObjects().length; i++) {
-                            var newObj = obj.getObjects()[i];
-                            if (newObj.type == 'text') {
-                                oldText = oldText + newObj.getText();
-                            }
-                        }
-                        if (text != oldText) {
-                            var cmd = new RemoveCanvasObject(this.productDesigner, obj);
-                            cmd.exec();
-                            History.prototype.push(cmd);
-                            var textObjectData = {
-                                fontSize: 30,
-                                fontFamily: jQuery('#font_selection').val(),
-                                fill: a.toHex(),
-                                opacity: jQuery('#opacity').val(),
-                            };
-                            var textObject = new fabric.Text(text, textObjectData);
-                            textObject.set({
-                                top: obj.top,
-                                left: obj.left,
-                                image_side: obj.image_side,
-                                scaleX: obj.scaleX,
-                                scaleY: obj.scaleY,
-                                width: obj.width,
-                                height: obj.height,
-                                textarea: 'one',
-                            });
-                            var cmd = new InsertCanvasObject(this.productDesigner, textObject, true);
-                            cmd.exec();
-                            History.prototype.push(cmd);
-                            var currentArc = parseInt(jQuery('#text_arc').val());
-                            var currentSpacing = parseInt(jQuery('#text_spacing').val());
-                            var defaultArc = obj.arc ? obj.arc : 0;
-                            var defaultSpacing = obj.spacing ? obj.spacing : 0;
-                            cmd = new TextSpaceAngleChange(this.productDesigner, canvas, {
-                                arc: defaultArc,
-                                spacing: defaultSpacing
-                            }, {
-                                arc: currentArc,
-                                spacing: currentSpacing
-                            });
-                            cmd.exec();
-                            History.prototype.push(cmd);
-                        }
-                    } else {
-                        oldText = obj.getText();
-                        if (text != oldText) {
-                            var cmd = new UpdateCommand(canvas, obj, {
-                                text: text
-                            });
-                            cmd.exec();
-                            jQuery('#text_prop_container').removeClass("disabled");
-                            History.prototype.push(cmd);
->>>>>>> 83e490e3e42e01422fa0d915e8e66d2e55c4c5b3
                         }
                     }
                     if (text != oldText) {
@@ -8345,7 +8074,7 @@ observeTextAdd: function() {
                         cmd.exec();
                         History.prototype.push(cmd);
                         var textObjectData = {
-                            fontSize: parseInt(jQuery('#font_size_selection').val()),
+                            fontSize: 30,
                             fontFamily: jQuery('#font_selection').val(),
                             fill: a.toHex(),
                             opacity: jQuery('#opacity').val(),
@@ -8380,7 +8109,7 @@ observeTextAdd: function() {
                     }
                 } else {
                     oldText = obj.getText();
-                    if (text != oldText) {
+                    if (text != oldText && obj.textarea == "one") {
                         var cmd = new UpdateCommand(canvas, obj, {
                             text: text
                         });
@@ -8388,7 +8117,6 @@ observeTextAdd: function() {
                         jQuery('#text_prop_container').removeClass("disabled");
                         History.prototype.push(cmd);
                     }
-<<<<<<< HEAD
                 }
             } else {
                 var textCount = 0;
@@ -8407,84 +8135,37 @@ observeTextAdd: function() {
                     }
                 }
                 var textObject = new fabric.Text(text, textObjectData);
-                if (jQuery('#add_text_area_2').val() != null && jQuery('#add_text_area_2').val() != '') {
-=======
-                    var textObject = new fabric.Text(text, textObjectData);
-                    var topPosition = 0;
->>>>>>> 83e490e3e42e01422fa0d915e8e66d2e55c4c5b3
-                    var allObj = canvas.getObjects();
-                    for (var i = 0; i < allObj.length; i++) {
-<<<<<<< HEAD
-                        if (allObj[i].textarea != "undefined") {
-                            if (allObj[i].textarea == 'two') {
-                                if (isMobile.any()) {
-                                    var cmd = new UpdateCommand(canvas, allObj[i], {
-                                        top: 4
-                                    });
-                                } else {
-                                    var cmd = new UpdateCommand(canvas, allObj[i], {
-                                        top: 16
-                                    });
-                                }
-                                cmd.exec();
-                                allObj[i].setCoords();
-                            }
-                        }
-                    }
-                    if (isMobile.any()) {
-                        var topPosition = 1;
-                    } else {
-                        var topPosition = 8;
-=======
-                        if (allObj[i] && (allObj[i].type == 'image' || allObj[i].type == 'path' || allObj[i].type == 'path-group')) {
-                            leftPosition = 50;
-                        }
-                    }
-                    textObject.set({
-                        textarea: 'one',
-                        left: leftPosition,
-                        top: topPosition,
-                        fontSize: fontSizeText2
-                    });
-                    var cmd = new InsertCanvasObject(this.productDesigner, textObject, true);
-                    cmd.exec();
-                    var topPosition2 = textObject.height - 2;
-                    if (jQuery('#add_text_area_2').val() != null && jQuery('#add_text_area_2').val() != '') {
-                        var allObj = canvas.getObjects();
-                        for (var i = 0; i < allObj.length; i++) {
-                            if (allObj[i].textarea != "undefined") {
-                                if (allObj[i].textarea == 'two') {
-                                    var cmd = new UpdateCommand(canvas, allObj[i], {
-                                        top: topPosition2,
-                                        fontSize: 20
-                                    });
-                                    cmd.exec();
-                                    allObj[i].setCoords();
-                                }
-                            }
-                        }
->>>>>>> 83e490e3e42e01422fa0d915e8e66d2e55c4c5b3
-                    }
-                } else {
-                    var topPosition = canvas.height / 2;
-                }
+                var topPosition = -5;
                 var allObj = canvas.getObjects();
                 var leftPosition = 10;
                 for (var i = 0; i < allObj.length; i++) {
                     if (allObj[i] && (allObj[i].type == 'image' || allObj[i].type == 'path' || allObj[i].type == 'path-group')) {
-                        leftPosition = 35;
+                        leftPosition = 50;
                     }
                 }
                 textObject.set({
                     textarea: 'one',
                     left: leftPosition,
                     top: topPosition,
-                    scaleY: 0.4
+                    fontSize: fontSizeText2
                 });
                 var cmd = new InsertCanvasObject(this.productDesigner, textObject, true);
                 cmd.exec();
-                if (jQuery('#add_text_area_2').val() == null || jQuery('#add_text_area_2').val() == '') {
-                    textObject.centerV();
+                var topPosition2 = textObject.height - 7;
+                if (jQuery('#add_text_area_2').val() != null && jQuery('#add_text_area_2').val() != '') {
+                    var allObj = canvas.getObjects();
+                    for (var i = 0; i < allObj.length; i++) {
+                        if (allObj[i].textarea != "undefined") {
+                            if (allObj[i].textarea == 'two') {
+                                var cmd = new UpdateCommand(canvas, allObj[i], {
+                                    top: topPosition2,
+                                    fontSize: 20
+                                });
+                                cmd.exec();
+                                allObj[i].setCoords();
+                            }
+                        }
+                    }
                 }
                 jQuery('#add_text_area').focus();
                 jQuery('#add_text_area')[0].selectionStart = jQuery('#add_text_area')[0].selectionEnd = jQuery('#add_text_area').val().length;
@@ -8518,12 +8199,27 @@ observeText2Add: function() {
             }
         }
     });
+    jQuery("#add_text_area_2").blur(function(e) {
+           // if (e.which == 9) {
+            jQuery("#add_text_area").click();
+                e.preventDefault(); //Add this line to your code
+            //}
+        });
+    jQuery("#add_text_area_2").focus(function(e) {
+           // if (e.which == 9) {
+            jQuery("#add_text_area_2").click();
+                e.preventDefault(); //Add this line to your code
+            //}
+        });
     jQuery('#add_text_area_2').on('keyup', function(e) {
+
+        
         this.productDesigner = ProductDesigner.prototype;
         var canvas = this.productDesigner.canvas;
         var allObj = canvas.getObjects();
         var obj = canvas.getActiveObject();
-        if (!jQuery('#add_text_area_2').val() && e.which != 13 && obj) {
+        if (!jQuery('#add_text_area_2').val() && e.which != 13 && obj && obj.textarea == "two") {
+            alert("Text2");
             var cmd = new RemoveCanvasObject(this.productDesigner, obj);
             cmd.exec();
             jQuery('#text_prop_container').addClass('disabled');
@@ -8532,48 +8228,27 @@ observeText2Add: function() {
                 if (allObj[i].textarea != "undefined") {
                     if (allObj[i].textarea == 'one') {
                         allObj[i].centerV();
+                        var cmd = new UpdateCommand(canvas, allObj[i], {
+                            fontSize: 40,
+                            top: -5
+                        });
+                        cmd.exec();
+                        History.prototype.push(cmd);
                     }
                 }
             }
-<<<<<<< HEAD
             return;
         }
         if (jQuery('#add_text_area_2').val()) {
             if (e.which == 13 || e.which == 46) {
                 if (jQuery('#add_text_area_2')[0].selectionEnd == jQuery('#add_text_area_2').val().length) {
                     return;
-=======
-        });
-        jQuery('#add_text_area_2').on('keyup', function(e) {
-            this.productDesigner = ProductDesigner.prototype;
-            var canvas = this.productDesigner.canvas;
-            var allObj = canvas.getObjects();
-            var obj = canvas.getActiveObject();
-            if (!jQuery('#add_text_area_2').val() && e.which != 13 && obj) {
-                var cmd = new RemoveCanvasObject(this.productDesigner, obj);
-                cmd.exec();
-                jQuery('#text_prop_container').addClass('disabled');
-                History.prototype.push(cmd);
-                for (var i = 0; i < allObj.length; i++) {
-                    if (allObj[i].textarea != "undefined") {
-                        if (allObj[i].textarea == 'one') {
-                            allObj[i].centerV();
-                            var cmd = new UpdateCommand(canvas, allObj[i], {
-                                fontSize: 40,
-                                top: 0
-                            });
-                            cmd.exec();
-                            History.prototype.push(cmd);
-                        }
-                    }
->>>>>>> 83e490e3e42e01422fa0d915e8e66d2e55c4c5b3
                 }
             }
-<<<<<<< HEAD
             var text = jQuery('#add_text_area_2').val();
             var a = new RGBColor(jQuery('#text_color span').css('border-color'));
             var textObjectData = {
-                fontSize: parseInt(jQuery('#font_size_selection').val()),
+                fontSize: 30,
                 fontFamily: jQuery('#font_selection').val(),
                 /*fill: a.toHex(),*/
                 obj_side: this.productDesigner.data.product.images[this.productDesigner.currentProductColor][this.productDesigner.currentProduct].side
@@ -8584,77 +8259,6 @@ observeText2Add: function() {
                         var newObj = obj.getObjects()[i];
                         if (newObj.type == 'text') {
                             oldText = oldText + newObj.getText();
-=======
-            if (jQuery('#add_text_area_2').val()) {
-                if (e.which == 13 || e.which == 46) {
-                    if (jQuery('#add_text_area_2')[0].selectionEnd == jQuery('#add_text_area_2').val().length) {
-                        return;
-                    }
-                }
-                var text = jQuery('#add_text_area_2').val();
-                var a = new RGBColor(jQuery('#text_color span').css('border-color'));
-                var textObjectData = {
-                    fontSize: 30,
-                    fontFamily: jQuery('#font_selection').val(),
-                    /*fill: a.toHex(),*/
-                    obj_side: this.productDesigner.data.product.images[this.productDesigner.currentProductColor][this.productDesigner.currentProduct].side
-                };
-                if (obj && (obj.type == 'text' || obj.type == 'group')) {
-                    if (obj.type == 'group') {
-                        for (var i = 0; i < obj.getObjects().length; i++) {
-                            var newObj = obj.getObjects()[i];
-                            if (newObj.type == 'text') {
-                                oldText = oldText + newObj.getText();
-                            }
-                        }
-                        if (text != oldText) {
-                            var cmd = new RemoveCanvasObject(this.productDesigner, obj);
-                            cmd.exec();
-                            History.prototype.push(cmd);
-                            var textObjectData = {
-                                fontSize: 30,
-                                fontFamily: jQuery('#font_selection').val(),
-                                fill: a.toHex(),
-                                opacity: jQuery('#opacity').val(),
-                            };
-                            var textObject = new fabric.Text(text, textObjectData);
-                            textObject.set({
-                                top: obj.top,
-                                left: obj.left,
-                                image_side: obj.image_side,
-                                scaleX: obj.scaleX,
-                                scaleY: obj.scaleY,
-                                width: obj.width,
-                                height: obj.height,
-                                textarea: 'two',
-                            });
-                            var cmd = new InsertCanvasObject(this.productDesigner, textObject, true);
-                            cmd.exec();
-                            History.prototype.push(cmd);
-                            var currentArc = parseInt(jQuery('#text_arc').val());
-                            var currentSpacing = parseInt(jQuery('#text_spacing').val());
-                            var defaultArc = obj.arc ? obj.arc : 0;
-                            var defaultSpacing = obj.spacing ? obj.spacing : 0;
-                            cmd = new TextSpaceAngleChange(this.productDesigner, canvas, {
-                                arc: defaultArc,
-                                spacing: defaultSpacing
-                            }, {
-                                arc: currentArc,
-                                spacing: currentSpacing
-                            });
-                            cmd.exec();
-                            History.prototype.push(cmd);
-                        }
-                    } else {
-                        oldText = obj.getText();
-                        if (text != oldText) {
-                            var cmd = new UpdateCommand(canvas, obj, {
-                                text: text
-                            });
-                            cmd.exec();
-                            jQuery('#text_prop_container').removeClass("disabled");
-                            History.prototype.push(cmd);
->>>>>>> 83e490e3e42e01422fa0d915e8e66d2e55c4c5b3
                         }
                     }
                     if (text != oldText) {
@@ -8662,7 +8266,7 @@ observeText2Add: function() {
                         cmd.exec();
                         History.prototype.push(cmd);
                         var textObjectData = {
-                            fontSize: parseInt(jQuery('#font_size_selection').val()),
+                            fontSize: 30,
                             fontFamily: jQuery('#font_selection').val(),
                             fill: a.toHex(),
                             opacity: jQuery('#opacity').val(),
@@ -8697,7 +8301,7 @@ observeText2Add: function() {
                     }
                 } else {
                     oldText = obj.getText();
-                    if (text != oldText) {
+                    if (text != oldText && obj.textarea == "two") {
                         var cmd = new UpdateCommand(canvas, obj, {
                             text: text
                         });
@@ -8705,7 +8309,6 @@ observeText2Add: function() {
                         jQuery('#text_prop_container').removeClass("disabled");
                         History.prototype.push(cmd);
                     }
-<<<<<<< HEAD
                 }
             } else {
                 var textCount = 0;
@@ -8724,125 +8327,42 @@ observeText2Add: function() {
                     }
                 }
                 var textObject = new fabric.Text(text, textObjectData);
-                if (jQuery('#add_text_area_2').val() != null && jQuery('#add_text_area_2').val() != '') {
+                var fontSizeText2 = 40;
+                var topPosition = -5;
+                if (jQuery('#add_text_area').val() != null && jQuery('#add_text_area').val() != '') {
                     var allObj = canvas.getObjects();
                     for (var i = 0; i < allObj.length; i++) {
                         if (allObj[i].textarea != "undefined") {
                             if (allObj[i].textarea == 'one') {
-                                if (isMobile.any()) {
-                                    var cmd = new UpdateCommand(canvas, allObj[i], {
-                                        top: -1
-                                    });
-                                } else {
-                                    var cmd = new UpdateCommand(canvas, allObj[i], {
-                                        top: 8
-                                    });
-                                }
+                                var cmd = new UpdateCommand(canvas, allObj[i], {
+                                    top: 0,
+                                    fontSize: 20
+                                });
                                 cmd.exec();
                                 allObj[i].setCoords();
+                                fontSizeText2 = 20;
+                                topPosition = allObj[i].height - 7;
                             }
                         }
                     }
                 }
-                if (isMobile.any()) {
-                    var topPosition = 5;
-                    var leftPosition = 10;
-                } else {
-                    var topPosition = 18;
-                    var leftPosition = 10;
-                }
+                var leftPosition = 10;
                 for (var i = 0; i < allObj.length; i++) {
                     if (allObj[i] && (allObj[i].type == 'image' || allObj[i].type == 'path' || allObj[i].type == 'path-group')) {
-                        leftPosition = 35;
+                        leftPosition = 50;
                     }
                 }
                 textObject.set({
                     textarea: 'two',
                     left: leftPosition,
                     top: topPosition,
-                    scaleY: 0.4
-=======
-                    var textObject = new fabric.Text(text, textObjectData);
-                    var fontSizeText2 = 40;
-                    var topPosition = 0;
-                    if (jQuery('#add_text_area').val() != null && jQuery('#add_text_area').val() != '') {
-                        var allObj = canvas.getObjects();
-                        for (var i = 0; i < allObj.length; i++) {
-                            if (allObj[i].textarea != "undefined") {
-                                if (allObj[i].textarea == 'one') {
-                                    var cmd = new UpdateCommand(canvas, allObj[i], {
-                                        top: 0,
-                                        fontSize: 20
-                                    });
-                                    cmd.exec();
-                                    allObj[i].setCoords();
-                                    fontSizeText2 = 20;
-                                    topPosition = allObj[i].height - 2;
-                                }
-                            }
-                        }
-                    }
-                    var leftPosition = 10;
-                    for (var i = 0; i < allObj.length; i++) {
-                        if (allObj[i] && (allObj[i].type == 'image' || allObj[i].type == 'path' || allObj[i].type == 'path-group')) {
-                            leftPosition = 50;
-                        }
-                    }
-                    textObject.set({
-                        textarea: 'two',
-                        left: leftPosition,
-                        top: topPosition,
-                        fontSize: fontSizeText2
-                    });
-                    var cmd = new InsertCanvasObject(this.productDesigner, textObject, true);
-                    cmd.exec();
-                    jQuery('#add_text_area_2').focus();
-                    jQuery('#add_text_area_2')[0].selectionStart = jQuery('#add_text_area_2')[0].selectionEnd = jQuery('#add_text_area_2').val().length;
-                    jQuery('#text_prop_container').removeClass("disabled");
-                    History.prototype.push(cmd);
-                    jQuery('#text_color_title').html('Black');
-                    jQuery('#text_bgcolor_title').html('Black');
-                    jQuery('#text_shadowcolor_title').html('Black');
-                    jQuery('#text_strokecolor_title').html('Black');
-                }
-            }
-        });
-    },
-    observeTextSizeChange: function() {
-        jQuery('#font_size_selection').on('change input', function() {
-            this.productDesigner = ProductDesigner.prototype;
-            var canvas = this.productDesigner.canvas;
-            var obj = canvas.getActiveObject();
-            var allObj = canvas.getObjects();
-            if (obj && (obj.type == 'text' || obj.type == 'group')) {
-                var oldFontSize = obj.fontSize;
-                var cmd = new UpdateCommand(canvas, obj, {
-                    fontSize: jQuery('#font_size_selection').val(),
-                    scaleY: 0.6
->>>>>>> 83e490e3e42e01422fa0d915e8e66d2e55c4c5b3
+                    fontSize: fontSizeText2
                 });
                 var cmd = new InsertCanvasObject(this.productDesigner, textObject, true);
                 cmd.exec();
-<<<<<<< HEAD
                 jQuery('#add_text_area_2').focus();
                 jQuery('#add_text_area_2')[0].selectionStart = jQuery('#add_text_area_2')[0].selectionEnd = jQuery('#add_text_area_2').val().length;
                 jQuery('#text_prop_container').removeClass("disabled");
-=======
-                /*if(obj.textarea == 'one' && jQuery('#add_text_area_2').val() != '')
-                {
-                    if(oldFontSize > jQuery('#font_size_selection').val())
-                    {                    
-                        obj.set({
-                            top : 19
-                        });
-                    } else {
-                        obj.set({
-                            top : 11
-                        });
-                    }
-                    obj.setCoords();
-                }*/
->>>>>>> 83e490e3e42e01422fa0d915e8e66d2e55c4c5b3
                 History.prototype.push(cmd);
                 jQuery('#text_color_title').html('Black');
                 jQuery('#text_bgcolor_title').html('Black');
@@ -8857,15 +8377,31 @@ observeTextSizeChange: function() {
         this.productDesigner = ProductDesigner.prototype;
         var canvas = this.productDesigner.canvas;
         var obj = canvas.getActiveObject();
+        var allObj = canvas.getObjects();
         if (obj && (obj.type == 'text' || obj.type == 'group')) {
+            var oldFontSize = obj.fontSize;
             var cmd = new UpdateCommand(canvas, obj, {
                 fontSize: jQuery('#font_size_selection').val(),
-                scaleY: 0.4
+                scaleY: 0.6
             });
             cmd.exec();
-            History.prototype.push(cmd);
-        }
-    }.bind(this));
+                /*if(obj.textarea == 'one' && jQuery('#add_text_area_2').val() != '')
+                {
+                    if(oldFontSize > jQuery('#font_size_selection').val())
+                    {                    
+                        obj.set({
+                            top : 19
+                        });
+                    } else {
+                        obj.set({
+                            top : 11
+                        });
+                    }
+                    obj.setCoords();
+                }*/
+                History.prototype.push(cmd);
+            }
+        }.bind(this));
 },
 observeTextStyleChange: function() {
     this.productDesigner = ProductDesigner.prototype;
