@@ -1148,7 +1148,7 @@ input,button,select,textarea{-webkit-box-shadow:none!important;box-shadow:none!i
 .productdesigner-index-band #add_mydesigns_content #mydesigns_images_container .product_list li {width: 16.35%;}
 
 @media screen and (min-width: 981px) and (max-width: 1300px) {  
-    .productdesigner-view .pd-left-panel {width: 100% !important;}
+    /*.productdesigner-view .pd-left-panel {width: 100% !important;}*/
     .productdesigner-index-band .right-form-addtocart #customOptionFormProdSettings #cart-add {margin-left: 0;margin-top: 2px;width: 100%;}
     .productdesigner-index-band .right-form-addtocart #customOptionFormProdSettings div.mage-error {position: static;margin-top: 0;}
 }
