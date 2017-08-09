@@ -4148,7 +4148,7 @@ ProductDesigner.prototype = {
                 old_canvas[prop].set({
                     mydesign: false,
                     isclone: true,
-                    image_id: old_canvas[prop].image_id,
+                    image_id: ProductDesigner.prototype.firstImageId,
                 });
                 for (canvasId in ProductDesigner.prototype.containerCanvases)
                 {
