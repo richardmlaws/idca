@@ -10,6 +10,7 @@ class PreLoadedTemplate extends \Magento\Eav\Model\Entity\Attribute\Source\Abstr
      * @return array
      */
     protected $request;
+    protected $_options = [];
 
     public function __construct(
     \Magento\Framework\App\Request\Http $request
@@ -29,7 +30,7 @@ class PreLoadedTemplate extends \Magento\Eav\Model\Entity\Attribute\Source\Abstr
             $obj_product = $objectManager->create('Biztech\Productdesigner\Model\Mysql4\Designtemplates\Collection')->addFieldToFilter('product_id',$product_id);
             $designs = $obj_product->getData();
             //print_r($designs); die;
-            if (is_null($this->_options)) {
+            if (empty($this->_options)) {
                 $this->_options = array();
                 $nodata = array(
                     'label' => __('Select Default template for this product'),
@@ -70,8 +71,9 @@ class PreLoadedTemplate extends \Magento\Eav\Model\Entity\Attribute\Source\Abstr
                         }
                 }
             }
-            return $this->_options;
+            
         }
+        return $this->_options;
     }
 
     /**

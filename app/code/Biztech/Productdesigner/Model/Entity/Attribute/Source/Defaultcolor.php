@@ -10,6 +10,7 @@ class Defaultcolor extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSo
      * @return array
      */
     protected $request;
+    protected $_options = [];
 
     public function __construct(
     \Magento\Framework\App\Request\Http $request
@@ -37,7 +38,7 @@ class Defaultcolor extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSo
                         $colors = $attr['values'];
                     }
                 }
-                if (is_null($this->_options)) {
+                if (empty($this->_options)) {
                     $this->_options = array();
                     $nodata = array(
                         'label' => __('Select Default Color for this Design'),
@@ -54,9 +55,10 @@ class Defaultcolor extends \Magento\Eav\Model\Entity\Attribute\Source\AbstractSo
                 } else {
                     
                 }
-                return $this->_options;
+                
             }
         }
+        return $this->_options;
     }
 
     /**

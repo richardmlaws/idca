@@ -11,6 +11,7 @@ class Printingmethodattr extends \Magento\Eav\Model\Entity\Attribute\Source\Abst
      * @return array
      */
     protected $request;
+    protected $_options = [];
 
     public function __construct(
         \Magento\Framework\App\Request\Http $request

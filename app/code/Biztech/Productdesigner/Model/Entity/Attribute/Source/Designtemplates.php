@@ -10,6 +10,7 @@ class Designtemplates extends \Magento\Eav\Model\Entity\Attribute\Source\Abstrac
      * @return array
      */
     protected $request;
+    protected $_options = [];
 
     public function __construct(
     \Magento\Framework\App\Request\Http $request
@@ -23,7 +24,7 @@ class Designtemplates extends \Magento\Eav\Model\Entity\Attribute\Source\Abstrac
 
         $obj_product = $objectManager->create('Biztech\Productdesigner\Model\Designtemplatecategory')->getCollection();
        
-        if (is_null($this->_options)) {
+        if (empty($this->_options)) {
             $this->_options = array();
             foreach ($obj_product as $obj) {
                 $data = array(
